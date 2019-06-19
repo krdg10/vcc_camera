@@ -20,7 +20,7 @@
                 </span>
             @enderror
 
-            <input placeholder="Senha" id="password" type="text" class="fadeIn third @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+            <input placeholder="Senha" id="password" type="password" class="fadeIn third @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
             @error('password')
                 <span class="invalid-feedback" role="alert">
