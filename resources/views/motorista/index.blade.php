@@ -11,7 +11,7 @@
             <input type="text" placeholder="Código VCC" name="codigo_empresa" class="form-control">
             <input type="text" placeholder="Código Transdata" name="codigo_transdata" class="form-control">
             <div id="formFooter">
-                <button type="submit" id="submit" class="btn btn-outline-success"> Salvar </button>
+                <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Salvar </button>
             </div>
 
         </form>

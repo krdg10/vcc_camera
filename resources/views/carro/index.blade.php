@@ -10,7 +10,7 @@
             <input type="text" placeholder="Modelo" name="modelo" class="form-control">
             <input type="text" placeholder="Ano" name="ano" class="form-control">
             <div id="formFooter">
-                <button type="submit" id="submit" class="btn btn-outline-success"> Salvar </button>
+                <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Salvar </button>
             </div>
 
         </form>

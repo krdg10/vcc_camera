@@ -20,7 +20,7 @@
             <input type="file" aria-label="foto" id="foto" name="fotos[]" class="form-control" multiple />
             
             <div id="formFooter">
-              <button type="submit" id="submit" class="btn btn-outline-success"> Salvar </button>
+              <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Salvar </button>
             </div>
         </form>
     </div>
