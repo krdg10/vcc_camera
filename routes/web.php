@@ -26,5 +26,8 @@ Route::post('/motorista','MotoristaController@store')->name('motorista.store');
 Route::get('/carro','CarroController@index')->name('carro');
 Route::post('/carro','CarroController@store')->name('carro.store');
 
+Route::get('/entrada','EntradaController@index')->name('entrada');
+Route::post('/entrada','EntradaController@store')->name('entrada.store');
+
 
 
