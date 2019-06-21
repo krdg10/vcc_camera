@@ -19,5 +19,8 @@ Auth::routes();
 
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('/motorista','MotoristaController');
+
+Route::get('/motorista','MotoristaController@index')->name('motorista');
+Route::post('/motorista','MotoristaController@store')->name('motorista.store');
+
 
