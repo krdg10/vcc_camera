@@ -56,6 +56,7 @@
         
         </div>
         @else
+         <hr>
         <div class="container">
             <a class="badge badge-secondary badge-pill" href="{{ url('/motorista') }}">Cadastrar Motoristas</a>
             <a class="badge badge-secondary badge-pill" href="{{ url('/carro') }}">Cadastrar Carros</a>
