@@ -39,42 +39,44 @@
     }
 </script>
 <!-- onde tava type=time no text+= tava dando BO com file e coloquei type=text -->
-<div id="formContent">
-    <form method="POST" action="{{ route('entrada.store') }}" enctype="multipart/form-data">
-    {{ csrf_field() }}
-        <select class="formControl" name="motorista">
-            @foreach($motorista as $Motorista) 
-                <option value="{{ $Motorista->id }}"> {{ $Motorista->nome }} </option>
-            @endforeach
-        </select>
-        <select class="formControl" name="carro">
-            @foreach($carro as $Carro)
-                <option value="{{ $Carro->id }}"> {{ $Carro->nome }} - {{ $Carro->placa }} </option>
-            @endforeach
-        </select>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <form method="POST" action="{{ route('entrada.store') }}" enctype="multipart/form-data">
+        {{ csrf_field() }}
+            <select class="formControl" name="motorista">
+                @foreach($motorista as $Motorista) 
+                    <option value="{{ $Motorista->id }}"> {{ $Motorista->nome }} </option>
+                @endforeach
+            </select>
+            <select class="formControl" name="carro">
+                @foreach($carro as $Carro)
+                    <option value="{{ $Carro->id }}"> {{ $Carro->nome }} - {{ $Carro->placa }} </option>
+                @endforeach
+            </select>
 
-        <input type="datetime-local" placeholder="Horário" name="horario" class="form-control">
-        <li class="list-group-item">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Foto</span>
+            <input type="datetime-local" placeholder="Horário" name="horario" class="form-control">
+            <li class="list-group-item">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Foto</span>
+                    </div>
+                    <input type="file" aria-label="foto" id="foto" name="fotos[]" class="form-control" multiple />
+                                
+                    <div class="input-group-append">
+                        <button type="button" id="addfoto" class="btn btn-outline-success"> Adicionar </button>
+                    </div>
                 </div>
-                <input type="file" aria-label="foto" id="foto" name="fotos[]" class="form-control" multiple />
-                               
-                <div class="input-group-append">
-                    <button type="button" id="addfoto" class="btn btn-outline-success"> Adicionar </button>
+                <div class="text-right">
+                    <span class="badge badge-secondary badge-pill">Coloque as imagens dos ônibus.</span>
                 </div>
-            </div>
-            <div class="text-right">
-                <span class="badge badge-secondary badge-pill">Coloque as imagens dos ônibus.</span>
-            </div>
-            <div class="text-right">
-                <span class="badge badge-danger badge-pill">Cuidado para inserir as imagens corretas.</span>
-            </div>
-            <div id="fotos"> </div>
-        </li>
-        <button type="submit" id="submit" class="btn btn-outline-success"> Salvar </button>
-    </form>
+                <div class="text-right">
+                    <span class="badge badge-danger badge-pill">Cuidado para inserir as imagens corretas.</span>
+                </div>
+                <div id="fotos"> </div>
+            </li>
+            <button type="submit" id="submit" class="btn btn-outline-success"> Salvar </button>
+        </form>
+    </div>
 </div>
 
   
