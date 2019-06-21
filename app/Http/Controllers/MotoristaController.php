@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Motorista;
+use App\Models\Motorista;
 
 class MotoristaController extends Controller
 {

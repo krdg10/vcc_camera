@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Entrada;
-use App\Carro;
-use App\Motorista;
+use App\Models\Entrada;
+use App\Models\Carro;
+use App\Models\Motorista;
 
 class EntradaController extends Controller
 {
