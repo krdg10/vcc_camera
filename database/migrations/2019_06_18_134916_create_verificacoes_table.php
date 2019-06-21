@@ -8,16 +8,12 @@ class CreateVerificacoesTable extends Migration{
     public function up(){
         Schema::create('verificacoes', function (Blueprint $table){
             $table->increments('id');
-            $table->boolean('verificou');
-            $table->unsignedInteger('entrada_id');
             $table->unsignedInteger('users_id');
-            $table->unsignedInteger('avaria_id');
+            $table->unsignedInteger('entrada_id');
             $table->timestamps();
 
-            $table->foreign('entrada_id')->references('id')->on('entradas');
             $table->foreign('users_id')->references('id')->on('users');
-            $table->foreign('avaria_id')->references('id')->on('avarias');
-
+            $table->foreign('entrada_id')->references('id')->on('entradas');
         });
     }
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Entrada;
 use App\Models\Carro;
 use App\Models\Motorista;
+use App\Models\Foto;
 
 class EntradaController extends Controller
 {
@@ -27,8 +28,15 @@ class EntradaController extends Controller
         $entrada->motorista_id = $request->motorista;
         $entrada->carro_id = $request->carro;
         $entrada->horario = $request->horario;
-        
         $entrada->save();
+        for($i = 0; $i < count($request->foto); $i++){
+            $foto = new Foto;
+            \Log::info($foto);
+
+            $foto->path = $request->foto[$i];
+            $foto->entrada()->associate($entrada);
+            $foto->save();
+        }
         
         return redirect()->back()->with('message', 'Sucesso ao cadastrar entrada!');
     }
