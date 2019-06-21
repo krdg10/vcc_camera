@@ -23,7 +23,7 @@ class MotoristaController extends Controller
         $motorista->data_nascimento = $request->data_nascimento;
         $motorista->codigo_empresa = $request->codigo_empresa;
         $motorista->codigo_transdata = $request->codigo_transdata;
-        $motorista->save();
+        $motorista->save();q'
         
         return redirect()->back()->with('message', 'Sucesso ao cadastrar motorista!');
     }
