@@ -27,9 +27,4 @@ class MotoristaController extends Controller
         
         return redirect()->back()->with('message', 'Sucesso ao cadastrar motorista!');
     }
-
-    public function show($id)
-    {
-        //
-    }
 }
