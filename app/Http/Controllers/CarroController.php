@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Carro;
+use App\Models\Carro;
 
 class CarroController extends Controller
 {
