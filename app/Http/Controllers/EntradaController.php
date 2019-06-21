@@ -1,14 +1,13 @@
-<<<<<<< HEAD
 <?php
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Entrada;
-use App\Carro;
-use App\Motorista;
-use App\Foto;
+use App\Models\Entrada;
+use App\Models\Carro;
+use App\Models\Motorista;
+use App\Models\Foto;
 
 class EntradaController extends Controller
 {
