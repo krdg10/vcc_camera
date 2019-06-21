@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @extends('layouts.app')
 @section('content')
 <script>
@@ -60,7 +59,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Foto</span>
                 </div>
-                <input type="file" aria-label="foto" id="foto" class="form-control">
+                <input type="file" aria-label="foto" id="foto" name="fotos[]" class="form-control" multiple />
                                
                 <div class="input-group-append">
                     <button type="button" id="addfoto" class="btn btn-outline-success"> Adicionar </button>
