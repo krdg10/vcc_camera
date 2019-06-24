@@ -62,6 +62,8 @@
                     <a class="list-group-item list-group-item-action" href="{{ url('/motorista') }}">Cadastrar Motoristas</a>
                     <a class="list-group-item list-group-item-action" href="{{ url('/carro') }}">Cadastrar Carros</a>
                     <a class="list-group-item list-group-item-action" href="{{ url('/entrada') }}">Cadastrar Entradas</a>
+                    <a class="list-group-item list-group-item-action" href="{{ url('/verificacoa') }}">Verificar Entradas</a>
+
                 </div>
             </div>
             <div id="formFooter">

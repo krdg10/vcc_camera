@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\LocalAVarias;
+use app\Models\LocalAVarias;
 
 class LocalAVariasController extends Controller{
     public function index(){

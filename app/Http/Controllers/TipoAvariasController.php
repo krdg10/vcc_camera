@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\TipoAvarias;
+use app\Models\TipoAvarias;
 
 class TipoAvariasController extends Controller{
     public function index(){

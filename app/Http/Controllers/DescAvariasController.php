@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Desc_avaria;
+use app\Models\Desc_avaria;
 
 class DescAvariasController extends Controller{
     public function index(){
-        //
+        return view('verificacao.viewVerificacao');
     }
 
     public function create(){

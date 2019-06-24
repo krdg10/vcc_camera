@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Verificacao;
+use app\Models\Verificacao;
 
 class VerificacaoController extends Controller{
     public function index(){
