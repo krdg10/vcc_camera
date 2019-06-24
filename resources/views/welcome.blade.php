@@ -28,7 +28,7 @@
                 </span>
             @enderror
             <div class="form-group row">
-                <div class="col-md-6 offset-md-4">
+                <div class="col-md-6">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
@@ -38,11 +38,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 offset-md-4">
+           
                 <button type="submit" class="fadeIn fourth btn btn-primary">
                     {{ __('Login') }}
                 </button>
-            </div>
+           
         
         </form>
 
@@ -56,6 +56,17 @@
         
         </div>
         @else
+            <hr>
+            <div class="container">
+                <div class="list-group">
+                    <a class="list-group-item list-group-item-action" href="{{ url('/motorista') }}">Cadastrar Motoristas</a>
+                    <a class="list-group-item list-group-item-action" href="{{ url('/carro') }}">Cadastrar Carros</a>
+                    <a class="list-group-item list-group-item-action" href="{{ url('/entrada') }}">Cadastrar Entradas</a>
+                </div>
+            </div>
+            <div id="formFooter">
+            </div>
+        
         @endguest
 
     </div>

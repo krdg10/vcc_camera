@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => env('FILESYSTEM_DRIVER', 'public'),
+    /*public faz ir pro storage public. Local storage app */
 
     /*
     |--------------------------------------------------------------------------
