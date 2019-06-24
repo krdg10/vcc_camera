@@ -12,7 +12,7 @@ use App\Models\Foto;
 class EntradaController extends Controller
 {
     public function index()
-    {   
+    {
         $motorista = new Motorista;
         $carro = new Carro;
         $motorista = Motorista::all();
