@@ -26,5 +26,25 @@ class CarroController extends Controller
         
         return redirect()->back()->with('message', 'Sucesso ao cadastrar carro!');
     }
+    public function show(){
+        $carros = Carro::all();
+        return view('carro.show', compact('carros'));
+    }
+    public function edit($id)
+    {
+        $Carro = Carro::findOrFail($id);
+        return view('carro.edit',compact('Carro'));
+    }
+  
+    public function update(Request $request, $id)
+    {
+        $Carro = Carro::findOrFail($id);
+        $Carro->nome        = $request->nome;
+        $Carro->modelo = $request->modelo;
+        $Carro->placa    = $request->placa;
+        $Carro->ano       = $request->ano;
+        $Carro->save();
+        return redirect()->route('carro.edit', compact('Carro'))->with('message', 'Product updated successfully!');
+    }
 }
 
