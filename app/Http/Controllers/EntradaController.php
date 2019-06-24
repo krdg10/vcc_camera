@@ -11,11 +11,6 @@ use App\Models\Foto;
 
 class EntradaController extends Controller{
     public function index(){
-        $motorista = new Motorista;
-        $carro = new Carro;
-        $motorista = Motorista::all();
-        $carro = Carro::all();
-        return view('entrada.index', compact('motorista', 'carro'));
     }
     
     public function store(Request $request){
@@ -65,6 +60,14 @@ class EntradaController extends Controller{
         
         
         return redirect()->back()->with('message', 'Sucesso ao cadastrar entrada!');
+    }
+
+    public function create(){
+        $motorista = new Motorista;
+        $carro = new Carro;
+        $motorista = Motorista::all();
+        $carro = Carro::all();
+        return view('entrada.index', compact('motorista', 'carro'));
     }
 }
 /* https://www.cloudways.com/blog/laravel-multiple-files-images-upload/ base do upload. antes tava adicionando o nome via script, mas pegava o fakepath e não fazia upload de fato. depois fazia upload mas só de um arquivo. */

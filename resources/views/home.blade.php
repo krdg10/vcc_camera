@@ -84,7 +84,7 @@
                         Entradas
                     </button>
                     <div id="entradas" class="w3-container w3-hide">
-                        <a class="list-group-item list-group-item-action" href="{{ url('/entrada') }}">Cadastrar Entradas</a>
+                        <a class="list-group-item list-group-item-action" href="{{ url('/entradas/create') }}">Cadastrar Entradas</a>
                         <a class="list-group-item list-group-item-action" href="{{ url('/verificacoa') }}">Visualizar Entradas</a>
                     </div>
                     {{-- FIM BOTÃO ENTRADA --}}
