@@ -10,7 +10,7 @@ class CreateDescAvariasTable extends Migration{
             $table->increments('id');
             $table->integer('local_avaria_id')->unsigned();
             $table->integer('tipo_avaria_id')->unsigned();
-            $table->string('obs');
+            $table->text('obs');
 
             $table->timestamps();
 

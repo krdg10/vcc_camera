@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Models\Verificacao;
+use App\Models\Verificacao;
 
 class VerificacaoController extends Controller{
+
     public function index(){
-        //
+        $tipoAvariaController = new TipoAvariaController;
+        $localAvariasController = new LocalAVariasController;
+        $tipoAvarias = $tipoAvariaController->show();
+        $localAvarias = $localAvariasController->show();
+        return view('verificacao.viewVerificacao', compact('tipoAvarias', 'localAvarias'));
     }
 
     public function create(){
@@ -15,7 +20,7 @@ class VerificacaoController extends Controller{
     }
 
     public function store(Request $request){
-        //
+        return dd($request);
     }
 
     public function show($id){

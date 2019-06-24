@@ -8,7 +8,7 @@ class CreateTipoAvariasTable extends Migration{
     public function up(){
         Schema::create('tipo_avarias', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('local');
+            $table->string('tipo');
             
             $table->timestamps();
         });

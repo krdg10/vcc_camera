@@ -7,7 +7,6 @@ use app\Models\Desc_avaria;
 
 class DescAvariasController extends Controller{
     public function index(){
-        return view('verificacao.viewVerificacao');
     }
 
     public function create(){
@@ -18,8 +17,8 @@ class DescAvariasController extends Controller{
         //
     }
 
-    public function show($id){
-        //
+    public function show($id=""){
+        return Desc_avaria::all();
     }
 
     public function edit($id){
