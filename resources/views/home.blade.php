@@ -92,14 +92,7 @@
                     {{-- FIM BOTÃO CARROS --}}
 
                     {{-- INICIO BOTÃO ENTRADA --}}
-<<<<<<< HEAD
-                    <button onclick="accordions('entradas')" class="w3-btn w3-block w3-black w3-left-align">
-                        Entradas
-                    </button>
-                    <div id="entradas" class="w3-container w3-hide">
-                        <a class="list-group-item list-group-item-action" href="{{ url('/verificacoa') }}">Visualizar Entradas</a>
-                        <a class="list-group-item list-group-item-action" href="{{ url('/entradas/create') }}">Cadastrar Entradas</a>
-=======
+                   
                     <div class="dropdown">
                         <button type="button" class="list-group-item list-group-item-action" data-toggle="dropdown">
                             Entradas
@@ -110,7 +103,7 @@
                             <a class="list-group-item list-group-item-action" href="{{ url('/verificacoa') }}">Verificar Entradas</a>
                             </div>
                         </div>
->>>>>>> e674a29c4da77090c752350673929b011772079c
+
                     </div>
                     {{-- FIM BOTÃO ENTRADA --}}
 
