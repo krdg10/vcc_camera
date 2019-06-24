@@ -9,16 +9,15 @@ use App\Models\Carro;
 use App\Models\Motorista;
 use App\Models\Foto;
 
-class EntradaController extends Controller
-{
-    public function index()
-    {   
+class EntradaController extends Controller{
+    public function index(){
         $motorista = new Motorista;
         $carro = new Carro;
         $motorista = Motorista::all();
         $carro = Carro::all();
         return view('entrada.index', compact('motorista', 'carro'));
     }
+    
     public function store(Request $request){
         $entrada = new Entrada;
         if(!$entrada->nome){
