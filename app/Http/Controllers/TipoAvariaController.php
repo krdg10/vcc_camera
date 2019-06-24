@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Models\TipoAvarias;
+use App\Models\Tipo_avarias;
 
-class TipoAvariasController extends Controller{
+class TipoAvariaController extends Controller{
     public function index(){
         //
     }
@@ -18,8 +18,8 @@ class TipoAvariasController extends Controller{
         //
     }
 
-    public function show($id){
-        //
+    public function show($id=""){
+        return Tipo_avarias::all();
     }
 
     public function edit($id){

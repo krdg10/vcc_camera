@@ -11,15 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+    Route::get('/', function () {
+        return view('home');
+    });
 
-Auth::routes();
+    Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::group(['middleware' => ['auth']], function () {  
-    Route::resource('/verificacoa', 'DescAvariasController');
+	Route::get('/home', 'HomeController@index')->name('home');
+	Route::group(['middleware' => ['auth']], function () {  
+    Route::resource('/verificacoa', 'VerificacaoController');
 
 
     Route::get('/motorista','MotoristaController@index')->name('motorista');

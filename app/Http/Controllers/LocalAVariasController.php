@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Models\LocalAVarias;
+use App\Models\Local_avaria;
 
 class LocalAVariasController extends Controller{
     public function index(){
@@ -18,8 +18,8 @@ class LocalAVariasController extends Controller{
         //
     }
 
-    public function show($id){
-        //
+    public function show($id=""){
+        return Local_avaria::all();
     }
 
     public function edit($id){
