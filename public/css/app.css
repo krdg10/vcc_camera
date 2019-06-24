@@ -108,11 +108,6 @@ hr {
   overflow: visible;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-}
-
 p {
   margin-top: 0;
   margin-bottom: 1rem;
@@ -204,7 +199,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   transform: scale(0.95);
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=date] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -225,12 +220,12 @@ input[type=text], input[type=password] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type=text]:focus, input[type=password]:focus {
+input[type=text]:focus, input[type=password]:focus, input[type=date]:focus {
   background-color: #fff;
   border-bottom: 2px solid #41a58b;
 }
 
-input[type=text]:placeholder, input[type=password]:placeholder {
+input[type=text]:placeholder, input[type=password]:placeholder, input[type=date]:placeholder {
   color: #cccccc;
 }
 
@@ -630,6 +625,7 @@ template {
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
+  margin-top: 1.5rem;
   margin-bottom: 0.5rem;
   font-weight: 500;
   line-height: 1.2;
