@@ -12,7 +12,7 @@ use App\Models\Foto;
 
 class EntradaController extends Controller{
     public function index(){
-        
+        return view('entrada.index');//, compact('motorista', 'carro'));
     }
 
     public function store(Request $request){
