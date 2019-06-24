@@ -12,23 +12,24 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
 
-Route::resource('/verificacoa', 'DescAvariasController');
-
 Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => ['auth']], function () {  
+    Route::resource('/verificacoa', 'DescAvariasController');
 
-Route::get('/motorista','MotoristaController@index')->name('motorista');
-Route::post('/motorista','MotoristaController@store')->name('motorista.store');
 
-Route::get('/carro','CarroController@index')->name('carro');
-Route::post('/carro','CarroController@store')->name('carro.store');
+    Route::get('/motorista','MotoristaController@index')->name('motorista');
+    Route::post('/motorista','MotoristaController@store')->name('motorista.store');
 
-Route::get('/entrada','EntradaController@index')->name('entrada');
-Route::post('/entrada','EntradaController@store')->name('entrada.store');
+    Route::get('/carro','CarroController@index')->name('carro');
+    Route::post('/carro','CarroController@store')->name('carro.store');
 
+    Route::get('/entrada','EntradaController@index')->name('entrada');
+    Route::post('/entrada','EntradaController@store')->name('entrada.store');
+});
 
 
