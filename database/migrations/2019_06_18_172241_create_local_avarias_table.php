@@ -7,9 +7,9 @@ use Illuminate\Database\Migrations\Migration;
 class CreateLocalAvariasTable extends Migration{
     public function up(){
         Schema::create('local_avarias', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('local');
-
+            
             $table->timestamps();
         });
     }
