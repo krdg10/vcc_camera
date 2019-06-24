@@ -60,32 +60,57 @@
             <div class="container">
                 <div class="list-group">
                     {{-- INICIO BOTÃO MOTORISTAS --}}
-                    <button onclick="accordions('motorista')" class="w3-btn w3-block w3-black w3-left-align">
-                        Motoristas
-                    </button>
-                    <div id="motorista" class="w3-container w3-hide">
-                        <a class="list-group-item list-group-item-action" href="{{ url('/motorista') }}">Cadastrar Motoristas</a>
+            
+                    <div class="dropdown">
+                        <button type="button" class="list-group-item list-group-item-action" data-toggle="dropdown">
+                            Motorista
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="list-group">
+                            <a class="list-group-item list-group-item-action" href="{{ url('/motorista') }}">Cadastrar Motoristas</a>
+                            <a class="list-group-item list-group-item-action" href="{{ url('/motorista/listar') }}">Ver Motoristas</a>
+                            </div>
+                        </div>
                     </div>
-                    <hr>
+
+                   
                     {{-- FIM BOTÃO MOTORISTAS --}}
 
                     {{-- INICIO BOTÃO CARROS --}}
-                    <button onclick="accordions('carros')" class="w3-btn w3-block w3-black w3-left-align">
-                        Carros
-                    </button>
-                    <div id="carros" class="w3-container w3-hide">
-                        <a class="list-group-item list-group-item-action" href="{{ url('/carro') }}">Cadastrar Carros</a>
+                    
+                    <div class="dropdown">
+                        <button type="button" class="list-group-item list-group-item-action" data-toggle="dropdown">
+                            Veículo
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="list-group">
+                            <a class="list-group-item list-group-item-action" href="{{ url('/carro') }}">Cadastrar Veículos</a>
+                            <a class="list-group-item list-group-item-action" href="{{ url('/carro/listar') }}">Ver Veículos</a>
+                            </div>
+                        </div>
                     </div>
-                    <hr>
                     {{-- FIM BOTÃO CARROS --}}
 
                     {{-- INICIO BOTÃO ENTRADA --}}
+<<<<<<< HEAD
                     <button onclick="accordions('entradas')" class="w3-btn w3-block w3-black w3-left-align">
                         Entradas
                     </button>
                     <div id="entradas" class="w3-container w3-hide">
                         <a class="list-group-item list-group-item-action" href="{{ url('/verificacoa') }}">Visualizar Entradas</a>
                         <a class="list-group-item list-group-item-action" href="{{ url('/entradas/create') }}">Cadastrar Entradas</a>
+=======
+                    <div class="dropdown">
+                        <button type="button" class="list-group-item list-group-item-action" data-toggle="dropdown">
+                            Entradas
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="list-group">
+                            <a class="list-group-item list-group-item-action" href="{{ url('/entrada') }}">Cadastrar Entradas</a>
+                            <a class="list-group-item list-group-item-action" href="{{ url('/verificacoa') }}">Verificar Entradas</a>
+                            </div>
+                        </div>
+>>>>>>> e674a29c4da77090c752350673929b011772079c
                     </div>
                     {{-- FIM BOTÃO ENTRADA --}}
 
