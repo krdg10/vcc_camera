@@ -25,6 +25,8 @@
 						<option value="{{$tipoAvarias[$i]->id}}">{{$tipoAvarias[$i]->local}}</option>
 					@endfor
 				</select>
+
+				{{-- CAMPO DE OBSERVAÇÃO --}}
 		        <input type="textArea" placeholder="Observação" name="observacao" class="form-control">
 
 		        <div id="formFooter">

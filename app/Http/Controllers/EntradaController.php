@@ -12,7 +12,8 @@ use App\Models\Foto;
 
 class EntradaController extends Controller{
     public function index(){
-        return view('entrada.index');//, compact('motorista', 'carro'));
+        $entradas = Entrada::all();
+        return view('entrada.index', compact('entradas'));//, compact('motorista', 'carro'));
     }
 
     public function store(Request $request){
