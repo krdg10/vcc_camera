@@ -3,7 +3,7 @@
 
 <div class="wrapper fadeInDown">
     <div id="formContent">
-        <h3>Cadastrar Carro</h3> <hr>
+        <h3>Editar Carro</h3> <hr>
         <form method="POST" action="{{ route('carro.update', $Carro->id) }}" enctype="multipart/form-data" >
         {{ csrf_field() }}
             <input type="text" placeholder="Nome" name="nome" class="form-control" value="{{ $Carro->nome }}">
