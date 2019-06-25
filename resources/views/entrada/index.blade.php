@@ -21,7 +21,7 @@
                         <td>{{$entrada->carro->nome}}</td>
                         <td>{{$entrada->horario}}</td>
                         <td>
-                            <a href="/verificacoa/{{$entrada->id}}" class="iconesLista"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <a href="/verificacoa/{{$entrada->id}}" class="iconesLista"><i class="fas fa-eye"></i></a>
                         </td>
                     </tr>
                 @endforeach

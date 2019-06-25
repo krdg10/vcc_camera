@@ -12,7 +12,7 @@
             <div class="container">
                 <div class="list-group">
                     @foreach ($carros as $carro) 
-                    <li class="list-group-item list-group-item-action"><div class="d-flex"> <div class="mr-auto p-2"> {{ $carro->nome }} - {{ $carro->placa }} </div><div class="p-2 iconesLista"><a href="{{ url('/carro/listar/excluir/'.$carro->id) }}"> <i class="fa fa-trash" aria-hidden="true"></i> </a> <a href="{{ url('/carro/listar/'.$carro->id) }}"> <i class="fa fa-pencil" aria-hidden="true"></i></a></div></li>
+                    <li class="list-group-item list-group-item-action"><div class="d-flex"> <div class="mr-auto p-2"> {{ $carro->nome }} - {{ $carro->placa }} </div><div class="p-2 iconesLista"><a href="{{ url('/carro/listar/excluir/'.$carro->id) }}"> <i class="fas fa-trash"></i> </a> <a href="{{ url('/carro/listar/'.$carro->id) }}"> <i class="fas fa-edit"></i></a></div></li>
                     @endforeach
 
                 </div>
