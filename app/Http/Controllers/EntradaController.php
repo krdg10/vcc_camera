@@ -13,7 +13,7 @@ use App\Models\Foto;
 class EntradaController extends Controller{
     public function index(){
         $entradas = Entrada::all();
-        return view('entrada.index', compact('entradas'));//, compact('motorista', 'carro'));
+        return view('entrada.index', compact('entradas'));
     }
 
     public function store(Request $request){
@@ -42,8 +42,6 @@ class EntradaController extends Controller{
                     //dd($check);
                     if($check)
                     {
-                        
-                       
                             $filename = $file->store('fotos');
                             Foto::create([
                                 'entrada_id' => $entrada->id,
@@ -66,11 +64,13 @@ class EntradaController extends Controller{
     }
 
     public function create(){
-        $motorista = new Motorista;
-        $carro = new Carro;
         $motorista = Motorista::all();
         $carro = Carro::all();
         return view('entrada.create', compact('motorista', 'carro'));
+    }
+
+    public function show($id){
+        return Entrada::find($id);
     }
 }
 /* https://www.cloudways.com/blog/laravel-multiple-files-images-upload/ base do upload. antes tava adicionando o nome via script, mas pegava o fakepath e não fazia upload de fato. depois fazia upload mas só de um arquivo. */

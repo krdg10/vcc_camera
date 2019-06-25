@@ -74,7 +74,6 @@
                     {{-- FIM BOTÃO MOTORISTAS --}}
 
                     {{-- INICIO BOTÃO CARROS --}}
-                    
                     <div class="dropdown">
                         <button type="button" class="list-group-item list-group-item-action" data-toggle="dropdown">
                             Veículo
@@ -89,15 +88,14 @@
                     {{-- FIM BOTÃO CARROS --}}
 
                     {{-- INICIO BOTÃO ENTRADA --}}
-                   
                     <div class="dropdown">
                         <button type="button" class="list-group-item list-group-item-action" data-toggle="dropdown">
                             Entradas
                         </button>
                         <div class="dropdown-menu">
                             <div class="list-group">
-                            <a class="list-group-item list-group-item-action" href="{{ url('/entradas') }}">Verificar Entradas</a>
-                            <a class="list-group-item list-group-item-action" href="{{ url('/entradas/create') }}">Cadastrar Entradas</a>
+                            <a class="list-group-item list-group-item-action" href="{{ url('/entradas') }}">Visualizar entradas</a>
+                            <a class="list-group-item list-group-item-action" href="{{ url('/entradas/create') }}">Cadastrar entradas</a>
                             </div>
                         </div>
 

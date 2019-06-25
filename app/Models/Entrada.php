@@ -16,4 +16,9 @@ class Entrada extends Model{
     public function carro(){
     	return $this->hasOne(\App\Models\Carro::class, 'id', 'carro_id');
 	}
+
+	// IRÁ PROCURAR TODAS AS FOTOS ASSOCIADAS A ENTRADA
+	public function fotos(){
+    	return $this->hasMany(\App\Models\Foto::class);
+	}
 }
