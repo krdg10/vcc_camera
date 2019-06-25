@@ -37,39 +37,31 @@ class EntradaController extends Controller{
         $entrada->carro_id = $request->carro;
         $entrada->horario = $request->horario;
         $entrada->save();
-       
-            
-            $this->validate($request, [
-                'fotos' => 'required'
-             ]);
-             if($request->hasFile('fotos'))
-              {
-                $allowedfileExtension=['jpg','png','gif'];
-                $files = $request->file('fotos');
-                foreach($files as $file){
-                    $filename = $file->getClientOriginalName();
-                    $extension = $file->getClientOriginalExtension();
-                    $check=in_array($extension,$allowedfileExtension);
-                    //dd($check);
-                    if($check){
-                            $filename = $file->store('fotos');
-                            Foto::create([
-                                'entrada_id' => $entrada->id,
-                                'path' => $filename
-                            ]);
+        $this->validate($request, [
+            'fotos' => 'required'
+        ]);
+        if($request->hasFile('fotos')){
+            $allowedfileExtension=['jpg','png','gif'];
+            $files = $request->file('fotos');
+            foreach($files as $file){
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $check=in_array($extension,$allowedfileExtension);
+                //dd($check);
+                if($check){
+                    $filename = $file->store('fotos');
+                    Foto::create([
+                        'entrada_id' => $entrada->id,
+                        'path' => $filename
+                    ]);
                     
-                        //echo "Upload Successfully";
-                    }
-                    /*else
-                    {
-                        echo '<div class="alert alert-warning"><strong>Warning!</strong> Sorry Only Upload png , jpg , doc</div>';
-                    }*/
+                    //echo "Upload Successfully";
                 }
-             }
-           
-            
-        
-        
+                /*else{
+                    echo '<div class="alert alert-warning"><strong>Warning!</strong> Sorry Only Upload png , jpg , doc</div>';
+                }*/
+            }
+        }
         return redirect()->back()->with('message', 'Sucesso ao cadastrar entrada!');
     }
 
