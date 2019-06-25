@@ -12,7 +12,7 @@
             <div class="container">
                 <div class="list-group">
                     @foreach ($motoristas as $motorista) 
-                    <a class="list-group-item list-group-item-action" href="{{ url('/motorista/listar/'.$motorista->id) }}">{{ $motorista->nome }} - {{ $motorista->cpf }}</a>
+                    <li class="list-group-item list-group-item-action">{{ $motorista->nome }} - {{ $motorista->cpf }} <a href="{{ url('/motorista/listar/excluir/'.$motorista->id) }}"> <i class="fas fa-trash"></i> </a> <a href="{{ url('/motorista/listar/'.$motorista->id) }}"> <i class="fas fa-edit"></i></a></li>
                     @endforeach
 
                 </div>

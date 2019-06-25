@@ -46,5 +46,17 @@ class CarroController extends Controller
         $Carro->save();
         return redirect()->route('carro.edit', compact('Carro'))->with('message', 'Product updated successfully!');
     }
+
+    public function delete($id)
+    {
+        $Carro = Carro::findOrFail($id);
+        return view('carro.delete',compact('Carro'));
+    }
+    public function destroy($id){
+        $Carro = Carro::findOrFail($id);
+        $Carro->delete();
+        return redirect()->route('carro.show');
+    }
+
 }
 

@@ -48,4 +48,14 @@ class MotoristaController extends Controller
         $Motorista->save();
         return redirect()->route('motorista.edit', compact('Motorista'))->with('message', 'Product updated successfully!');
     }
+    public function delete($id)
+    {
+        $Motorista = Motorista::findOrFail($id);
+        return view('motorista.delete',compact('Motorista'));
+    }
+    public function destroy($id){
+        $Motorista = Motorista::findOrFail($id);
+        $Motorista->delete();
+        return redirect()->route('motorista.show');
+    }
 }

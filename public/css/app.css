@@ -113,11 +113,6 @@ p {
   margin-bottom: 1rem;
 }
 
-/* BASIC */
-
-html {
-  background-color: #56baed;
-}
 
 body {
   font-family: "Poppins", sans-serif;
@@ -8443,8 +8438,7 @@ button.bg-dark:focus {
   padding: 1.5rem !important;
 }
 
-.pt-4,
-.py-4 {
+.pt-4 {
   padding-top: 1.5rem !important;
 }
 
@@ -8453,8 +8447,7 @@ button.bg-dark:focus {
   padding-right: 1.5rem !important;
 }
 
-.pb-4,
-.py-4 {
+.pb-4{
   padding-bottom: 1.5rem !important;
 }
 
