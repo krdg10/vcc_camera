@@ -4,9 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Entrada extends Model
-{
+class Entrada extends Model{
     protected $table = 'entradas';
 
-    //
+    // IRÁ PROCURAR O MOTORISTA ASSOCIADO A ENTRADA
+    public function motorista(){
+    	return $this->hasOne(\App\Models\Motorista::class, 'id', 'motorista_id');
+	}
+
+	// IRÁ PROCURAR O CARRO ASSOCIADO A ENTRADA
+    public function carro(){
+    	return $this->hasOne(\App\Models\Carro::class, 'id', 'carro_id');
+	}
 }
