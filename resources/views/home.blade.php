@@ -60,7 +60,6 @@
             <div class="container">
                 <div class="list-group">
                     {{-- INICIO BOTÃO MOTORISTAS --}}
-            
                     <div class="dropdown">
                         <button type="button" class="list-group-item list-group-item-action" data-toggle="dropdown">
                             Motorista
@@ -72,8 +71,6 @@
                             </div>
                         </div>
                     </div>
-
-                   
                     {{-- FIM BOTÃO MOTORISTAS --}}
 
                     {{-- INICIO BOTÃO CARROS --}}
@@ -99,8 +96,8 @@
                         </button>
                         <div class="dropdown-menu">
                             <div class="list-group">
-                            <a class="list-group-item list-group-item-action" href="{{ url('/entrada') }}">Cadastrar Entradas</a>
-                            <a class="list-group-item list-group-item-action" href="{{ url('/verificacoa') }}">Verificar Entradas</a>
+                            <a class="list-group-item list-group-item-action" href="{{ url('/entradas') }}">Verificar Entradas</a>
+                            <a class="list-group-item list-group-item-action" href="{{ url('/entradas/create') }}">Cadastrar Entradas</a>
                             </div>
                         </div>
 
