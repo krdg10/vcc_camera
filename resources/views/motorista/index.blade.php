@@ -16,12 +16,31 @@
             return false;
         }
     }
+    function excluirElement(id){
+        $('#'+id).remove();
+    }
 </script>
 <!-- script valida verifica se há apenas números positivos em cpf, codigo da empresa e codigo vcc. Alerta de tamanho não precisa script pois minlenght já faz isso -->
 
 <div class="wrapper fadeInDown">
     <div id="formContent">
-        <h3>Cadastrar Motorista</h3> <hr>
+        <h3>Cadastrar Motorista</h3> 
+        {{-- Exibe mensagem de sucesso ou de erro caso haja. --}}
+        @if( \Session::has('error') )
+            @foreach(session()->get('error') as $key => $ms)
+                <span id="{{ $key }}error" class="badge badge-danger badge-pill">
+                    {{ $ms }}
+                    <a id="excluir" onClick="excluirElement('{{ $key }}error')"><i class="fa fa-times" aria-hidden="true"></i></a>
+                </span>
+            @endforeach
+        @endif
+        @if( \Session::has('message') )
+            <span id="success" class="badge badge-success badge-pill">
+                {{ \Session::get('message') }}
+                    <a id="excluir" onClick="excluirElement('success')"><i class="fa fa-times" aria-hidden="true"></i></a>
+            </span>
+        @endif
+        <hr>
         <form method="POST" action="{{ route('motorista.store') }}" enctype="multipart/form-data" onsubmit="return valida();">
         {{ csrf_field() }}
             <input type="text" placeholder="Nome" name="nome" class="form-control">

@@ -18,7 +18,21 @@ class MotoristaController extends Controller
         if(!$request->nome){
             $error[] = 'Coloque algum nome para seu motorista!';
         }
-
+        if(!$request->cpf){
+            $error[] = 'Coloque o CPF do motorista!';
+        }
+        if(!$request->data_nascimento){
+            $error[] = 'Insira a data de nascimento!';
+        }
+        if(!$request->codigo_empresa){
+            $error[] = 'Insira o Código da Empresa!';
+        }
+        if(!$request->codigo_transdata){
+            $error[] = 'Insira o Código Transdata!';
+        }
+        if(isset($error)){
+            return redirect()->back()->with('error', $error);
+        }
         $motorista->nome = $request->nome;
         $motorista->cpf = $request->cpf;
         $motorista->data_nascimento = $request->data_nascimento;
