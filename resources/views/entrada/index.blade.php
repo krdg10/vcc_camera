@@ -21,7 +21,7 @@
                         <td>{{$entrada->carro->nome}}</td>
                         <td>{{$entrada->horario}}</td>
                         <td>
-                            <a href="/verificacoa/{{$entrada->id}}"><img style="height: 20px" src="https://static.thenounproject.com/png/2307-200.png"></a>
+                            <a href="/verificacoa/{{$entrada->id}}" class="iconesLista"><i class="fa fa-eye" aria-hidden="true"></i></a>
                         </td>
                     </tr>
                 @endforeach
