@@ -17,6 +17,18 @@ class CarroController extends Controller
         if(!$request->nome){
             $error[] = 'Coloque algum nome para seu carro!';
         }
+        if(!$request->placa){
+            $error[] = 'Insira alguma placa!';
+        }
+        if(!$request->modelo){
+            $error[] = 'Insira o modelo!';
+        }
+        if(!$request->ano){
+            $error[] = 'Coloque o ano do veículo!';
+        }
+        if(isset($error)){
+            return redirect()->back()->with('error', $error);
+        }
 
         $carro->nome = $request->nome;
         $carro->placa = $request->placa;

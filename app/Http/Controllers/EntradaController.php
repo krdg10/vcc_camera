@@ -33,7 +33,7 @@ class EntradaController extends Controller{
              ]);
              if($request->hasFile('fotos'))
               {
-                $allowedfileExtension=['pdf','jpg','png','docx'];
+                $allowedfileExtension=['jpg','png','gif'];
                 $files = $request->file('fotos');
                 foreach($files as $file){
                     $filename = $file->getClientOriginalName();
