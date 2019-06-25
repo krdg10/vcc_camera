@@ -54,6 +54,24 @@ class MotoristaController extends Controller
   
     public function update(Request $request, $id)
     {
+        if(!$request->nome){
+            $error[] = 'Coloque algum nome para seu motorista!';
+        }
+        if(!$request->cpf){
+            $error[] = 'Coloque o CPF do motorista!';
+        }
+        if(!$request->data_nascimento){
+            $error[] = 'Insira a data de nascimento!';
+        }
+        if(!$request->codigo_empresa){
+            $error[] = 'Insira o Código da Empresa!';
+        }
+        if(!$request->codigo_transdata){
+            $error[] = 'Insira o Código Transdata!';
+        }
+        if(isset($error)){
+            return redirect()->back()->with('error', $error);
+        }
         $Motorista = Motorista::findOrFail($id);
         $Motorista->nome        = $request->nome;
         $Motorista->cpf = $request->cpf;
@@ -61,7 +79,7 @@ class MotoristaController extends Controller
         $Motorista->codigo_empresa       = $request->codigo_empresa;
         $Motorista->codigo_transdata       = $request->codigo_transdata;
         $Motorista->save();
-        return redirect()->route('motorista.edit', compact('Motorista'))->with('message', 'Product updated successfully!');
+        return redirect()->route('motorista.edit', compact('Motorista'))->with('message', 'Motorista Atualizado com Sucesso!');
     }
     public function delete($id)
     {

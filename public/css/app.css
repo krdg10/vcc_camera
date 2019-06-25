@@ -500,12 +500,16 @@ label {
 button {
   border-radius: 0;
 }
-
+/*
 button:focus {
   outline: 1px dotted;
   outline: 5px auto -webkit-focus-ring-color;
 }
-
+*/
+button:focus {
+  outline: 1px dotted;
+  outline: 5px auto #41a58b;
+}
 input,
 button,
 select,
@@ -2156,9 +2160,8 @@ pre code {
 .form-control:focus {
   color: #495057;
   background-color: #fff;
-  border-color: #80bdff;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+ 
 }
 
 .form-control::-webkit-input-placeholder {
@@ -3551,6 +3554,8 @@ input[type="button"].btn-block {
 
 .dropdown-menu.show {
   display: block;
+  width: 50%;
+  text-align: center;
 }
 
 .dropdown-header {
@@ -5287,7 +5292,7 @@ a.badge-secondary:focus, a.badge-secondary.focus {
 
 .badge-success {
   color: #fff;
-  background-color: #28a745;
+  background-color: #41a58b;
 }
 
 a.badge-success:hover, a.badge-success:focus {

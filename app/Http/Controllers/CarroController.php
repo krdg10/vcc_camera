@@ -50,13 +50,29 @@ class CarroController extends Controller
   
     public function update(Request $request, $id)
     {
+        if(!$request->nome){
+            $error[] = 'Coloque algum nome para seu carro!';
+        }
+        if(!$request->placa){
+            $error[] = 'Insira alguma placa!';
+        }
+        if(!$request->modelo){
+            $error[] = 'Insira o modelo!';
+        }
+        if(!$request->ano){
+            $error[] = 'Coloque o ano do veículo!';
+        }
+        if(isset($error)){
+            return redirect()->back()->with('error', $error);
+        }
+
         $Carro = Carro::findOrFail($id);
         $Carro->nome        = $request->nome;
         $Carro->modelo = $request->modelo;
         $Carro->placa    = $request->placa;
         $Carro->ano       = $request->ano;
         $Carro->save();
-        return redirect()->route('carro.edit', compact('Carro'))->with('message', 'Product updated successfully!');
+        return redirect()->route('carro.edit', compact('Carro'))->with('message', 'Carro Atualizado com Sucesso!');
     }
 
     public function delete($id)
