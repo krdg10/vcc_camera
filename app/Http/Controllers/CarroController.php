@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\Carro;
 
 class CarroController extends Controller
@@ -27,7 +27,7 @@ class CarroController extends Controller
         return redirect()->back()->with('message', 'Sucesso ao cadastrar carro!');
     }
     public function show(){
-        $carros = Carro::all();
+        $carros = DB::table('carros')->paginate(10);
         return view('carro.show', compact('carros'));
     }
     public function edit($id)

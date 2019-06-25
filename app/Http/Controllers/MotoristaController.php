@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -28,7 +29,7 @@ class MotoristaController extends Controller
         return redirect()->back()->with('message', 'Sucesso ao cadastrar motorista!');
     }
     public function show(){
-        $motoristas = Motorista::all();
+        $motoristas = DB::table('motoristas')->paginate(10);
         return view('motorista.show', compact('motoristas'));
     }
     public function edit($id)
