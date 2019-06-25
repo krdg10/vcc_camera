@@ -18,10 +18,21 @@ class EntradaController extends Controller{
 
     public function store(Request $request){
         $entrada = new Entrada;
-        if(!$entrada->nome){
-            $error[] = 'Coloque algum nome para seu motorista!';
+        if(!$request->motorista){
+            $error[] = 'Selecione um motorista';
         }
-
+        if(!$request->carro){
+            $error[] = 'Selecione um carro!';
+        }
+        if(!$request->horario){
+            $error[] = 'Insira um horário!';
+        }
+        if(!$request->hasFile('fotos')){
+            $error[] =  'Insira pelo menos um arquivo!';
+        }
+        if(isset($error)){
+            return redirect()->back()->with('error', $error);
+        }
         $entrada->motorista_id = $request->motorista;
         $entrada->carro_id = $request->carro;
         $entrada->horario = $request->horario;
@@ -40,20 +51,19 @@ class EntradaController extends Controller{
                     $extension = $file->getClientOriginalExtension();
                     $check=in_array($extension,$allowedfileExtension);
                     //dd($check);
-                    if($check)
-                    {
+                    if($check){
                             $filename = $file->store('fotos');
                             Foto::create([
                                 'entrada_id' => $entrada->id,
                                 'path' => $filename
                             ]);
                     
-                        echo "Upload Successfully";
+                        //echo "Upload Successfully";
                     }
-                    else
+                    /*else
                     {
                         echo '<div class="alert alert-warning"><strong>Warning!</strong> Sorry Only Upload png , jpg , doc</div>';
-                    }
+                    }*/
                 }
              }
            
