@@ -4,7 +4,7 @@
 <div class="wrapper fadeInDown">
     <div id="formContent">
 	    <h3>Verificar entrada</h3> <hr>
-		<div class="form-control" style="height: 100px" >
+		<div class="form-control"  style="height: 400px">
 		    <div>
 		    	<label>Nome: </label> {{$entradas->motorista->nome}}
 
@@ -12,7 +12,7 @@
 				  <div class="carousel-inner">
 				  	@foreach ($entradas->fotos as $fotos)
 					    <div class="carousel-item active">
-					      <img class="d-block w-100" src="{{url('/storage/'.$fotos->path)}}" alt="Primeiro Slide">
+					      <img class="d-block w-100" style="height: 300px" src="{{url('/storage/'.$fotos->path)}}" alt="Primeiro Slide">
 					    </div>
 				  	@endforeach
 				    
@@ -31,33 +31,13 @@
 		<br>
 
 		<div>
+			<button onclick="novaVerificacao()">Nova</button>
+			<div id="divCreteVerificacao">
+				
+			</div>
+
 			<form method="post" action="/verificacoa">
 		    	{{ csrf_field() }}
-
-				{{-- LOCAL DA AVARIA --}}
-				<div class="form-control" >
-					<label>Local da avaria: </label>
-					<select name="localAvaria" class="form-item" onclick="verificar(this)">
-						@for ($i = 0; $i < $localAvarias->count(); $i++)
-							<option value="{{$localAvarias[$i]->id}}">{{$localAvarias[$i]->local}}</option>
-						@endfor
-					</select>
-				</div>
-
-				{{-- TIPO DE AVARIA --}}
-				<div class="form-control" >
-					<label>Tipo da avaria: </label>
-					<select id="tipoAvaria"  name="tipoAvaria" disabled="">
-						@for ($i = 0; $i < $tipoAvarias->count(); $i++)
-							<option value="{{$tipoAvarias[$i]->id}}">{{$tipoAvarias[$i]->local}}</option>
-						@endfor
-					</select>
-				</div>
-
-				{{-- CAMPO DE OBSERVAÇÃO --}}
-				<div class="form-control" >
-		        	<input type="textArea" placeholder="Observação" name="observacao" >
-		        </div>
 
 		        <div id="formFooter">
 		            <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Salvar </button>
@@ -68,6 +48,11 @@
 </div>
 
 <script type="text/javascript">
+	@php
+		echo "var localAvarias = JSON.parse('" . $localAvarias ."');";
+		echo "var tipoAvarias = JSON.parse('" . $tipoAvarias ."');";
+	@endphp
+	
 	function verificar(localAvaria){
 		var tipoAvaria = document.getElementById('tipoAvaria')
 		if(localAvaria.value == 1){
@@ -77,6 +62,41 @@
 		else{
 			tipoAvaria.disabled = false;
 		}
+	}
+
+	function novaVerificacao(){
+		var optionLocalAVaria = '';
+		var optionTipoAVaria = '';
+
+		for (var i = 0; i < localAvarias.length; i++)
+			optionLocalAVaria += '<option value="' + localAvarias[i].id + '">' + localAvarias[i].local + '</option>';
+
+		for (var x = 0; x < tipoAvarias.length; x++)
+			optionTipoAVaria += '<option value="' + tipoAvarias[x].id + '">' + tipoAvarias[x].local + '</option>';
+		
+			
+		var div = '' +
+			//LOCAL DA AVARIA
+			'<label>Local da avaria: </label> ' + 
+			'<select name="localAvaria" class="form-item" onclick="verificar(this)"> ' + 
+				optionLocalAVaria+
+			'</select>' + 
+
+			// TIPO DE AVARIA
+			'<label>Tipo da avaria: </label>' + 
+			'<select id="tipoAvaria"  name="tipoAvaria" disabled="">' + 
+				optionLocalAVaria +
+			'</select>' + 
+
+			//CAMPO DE OBSERVAÇÃO 
+        	'<input type="textArea" placeholder="Observação" name="observacao" >'+
+        	'<hr>'
+        	;
+
+		var objDiv = document.createElement('div');
+		objDiv.innerHTML = div;
+
+		document.getElementById("divCreteVerificacao").appendChild(objDiv);
 	}
 </script>
 @endsection
