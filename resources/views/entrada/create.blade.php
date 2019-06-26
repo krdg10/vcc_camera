@@ -33,7 +33,7 @@
                     <option value="{{ $Motorista->id }}"> {{ $Motorista->nome }} </option>
                 @endforeach
             </select>
-            <select class="MineSelect" name="carro">
+            <select class="MineSelect" name="carro"> <!--tava form-control -->
                 <option value="false"> Selecione um carro</option>
                 @foreach($carro as $Carro)
                     <option value="{{ $Carro->id }}"> {{ $Carro->nome }} - {{ $Carro->placa }} </option>
