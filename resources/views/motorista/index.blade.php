@@ -11,8 +11,16 @@
         if (valida.test(cpf)==true && valida.test(codigo_empresa)==true && valida.test(codigo_transdata)==true ) {
             return true;
         } 
+        else if (valida.test(cpf)==false){
+            alert("Verifique o CPF. Apenas números são permitidos!");
+        }
+        else if (valida.test(codigo_empresa)==false){
+            alert("Verifique o código da empresa. Apenas números são permitidos!");
+        }
+        else if (valida.test(codigo_transdata)==false){
+            alert("Verifique o código transdata. Apenas números são permitidos!");
+        }
         else {
-            alert("Verifique o CPF, Código VCC e Código Transdata. Apenas números são permitidos!");
             return false;
         }
     }
