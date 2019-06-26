@@ -19,9 +19,7 @@
 
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::group(['middleware' => ['auth']], function () {  
-        Route::resource('/verificacoa', 'VerificacaoController');
         Route::resource('/entradas', 'EntradaController');
-
 
         Route::get('/motorista','MotoristaController@index')->name('motorista');
         Route::post('/motorista','MotoristaController@store')->name('motorista.store');
@@ -42,6 +40,13 @@
 
         Route::get('/entrada','EntradaController@index')->name('entrada');
         Route::post('/entrada','EntradaController@store')->name('entrada.store');
+
+        // VERIFICAÇÃO
+        Route::get('/verificacoa/{id}','VerificacaoController@show')->name('verificacoa.show'); //SHOW
+        Route::post('/verificacoa','VerificacaoController@index')->name('verificacoa.store'); //STORE
+
+        // TIPO DE AVARIA
+        Route::post('/tipoAVaria','EntradaController@store')->name('entrada.store'); //store
 });
 
 
