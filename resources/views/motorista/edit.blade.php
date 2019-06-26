@@ -15,6 +15,7 @@
         }
         else if (valida.test(cpf)==false){
             alert("Verifique o CPF. Apenas números são permitidos!");
+            return false;
         }
         else if (validaNascimento.test(nascimento)==false){
             alert("Verifique a data. Apenas números são permitidos! O formato é AAAA-MM-DD HH-MM-SS.");
@@ -22,9 +23,11 @@
         }
         else if (valida.test(codigo_empresa)==false){
             alert("Verifique o código da empresa. Apenas números são permitidos!");
+            return false;
         }
         else if (valida.test(codigo_transdata)==false){
             alert("Verifique o código da Transdata. Apenas números são permitidos!");
+            return false;
         }
         else {
             return false;
