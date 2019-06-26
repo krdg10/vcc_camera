@@ -13,12 +13,15 @@
         } 
         else if (valida.test(cpf)==false){
             alert("Verifique o CPF. Apenas números são permitidos!");
+            return false;
         }
         else if (valida.test(codigo_empresa)==false){
             alert("Verifique o código da empresa. Apenas números são permitidos!");
+            return false;
         }
         else if (valida.test(codigo_transdata)==false){
             alert("Verifique o código transdata. Apenas números são permitidos!");
+            return false;
         }
         else {
             return false;
