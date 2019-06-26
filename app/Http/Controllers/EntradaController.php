@@ -18,6 +18,7 @@ class EntradaController extends Controller{
 
     public function store(Request $request){
         $entrada = new Entrada;
+        $allowedfileExtension=['jpg','png','gif'];
         if(!$request->motorista){
             $error[] = 'Selecione um motorista';
         }
@@ -30,6 +31,17 @@ class EntradaController extends Controller{
         if(!$request->hasFile('fotos')){
             $error[] =  'Insira pelo menos um arquivo!';
         }
+        else{
+            foreach($request->file('fotos') as $file){
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $check=in_array($extension,$allowedfileExtension);
+                //dd($check);
+                if(!$check){
+                    $error[] =  'Insira somente arquivos válidos! As extensões aceitas são jpg, png e gif.';
+                }
+            }
+        }
         if(isset($error)){
             return redirect()->back()->with('error', $error);
         }
@@ -41,7 +53,6 @@ class EntradaController extends Controller{
             'fotos' => 'required'
         ]);
         if($request->hasFile('fotos')){
-            $allowedfileExtension=['jpg','png','gif'];
             $files = $request->file('fotos');
             foreach($files as $file){
                 $filename = $file->getClientOriginalName();
