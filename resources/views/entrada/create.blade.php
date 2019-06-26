@@ -27,13 +27,13 @@
         <hr>
         <form method="POST" action="{{ route('entrada.store') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
-            <select class="form-control" name="motorista">
+            <select class="MineSelect" name="motorista">
                 <option value="false"> Selecione um motorista</option>
                 @foreach($motorista as $Motorista) 
                     <option value="{{ $Motorista->id }}"> {{ $Motorista->nome }} </option>
                 @endforeach
             </select>
-            <select class="form-control" name="carro">
+            <select class="MineSelect" name="carro">
                 <option value="false"> Selecione um carro</option>
                 @foreach($carro as $Carro)
                     <option value="{{ $Carro->id }}"> {{ $Carro->nome }} - {{ $Carro->placa }} </option>
