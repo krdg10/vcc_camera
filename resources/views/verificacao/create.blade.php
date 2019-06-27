@@ -9,8 +9,11 @@
             var local = $('#localAvaria').val()
             var tipo = $('#tipoAvaria').val()
 			var obs = $('#observacao').val()
+            if (local == 'false' || tipo == 'false'){
+                return alert('Selecione local e tipo.')
+            }
             var text = ''
-            if(local && tipo && obs){
+            if(local && tipo){
                 avarias.push({ 'id': cont, 'loc': local, 'tip': tipo, 'ob': obs })
                 cont++
                 console.log(avarias)
@@ -90,10 +93,7 @@
 		<div>
 		<form method="POST" action="{{ route('verificacao.store', $entradas->id) }}" enctype="multipart/form-data">
 		    	{{ csrf_field() }}
-				
-			<!--<select name="localAvaria" class="form-item" onclick="verificar(this)"> ' + 
-				optionLocalAVaria+
-			'</select>' + -->
+			<h4 style="margin-top: 0.5rem">Inserir Avaria (Caso Haja)</h4>
 			<select class="MineSelect" name="localAvaria" id="localAvaria"> <!--tava form-control -->
                 <option value="false">Selecione o local da Avaria</option>
                 @foreach($localAvarias as $avaria)
@@ -107,28 +107,19 @@
                 @endforeach
             </select>
 
-			<!--// TIPO DE AVARIA
-			'<label>Tipo da avaria: </label>' + 
-			'<select id="tipoAvaria"  name="tipoAvaria" disabled="">' + 
-				optionLocalAVaria +
-			'</select>' + -->
 
-			<!--//CAMPO DE OBSERVAÇÃO -->
-        	<input type="textArea" placeholder="Observação" name="observacao" id="observacao">
+			
+            <div id="addObs">
+        	<input type="text" placeholder="Observação" name="observacao" id="observacao" class="form-control">
         	
-			<button id="addAvaria" type="button">Adicionar</button>
+			<button id="addAvaria" type="button" class="btn-circle btn-outline-primary">+</button>
+            </div>
 			<div id="avarias"></div>
 
 			
 
 		        <div id="formFooter">
-               <!-- <select class="MineSelect" name="verificado" id="verificado">--> <!--tava form-control -->
-                   <!-- <option value="1">Não Verificado</option>
-               
-                    <option value="0">Verificado</option>
-               
-            </select>-->
-                    <input type="checkbox" name="verificado" id="verificado" value="0">
+                    <div id="marcaCheck"><label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked></div>
 
 		            <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Salvar </button>
 		        </div>

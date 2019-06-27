@@ -226,6 +226,9 @@ input[type=text], input[type=password]{
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
 }
+#addObs input[type=text]{
+  width: 79.5%;
+}
 .MineSelect{
   background-color: #f6f6f6;
   border: none;
@@ -600,7 +603,11 @@ input[type="radio"],
 input[type="checkbox"] {
   box-sizing: border-box;
   padding: 0;
+  display: inline-block;
+  height: calc(0.8em + 0.75rem + 2px);
+  width: 25%;
 }
+
 
 input[type="date"],
 input[type="time"],
@@ -608,7 +615,9 @@ input[type="datetime-local"],
 input[type="month"] {
   -webkit-appearance: listbox;
 }
-
+#marcaCheck{
+  padding-bottom: 10px;
+}
 textarea {
   overflow: auto;
   resize: vertical;
@@ -2766,8 +2775,17 @@ fieldset:disabled a.btn {
 }
 
 .btn-primary:focus, .btn-primary.focus {
-  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+  box-shadow: 0 0 0 0.2rem #558478;
 }
+.btn-circle {
+  font-weight: 900;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 650px;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+
 
 .btn-primary.disabled, .btn-primary:disabled {
   color: #fff;
@@ -3026,14 +3044,15 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-primary {
-  color: #007bff;
-  border-color: #007bff;
+  color: white;
+  border-color: #41a58b;
+  background-color: #41a58b;
 }
 
 .btn-outline-primary:hover {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #41a58b;
+  border-color: #41a58b;
 }
 
 .btn-outline-primary:focus, .btn-outline-primary.focus {
