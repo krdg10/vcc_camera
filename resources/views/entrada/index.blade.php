@@ -21,12 +21,13 @@
                         <td>{{$entrada->carro->nome}}</td>
                         <td>{{$entrada->horario}}</td>
                         <td>
-                            @foreach ($Verificacoes as $verificacao)
-                                @if(($verificacao->entrada_id == $entrada->id))
-                                    <a href="/verificacao/edit/{{$verificacao->id}}" class="iconesLista"><i class="fas fa-edit"></i></a>
-                                @endif
-                            @endforeach
+                            @forelse  ($entrada->verificacoes as $verificacao)
+                                <a href="/verificacao/edit/{{$verificacao->id}}" class="iconesLista"><i class="fas fa-edit"></i></a>
+                            
+                            @empty
                             <a href="/verificacao/{{$entrada->id}}" class="iconesLista"><i class="fas fa-eye"></i></a>
+
+                            @endforelse
                              
                         </td>
                     </tr>

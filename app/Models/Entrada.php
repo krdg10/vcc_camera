@@ -17,8 +17,13 @@ class Entrada extends Model{
     	return $this->hasOne(\App\Models\Carro::class, 'id', 'carro_id');
 	}
 
-	// IRÁ PROCURAR TODAS AS FOTOS ASSOCIADAS A ENTRADA
-	public function fotos(){
-    	return $this->hasMany(\App\Models\Foto::class);
-	}
+    // IRÁ PROCURAR TODAS AS FOTOS ASSOCIADAS A ENTRADA
+    public function fotos(){
+        return $this->hasMany(\App\Models\Foto::class);
+    }
+
+    // IRÁ PROCURAR TODAS AS VERIFICAÇÕES RELACIONADAS A ENTRADA
+    public function verificacoes(){
+        return $this->hasMany(\App\Models\Verificacao::class);
+    }
 }
