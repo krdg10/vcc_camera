@@ -21,7 +21,13 @@
                         <td>{{$entrada->carro->nome}}</td>
                         <td>{{$entrada->horario}}</td>
                         <td>
+                            @foreach ($Verificacoes as $verificacao)
+                                @if(($verificacao->entrada_id == $entrada->id))
+                                    <a href="/verificacao/edit/{{$verificacao->id}}" class="iconesLista"><i class="fas fa-edit"></i></a>
+                                @endif
+                            @endforeach
                             <a href="/verificacao/{{$entrada->id}}" class="iconesLista"><i class="fas fa-eye"></i></a>
+                             
                         </td>
                     </tr>
                 @endforeach
@@ -29,4 +35,4 @@
         </table>
     </div>
 </div>
-@endsection
+@endsection 
