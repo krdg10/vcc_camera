@@ -15,12 +15,16 @@ class TipoAvariaController extends Controller{
     }
 
     public function store(Request $request){
+        if(Tipo_avarias::where('tipo', 'like', '%'. $request->tipo .'%')->count() > 0)
+            return Metodos::retorno(0, 'Já existe "' . $request->tipo . '" cadastrado.');
+
         try {
             $tipo_avarias = new Tipo_avarias;
-            $tipo_avarias->tipo = $request->data->tipo;
+            $tipo_avarias->tipo = $request->tipo;
             $tipo_avarias->save();
+            return Metodos::retorno(1, 'Sucesso ao adicinar "' . $request->tipo . '".');
         } catch (Exception $e) {
-            
+            return Metodos::retorno(0, 'Erro ao inserir novo tipo');
         }
     }
 

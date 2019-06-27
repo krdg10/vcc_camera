@@ -43,11 +43,14 @@
         Route::post('/entrada','EntradaController@store')->name('entrada.store');
 
         // VERIFICAÇÃO
-        Route::get('/verificacoa/{id}','VerificacaoController@show')->name('verificacoa.show'); //SHOW
-        Route::post('/verificacoa','VerificacaoController@index')->name('verificacoa.store'); //STORE
+        Route::get('/verificacao/{id}','VerificacaoController@show')->name('verificacao.show'); //SHOW
+        Route::post('/verificacao','VerificacaoController@index')->name('verificacao.store'); //STORE
 
         // TIPO DE AVARIA
-        Route::post('/tipoAVaria','EntradaController@store')->name('entrada.store'); //STORE
+        Route::post('/tipoAvaria','TipoAvariaController@store')->name('tipoAvaria.store'); //STORE
+
+        // LOCAL DE AVARIA
+        Route::post('/localAvaria','LocalAVariasController@store')->name('localAvaria.store'); //STORE
 });
 
 
