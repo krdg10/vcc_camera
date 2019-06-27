@@ -44,13 +44,20 @@
 
         // VERIFICAÇÃO
         Route::get('/verificacao/{id}','VerificacaoController@show')->name('verificacao.show'); //SHOW
-        Route::post('/verificacao','VerificacaoController@index')->name('verificacao.store'); //STORE
+        Route::post('/verificacao/{id}','VerificacaoController@store')->name('verificacao.store'); //STORE
+        Route::get('/verificacao/edit/{id}','VerificacaoController@edit')->name('verificacao.edit'); //edit
+        Route::post('/verificacao/edit/{id}','VerificacaoController@update')->name('verificacao.update'); //edit
 
         // TIPO DE AVARIA
         Route::post('/tipoAvaria','TipoAvariaController@store')->name('tipoAvaria.store'); //STORE
 
         // LOCAL DE AVARIA
         Route::post('/localAvaria','LocalAVariasController@store')->name('localAvaria.store'); //STORE
+
+        
+        Route::get('image/upload','ImageUploadController@fileCreate');
+        Route::post('image/upload/store','ImageUploadController@fileStore');
+        Route::post('image/delete','ImageUploadController@fileDestroy');
 });
 
 

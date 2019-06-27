@@ -63,7 +63,7 @@
                     <a id="excluir" onClick="excluirElement('success')"><i class="fa fa-times" aria-hidden="true"></i></a>
             </span>
         @endif
-        <hr>
+        
 		<div class="form-control"  style="height: 400px">
 		    <div>
 		    	<label>Nome: </label> {{$entradas->motorista->nome}}
