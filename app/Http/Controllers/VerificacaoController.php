@@ -30,6 +30,7 @@ class VerificacaoController extends Controller{
         if(isset($error)){
             return redirect()->back()->with('error', $error);
         }
+        $verificacao = new Verificacao;
         $verificacao->verificado = $request->verificado;
         $verificacao->entrada_id = $id;
         $verificacao->users_id = Auth::id();
