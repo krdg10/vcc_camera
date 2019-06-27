@@ -21,6 +21,7 @@
 	Route::group(['middleware' => ['auth']], function () {  
         Route::resource('/entradas', 'EntradaController');
 
+        // MOTORISTA
         Route::get('/motorista','MotoristaController@index')->name('motorista');
         Route::post('/motorista','MotoristaController@store')->name('motorista.store');
         Route::get('/motorista/listar','MotoristaController@show')->name('motorista.show');
@@ -29,7 +30,7 @@
         Route::get('/motorista/listar/excluir/{id}','MotoristaController@delete')->name('motorista.delete');
         Route::post('/motorista/listar/excluir/{id}','MotoristaController@destroy')->name('motorista.destroy');
 
-        
+        // CARRO
         Route::get('/carro','CarroController@index')->name('carro');
         Route::post('/carro','CarroController@store')->name('carro.store');
         Route::get('/carro/listar','CarroController@show')->name('carro.show');
@@ -46,7 +47,7 @@
         Route::post('/verificacoa','VerificacaoController@index')->name('verificacoa.store'); //STORE
 
         // TIPO DE AVARIA
-        Route::post('/tipoAVaria','EntradaController@store')->name('entrada.store'); //store
+        Route::post('/tipoAVaria','EntradaController@store')->name('entrada.store'); //STORE
 });
 
 

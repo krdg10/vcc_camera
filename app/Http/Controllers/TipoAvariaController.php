@@ -15,7 +15,13 @@ class TipoAvariaController extends Controller{
     }
 
     public function store(Request $request){
-        //
+        try {
+            $tipo_avarias = new Tipo_avarias;
+            $tipo_avarias->tipo = $request->data->tipo;
+            $tipo_avarias->save();
+        } catch (Exception $e) {
+            
+        }
     }
 
     public function show($id=""){
