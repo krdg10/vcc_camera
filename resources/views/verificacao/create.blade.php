@@ -1,9 +1,66 @@
 @extends('layouts.app')
 
 @section('content')
+<script>
+    var avarias = []
+    var cont = 0
+    window.onload = function(){
+        $('#addAvaria').click(function(){
+            var local = $('#localAvaria').val()
+            var tipo = $('#tipoAvaria').val()
+			var obs = $('#observacao').val()
+            var text = ''
+            if(local && tipo && obs){
+                avarias.push({ 'id': cont, 'loc': local, 'tip': tipo, 'ob': obs })
+                cont++
+                console.log(avarias)
+            }
+            for(i in avarias){
+                text += ' <span id="'+avarias[i].id+'" class="badge badge-primary badge-pill">'+avarias[i].loc+' - '+avarias[i].tip+' - '+avarias[i].ob+' <input type="text" value="'+avarias[i].loc+'" name="local[]" class="d-none"> <input type="text" value="'+avarias[i].tip+'" name="tipo[]" class="d-none"> <input type="text" value="'+avarias[i].ob+'" name="obs[]" class="d-none">  <a id="excluir" onClick="excluir(`'+avarias[i].id+'`)"><i class="fa fa-times" aria-hidden="true"></i></a> </span>'
+            }
+            element = document.getElementById('avarias')
+            element.innerHTML = text
+        })
+    }
+    function excluir(id){
+        var remove = -1
+        for(i in avarias){
+            if(id == avarias[i].id){
+                avarias.splice(i, 1);
+                break;
+            }
+        }
+        var text = ''
+        for(i in avarias){
+            text += ' <span id="'+avarias[i].id+'" class="badge badge-primary badge-pill">'+avarias[i].loc+' - '+avarias[i].tip+' - '+avarias[i].ob+' <input type="text" value="'+avarias[i].loc+'" name="local[]" class="d-none"> <input type="text" value="'+avarias[i].tip+'" name="tipo[]" class="d-none"> <input type="text" value="'+avarias[i].obs+'" name="obs[]" class="d-none"> <a id="excluir" onClick="excluir(`'+avarias[i].id+'`)"><i class="fa fa-times" aria-hidden="true"></i></a> </span>'
+        }
+        element = document.getElementById('avarias')
+        element.innerHTML = text
+    }
+    function excluirElement(id){
+        $('#'+id).remove();
+    }
+</script>
+
 <div class="wrapper fadeInDown">
     <div id="formContent">
-	    <h3>Verificar entrada</h3> <hr>
+	    <h3>Verificar entrada</h3>
+        {{-- Exibe mensagem de sucesso ou de erro caso haja. --}}
+        @if( \Session::has('error') )
+            @foreach(session()->get('error') as $key => $ms)
+                <span id="{{ $key }}error" class="badge badge-danger badge-pill">
+                    {{ $ms }}
+                    <a id="excluir" onClick="excluirElement('{{ $key }}error')"><i class="fa fa-times" aria-hidden="true"></i></a>
+                </span>
+            @endforeach
+        @endif
+        @if( \Session::has('message') )
+            <span id="success" class="badge badge-success badge-pill">
+                {{ \Session::get('message') }}
+                    <a id="excluir" onClick="excluirElement('success')"><i class="fa fa-times" aria-hidden="true"></i></a>
+            </span>
+        @endif
+        <hr>
 		<div class="form-control"  style="height: 400px">
 		    <div>
 		    	<label>Nome: </label> {{$entradas->motorista->nome}}
@@ -31,72 +88,52 @@
 		<br>
 
 		<div>
-			<button onclick="novaVerificacao()">Nova</button>
-			<div id="divCreteVerificacao">
-				
-			</div>
-
-			<form method="post" action="/verificacoa">
+		<form method="POST" action="{{ route('verificacao.store', $entradas->id) }}" enctype="multipart/form-data">
 		    	{{ csrf_field() }}
+				
+			<!--<select name="localAvaria" class="form-item" onclick="verificar(this)"> ' + 
+				optionLocalAVaria+
+			'</select>' + -->
+			<select class="MineSelect" name="localAvaria" id="localAvaria"> <!--tava form-control -->
+                <option value="false">Selecione o local da Avaria</option>
+                @foreach($localAvarias as $avaria)
+                    <option value="{{ $avaria->id }}"> {{ $avaria->local }}</option>
+                @endforeach
+            </select>
+			<select class="MineSelect" name="tipoAvaria" id="tipoAvaria"> <!--tava form-control -->
+                <option value="false">Selecione o tipo da Avaria</option>
+                @foreach($tipoAvarias as $avaria)
+                    <option value="{{ $avaria->id }}"> {{ $avaria->tipo }}</option>
+                @endforeach
+            </select>
+
+			<!--// TIPO DE AVARIA
+			'<label>Tipo da avaria: </label>' + 
+			'<select id="tipoAvaria"  name="tipoAvaria" disabled="">' + 
+				optionLocalAVaria +
+			'</select>' + -->
+
+			<!--//CAMPO DE OBSERVAÇÃO -->
+        	<input type="textArea" placeholder="Observação" name="observacao" id="observacao">
+        	
+			<button id="addAvaria" type="button">Adicionar</button>
+			<div id="avarias"></div>
+
+			
 
 		        <div id="formFooter">
+               <!-- <select class="MineSelect" name="verificado" id="verificado">--> <!--tava form-control -->
+                   <!-- <option value="1">Não Verificado</option>
+               
+                    <option value="0">Verificado</option>
+               
+            </select>-->
+                    <input type="checkbox" name="verificado" id="verificado" value="0">
+
 		            <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Salvar </button>
 		        </div>
 			</form>
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-	@php
-		echo "var localAvarias = JSON.parse('" . $localAvarias ."');";
-		echo "var tipoAvarias = JSON.parse('" . $tipoAvarias ."');";
-	@endphp
-	
-	function verificar(localAvaria){
-		var tipoAvaria = document.getElementById('tipoAvaria')
-		if(localAvaria.value == 1){
-			tipoAvaria.disabled = true;
-			tipoAvaria.value = 1;
-		}
-		else{
-			tipoAvaria.disabled = false;
-		}
-	}
-
-	function novaVerificacao(){
-		var optionLocalAVaria = '';
-		var optionTipoAVaria = '';
-
-		for (var i = 0; i < localAvarias.length; i++)
-			optionLocalAVaria += '<option value="' + localAvarias[i].id + '">' + localAvarias[i].local + '</option>';
-
-		for (var x = 0; x < tipoAvarias.length; x++)
-			optionTipoAVaria += '<option value="' + tipoAvarias[x].id + '">' + tipoAvarias[x].local + '</option>';
-		
-			
-		var div = '' +
-			//LOCAL DA AVARIA
-			'<label>Local da avaria: </label> ' + 
-			'<select name="localAvaria" class="form-item" onclick="verificar(this)"> ' + 
-				optionLocalAVaria+
-			'</select>' + 
-
-			// TIPO DE AVARIA
-			'<label>Tipo da avaria: </label>' + 
-			'<select id="tipoAvaria"  name="tipoAvaria" disabled="">' + 
-				optionLocalAVaria +
-			'</select>' + 
-
-			//CAMPO DE OBSERVAÇÃO 
-        	'<input type="textArea" placeholder="Observação" name="observacao" >'+
-        	'<hr>'
-        	;
-
-		var objDiv = document.createElement('div');
-		objDiv.innerHTML = div;
-
-		document.getElementById("divCreteVerificacao").appendChild(objDiv);
-	}
-</script>
 @endsection
