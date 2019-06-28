@@ -20,8 +20,10 @@
             </span>
         @endif
 		<div class="form-control"  style="height: 400px">
+            {{-- DIV QUE EXIBE OS DADOS DA ENTRADA --}}
 		    <div>
-		    	<label>Nome: </label> {{$entradas->motorista->nome}}
+                <label>Nome: </label> {{$entradas->motorista->nome}} <br>
+		    	<label>Carro: </label> {{$entradas->carro->nome}} - {{$entradas->carro->placa}}
 
 				<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 				  <div class="carousel-inner">
@@ -50,30 +52,25 @@
 	    	{{ csrf_field() }}
 
 			<h4 style="margin-top: 0.5rem">Inserir Avaria (Caso Haja)</h4>
-			<select class="MineSelect" name="localAvaria" id="localAvaria"> <!--tava form-control -->
-                {{-- @foreach($localAvarias as $avaria)
-                    <option value="{{ $avaria->id }}"> {{ $avaria->local }}</option>
-                @endforeach --}}
-            </select>
+            {{-- SELECT LOCAL AVARIA --}}
+			<select class="MineSelect" name="localAvaria" id="localAvaria"></select>
 
-			<select class="MineSelect" name="tipoAvaria" id="tipoAvaria"  onchange="storeLocalAVaria(this)"> <!--tava form-control -->
-               {{--  @foreach($tipoAvarias as $avaria)
-                    <option value="{{ $avaria->id }}"> {{ $avaria->tipo }}</option>
-                @endforeach --}}
-            </select>
-            <button onclick=""></button>
+            {{-- SELECT TIPO DE AVARIA --}}
+			<select class="MineSelect" name="tipoAvaria" id="tipoAvaria"  onchange="storeTipoAVaria(this)"></select>
 
+            {{-- DIV CAMPO OBSERVAÇÃO --}}
             <div id="addObs">
-        	<input type="text" placeholder="Observação" name="observacao" id="observacao" class="form-control">
-        	
-			<button id="addAvaria" type="button" class="btn-circle btn-outline-primary">+</button>
+            	<input type="text" placeholder="Observação" name="observacao" id="observacao" class="form-control">
+            	
+    			<button id="addAvaria" type="button" class="btn-circle btn-outline-primary">+</button>
             </div>
 			<div id="avarias"></div>
 
 		        <div id="formFooter">
-                    <div id="marcaCheck"><label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked></div>
-
-		            <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Salvar </button>
+                    <div id="marcaCheck">
+                        <label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked>
+                    </div>
+		            <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Confirmar verificação </button>
 		        </div>
 			</form>
 		</div>
@@ -84,31 +81,48 @@
         echo "var localAvarias = JSON.parse('" . $localAvarias . "');";
         echo "var tipoAvarias = JSON.parse('" . $tipoAvarias . "');";
     @endphp
-
     var avarias = [];
     var cont = 0;
+
     window.onload = function(){
         $('#addAvaria').click(function(){
-            var local = $('#localAvaria').val()
-            var tipo = $('#tipoAvaria').val()
-            var obs = $('#observacao').val()
-            if (local == 'false' || tipo == 'false'){
-                return alert('Selecione local e tipo.')
-            }
-            var text = ''
+            var local = $('#localAvaria').val();
+            var tipo = $('#tipoAvaria').val();
+            var obs = $('#observacao').val();
+        
+            // VERIFICA SE O TIPO E LOCAL DE AVARIA FORAM PREENCHIDOS
+            if (local == 'false' || tipo == 'false')
+                return alert('Selecione local e tipo.');
+
+            var localString = 'Nada';
+            for (var x = 0; x < localAvarias.length; x++)
+                if(localAvarias[x].id == local){
+                    localString = localAvarias[x].local;
+                    break;
+                }
+            
+            var tipoString = 'Nada';
+            for (var w = 0; w < tipoAvarias.length; w++)
+                if(tipoAvarias[w].id == tipoString){
+                    tipoString = tipoAvarias[w].tipo;
+                    break;
+                }
+            
+            var text = '';
             if(local && tipo){
-                avarias.push({ 'id': cont, 'loc': local, 'tip': tipo, 'ob': obs })
-                cont++
-                console.log(avarias)
+                avarias.push({ 'id': cont, 'loc': local, 'tip': tipo, 'ob': obs });
+                cont++;
             }
+
             for(i in avarias){
-                text += ' <span id="'+avarias[i].id+'" class="badge badge-primary badge-pill">'+avarias[i].loc+' - '+avarias[i].tip+' - '+avarias[i].ob+' <input type="text" value="'+avarias[i].loc+'" name="local[]" class="d-none"> <input type="text" value="'+avarias[i].tip+'" name="tipo[]" class="d-none"> <input type="text" value="'+avarias[i].ob+'" name="obs[]" class="d-none">  <a id="excluir" onClick="excluir(`'+avarias[i].id+'`)"><i class="fa fa-times" aria-hidden="true"></i></a> </span>'
+                text += ' <span id="'+avarias[i].id+'" class="badge badge-primary badge-pill">'+ localString +' - '+tipoString+' - '+avarias[i].ob+' <input type="text" value="'+avarias[i].loc+'" name="local[]" class="d-none"> <input type="text" value="'+avarias[i].tip+'" name="tipo[]" class="d-none"> <input type="text" value="'+avarias[i].ob+'" name="obs[]" class="d-none">  <a id="excluir" onClick="excluir(`'+avarias[i].id+'`)"><i class="fa fa-times" aria-hidden="true"></i></a> </span>'
             }
-            element = document.getElementById('avarias')
-            element.innerHTML = text
+            document.getElementById('avarias').innerHTML = text;
         })
-        setSelect('localAvaria', localAvarias, 'local'); 
-        setSelect('tipoAvaria', tipoAvarias, 'tipo'); 
+
+        // FUNÇÃO PARA SETAR O OPTION EM SELECT DAS AVARIAS
+        setSelect('localAvaria', localAvarias, 'local', 'Selecione o local da avaria');
+        setSelect('tipoAvaria', tipoAvarias, 'tipo', 'Selecione o tipo da avaria'); 
     }
 
     function excluir(id){
@@ -169,42 +183,40 @@
 
     function storeTipoAVaria(selectAvaria){
         // VERIFICA SE O VALOR NOVO FOI SELECIONADO
-        if (selectAvaria.value == 'novo') {
-            var tipoAVariaTxt = prompt ("Inserir novo tipo avaria");
+        if (selectAvaria.value != 'novo') return false;
 
-            // VERIFICA SE O CAMPO ESTA VAZIO
-            if(tipoAVariaTxt == ''){
-                alert("Nenhum valor inserido.");
-                return false;
-            }
+        var tipoAVariaTxt = prompt ("Inserir novo tipo avaria");
 
-            var form = document.createElement('form');
-            form.innerHTML = `` +
-                `<input name="tipo" value="` + tipoAVariaTxt + `">`+
-                `<input name="_token" value="{{ csrf_token() }}">`
-            ;
-            var objForm = new FormData(form);
-
-            xmlHttpPost('/tipoAvaria', objForm, function(){
-                success(function(){
-                    var retorno = JSON.parse(xhttp.responseText);
-                    
-                    // MOSTRAR MENSSAGEM DE SUCESSO
-                    if (retorno.tipo == 1){
-                        tipoAvarias.push(xhttp.responseText.dados);
-                        setSelect('tipoAvaria', tipoAvarias, 'tipo');
-                    }
-
-                    //MOSTRAR MENSSAGEM DE ERROS
-                    // else if (retorno.tipo == 0)
-                    alert(retorno.msg)
-                });
-            });
+        // VERIFICA SE O CAMPO ESTA VAZIO
+        if(tipoAVariaTxt == '' || tipoAVariaTxt == null){
+            alert("Nenhum valor inserido.");
+            return false;
         }
+
+        var form = document.createElement('form');
+        form.innerHTML = `` +
+            `<input name="_token" value="{{ csrf_token() }}">`+
+            `<input name="tipo" value="` + tipoAVariaTxt + `">`
+        ;
+        var objForm = new FormData(form);
+
+        xmlHttpPost('/tipoAvaria', objForm, function(){
+            success(function(){
+                var retorno = JSON.parse(xhttp.responseText);
+
+                // MOSTRAR MENSSAGEM DE SUCESSO
+                if (retorno.tipo == 1){
+                    tipoAvarias.push(retorno.dados);
+                    setSelect(selectAvaria.id, tipoAvarias, 'tipo', 'Selecione o tipo da avaria'); 
+                }
+                alert(retorno.msg)
+            });
+        });
     }
 
-    function setSelect(id, array, chave){
-        var option = '<option value="false">Selecione uma opção</option>';
+    // FUNÇÃO PARA CRIAR AS OPTION SETAR NA SELECT
+    function setSelect(id, array, chave, msg){
+        var option = '<option value="false">'+ msg +'</option>';
         for (var i = 0; i < array.length; i++) {
             option = option + `<option value="`+ array[i].id +`">`+ array[i][chave] +`</option>`
         }

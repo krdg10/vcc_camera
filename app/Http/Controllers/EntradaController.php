@@ -8,12 +8,14 @@ use App\Models\Entrada;
 use App\Models\Carro;
 use App\Models\Motorista;
 use App\Models\Foto;
+use App\Models\Verificacao;
 
 
 class EntradaController extends Controller{
     public function index(){
         $entradas = Entrada::all();
-        return view('entrada.index', compact('entradas'));
+        $verificacoes = Verificacao::all();
+        return view('entrada.index', compact('entradas', 'verificacoes'));
     }
 
     public function store(Request $request){
