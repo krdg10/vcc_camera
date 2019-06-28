@@ -1,9 +1,51 @@
 @extends('layouts.app')
 @section('content')
 <script>
-function excluirElement(id){
+
+    var avarias = [];
+    var cont = 0;
+    window.onload = function(){
+        $('#addAvaria').click(function(){
+            var local = $('#localAvariaNovo').val()
+            var tipo = $('#tipoAvariaNovo').val()
+            var obs = $('#observacaoNovo').val()
+            if (local == 'false' || tipo == 'false'){
+                return alert('Selecione local e tipo.')
+            }
+            var text = ''
+            if(local && tipo){
+                avarias.push({ 'id': cont, 'loc': local, 'tip': tipo, 'ob': obs })
+                cont++
+                console.log(avarias)
+            }
+            for(i in avarias){
+                text += ' <span id="'+avarias[i].id+'" class="badge badge-primary badge-pill">'+avarias[i].loc+' - '+avarias[i].tip+' - '+avarias[i].ob+' <input type="text" value="'+avarias[i].loc+'" name="local[]" class="d-none"> <input type="text" value="'+avarias[i].tip+'" name="tipo[]" class="d-none"> <input type="text" value="'+avarias[i].ob+'" name="obs[]" class="d-none">  <a id="excluir" onClick="excluir(`'+avarias[i].id+'`)"><i class="fa fa-times" aria-hidden="true"></i></a> </span>'
+            }
+            element = document.getElementById('avarias')
+            element.innerHTML = text
+        })
+    }
+
+    function excluir(id){
+        var remove = -1
+        for(i in avarias){
+            if(id == avarias[i].id){
+                avarias.splice(i, 1);
+                break;
+            }
+        }
+        var text = ''
+        for(i in avarias){
+            text += ' <span id="'+avarias[i].id+'" class="badge badge-primary badge-pill">'+avarias[i].loc+' - '+avarias[i].tip+' - '+avarias[i].ob+' <input type="text" value="'+avarias[i].loc+'" name="local[]" class="d-none"> <input type="text" value="'+avarias[i].tip+'" name="tipo[]" class="d-none"> <input type="text" value="'+avarias[i].obs+'" name="obs[]" class="d-none"> <a id="excluir" onClick="excluir(`'+avarias[i].id+'`)"><i class="fa fa-times" aria-hidden="true"></i></a> </span>'
+        }
+        element = document.getElementById('avarias')
+        element.innerHTML = text
+    }
+
+    function excluirElement(id){
         $('#'+id).remove();
     }
+
 </script>
 <div class="wrapper fadeInDown">
     <div id="formContent">
@@ -79,8 +121,37 @@ function excluirElement(id){
 						<input class="form-control" type="text" value="{{ $avaria->obs }} " name="obs" id="obs">
 					@endif
 					<button type="submit" id="submit" class="btn btn-outline-primary"> Atualizar Avaria </button>
+					<button type="submit" id="submit" class="btn btn-outline-primary" formaction="{{ route('descavarias.destroy', $avaria->id) }}" > Excluir </button>
 				</form>
             @endforeach
+			<form method="POST" action="{{ route('descavarias.store', $entradas->id) }}" enctype="multipart/form-data">
+				{{ csrf_field() }}
+
+				<h4 style="margin-top: 0.5rem">Inserir Avaria Nova</h4>
+				<select class="MineSelect" name="localAvariaNovo" id="localAvariaNovo"> <!--tava form-control -->
+					<option value="false"> Selecione uma opção </option>
+					@foreach($localAvaria as $avaria)
+						<option value="{{ $avaria->id }}"> {{ $avaria->local }}</option>
+					@endforeach 
+				</select>
+
+				<select class="MineSelect" name="tipoAvariaNovo" id="tipoAvariaNovo"  onchange="storeLocalAVaria(this)"> <!--tava form-control -->
+					<option value="false"> Selecione uma opção </option>
+					@foreach($tipoAvaria as $avaria)
+						<option value="{{ $avaria->id }}"> {{ $avaria->tipo }}</option>
+					@endforeach 
+				</select>
+				
+
+				<div id="addObs">
+					<input type="text" placeholder="Observação" name="observacaoNovo" id="observacaoNovo" class="form-control">
+					
+					<button id="addAvaria" type="button" class="btn-circle btn-outline-primary">+</button>
+				</div>
+				<div id="avarias"></div>
+				<button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Cadastrar nova avaria </button>
+
+			</form>
 		    <div id="formFooter">
                 <div id="marcaCheck"><label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked disabled></div>
 		    </div>

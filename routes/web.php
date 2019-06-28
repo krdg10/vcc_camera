@@ -47,6 +47,11 @@
         Route::post('/verificacao/{id}','VerificacaoController@store')->name('verificacao.store'); //STORE
         Route::get('/verificacao/edit/{id}','VerificacaoController@edit')->name('verificacao.edit'); //edit
         Route::post('/verificacao/edit/{id}','VerificacaoController@update')->name('verificacao.update'); //edit
+        Route::post('/verificacao/edit/excluir/{id}','DescAvariasController@destroy')->name('descavarias.destroy');
+        Route::post('/verificacao/edit/adicionar/{id}','DescAvariasController@store')->name('descavarias.store');
+        Route::get('/verificacao/edit/adicionar/{id}','VerificacaoController@edit')->name('verificacao.edit');
+  
+
 
         // TIPO DE AVARIA
         Route::post('/tipoAvaria','TipoAvariaController@store')->name('tipoAvaria.store'); //STORE
