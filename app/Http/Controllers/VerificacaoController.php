@@ -25,12 +25,12 @@ class VerificacaoController extends Controller{
     }
 
     public function store(Request $request, $id){
-        if (DB::table('verificacoes')->where('entrada_id', '=', $id)->exists()){
+        if (DB::table('verificacoes')->where('entrada_id', '=', $id)->exists())
             $error[] = 'Essa entrada já foi verificada!';
-        }
-        if(isset($error)){
+        
+        if(isset($error))
             return redirect()->back()->with('error', $error);
-        }
+        
         $verificacao = new Verificacao;
         $verificacao->verificado = $request->verificado;
         $verificacao->entrada_id = $id;
