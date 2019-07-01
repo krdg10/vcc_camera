@@ -54,27 +54,40 @@
 		    </div>
 		</div>
 		<br>
-        @foreach ($Avarias as $avaria) 	
-			<h4>Avaria {{ $avaria->id }}</h4> <!-- contar quantidade de avaria certo -->
-				@foreach ($tipoAvaria as $tipo_avaria)
-					@foreach ($localAvaria as $local_avaria)
-						@if ($avaria->local_avaria_id == $local_avaria->id)
-                            <input type="text" placeholder="Local Avaria" name="localAvaria" class="form-control" value="{{ $local_avaria->local }}" disabled>
-									
-						@endif
-				    @endforeach
-                    @if ($avaria->tipo_avaria_id == $tipo_avaria->id)
-                        <input type="text" placeholder="Tipo Avaria" name="tipoAvaria" class="form-control" value="{{ $tipo_avaria->tipo }}" disabled>		
-                    @endif
-				@endforeach
-				@if ($avaria->verificacao_id == $Verificacao->id)
-					<input class="form-control" type="text" value="{{ $avaria->obs }} " name="obs" id="obs" disabled>
-				@endif	
+		<div class="accordion" id="accordionExample"> <!-- um tempo testando. primeiro com um if. ai depois colocando [{{}}] nas ids de um if. depois só {{}}. ai funcionou e foi geral. Ver nome depois. -->
+			@foreach ($Avarias as $avaria)
+				<div class="card">
+					<div class="card-header" id="heading{{ $avaria->id }}">
+						<h5 class="mb-0">
+							<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ $avaria->id }}" aria-expanded="false" aria-controls="collapse{{ $avaria->id }}">
+							Avaria {{ $avaria->id }}
+							</button>
+						</h5>
+					</div>
+					<div id="collapse{{ $avaria->id }}" class="collapse" aria-labelledby="heading{{ $avaria->id }}" data-parent="#accordionExample">
+						<div class="card-body">
+							@foreach ($tipoAvaria as $tipo_avaria)
+								@foreach ($localAvaria as $local_avaria)
+									@if ($avaria->local_avaria_id == $local_avaria->id)
+										<input type="text" placeholder="Local Avaria" name="localAvaria" class="form-control" value="{{ $local_avaria->local }}" disabled>				
+									@endif
+								@endforeach
+								@if ($avaria->tipo_avaria_id == $tipo_avaria->id)
+									<input type="text" placeholder="Tipo Avaria" name="tipoAvaria" class="form-control" value="{{ $tipo_avaria->tipo }}" disabled>		
+								@endif
+							@endforeach
+							@if ($avaria->verificacao_id == $Verificacao->id)
+								<input class="form-control" type="text" value="{{ $avaria->obs }} " name="obs" id="obs" disabled>
+							@endif	
+						</div>
+					</div>
+				</div>
 			@endforeach
-		    <div id="formFooter">
-                <div id="marcaCheck"><label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked disabled></div>
-		    </div>
 		</div>
+		<div id="formFooter">
+            <div id="marcaCheck"><label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked disabled></div>
+		</div>
+	</div>
 	</div>
 </div>
 @endsection
