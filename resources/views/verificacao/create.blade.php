@@ -19,6 +19,7 @@
                     <a id="excluir" onClick="excluirElement('success')"><i class="fa fa-times" aria-hidden="true"></i></a>
             </span>
         @endif
+        <div id="divMsg"></div>
 		<div class="form-control"  style="height: 400px">
             {{-- DIV QUE EXIBE OS DADOS DA ENTRADA --}}
 		    <div>
@@ -65,14 +66,15 @@
 
 			<h4 style="margin-top: 0.5rem">Inserir Avaria (Caso Haja)</h4>
             {{-- SELECT LOCAL AVARIA --}}
-			<select class="MineSelect" name="localAvaria" id="localAvaria"></select>
+			<select class="MineSelect" name="localAvaria" id="localAvaria" onchange="storeTipoAVaria(this)"></select>
 
             {{-- SELECT TIPO DE AVARIA --}}
-			<select class="MineSelect" name="tipoAvaria" id="tipoAvaria"  onchange="storeTipoAVaria(this)"></select>
+			<select class="MineSelect" name="tipoAvaria" id="tipoAvaria" onchange="storeTipoAVaria(this)"></select>
 
             {{-- DIV CAMPO OBSERVAÇÃO --}}
             <div id="addObs">
-            	<input type="text" placeholder="Observação" name="observacao" id="observacao" class="form-control">
+            	{{-- <input type="text" placeholder="Observação" name="observacao" id="observacao" class="form-control"> --}}
+                <textarea placeholder="Observação" name="observacao" id="observacao" class="form-control"></textarea>
             	
     			<button id="addAvaria" type="button" class="btn-circle btn-outline-primary">+</button>
             </div>
@@ -106,6 +108,7 @@
             if (local == 'false' || tipo == 'false')
                 return alert('Selecione local e tipo.');
 
+            // PROCURA PELO VALOR DO LOCAL DA AVARIA
             var localString = 'Nada';
             for (var x = 0; x < localAvarias.length; x++)
                 if(localAvarias[x].id == local){
@@ -113,6 +116,7 @@
                     break;
                 }
             
+            // PROCURA PELO VALOR DO TIPO DE AVARIA
             var tipoString = 'Nada';
             for (var w = 0; w < tipoAvarias.length; w++)
                 if(tipoAvarias[w].id == tipoString){
@@ -159,38 +163,36 @@
 
     function storeLocalAVaria(selectAvaria){
         // VERIFICA SE O VALOR NOVO FOI SELECIONADO
-        if (selectAvaria.value == 'novo') {
-            var localAVariaTxt = prompt ("Inserir novo local avaria");
+        if (selectAvaria.value != 'novo') return false;
 
-            // VERIFICA SE O CAMPO ESTA VAZIO
-            if(localAVariaTxt == ''){
-                alert("Nenhum valor inserido.");
-                return false;
-            }
+        var localAVariaTxt = prompt ("Inserir novo local avaria");
 
-            var form = document.createElement('form');
-            form.innerHTML = `` +
-                `<input name="local" value="` + localAVariaTxt + `">`+
-                `<input name="_token" value="{{ csrf_token() }}">`
-            ;
-            var objForm = new FormData(form);
-
-            xmlHttpPost('/localAvaria', objForm, function(){
-                success(function(){
-                    var retorno = JSON.parse(xhttp.responseText);
-                    
-                    // MOSTRAR MENSSAGEM DE SUCESSO
-                    if (retorno.tipo == 1){
-                        localAvarias.push(xhttp.responseText.dados);
-                        setSelect('localAvaria', localAvarias, 'local');
-                    }
-
-                    //MOSTRAR MENSSAGEM DE ERROS
-                    // else if (retorno.tipo == 0)
-                    alert(retorno.msg)
-                });
-            });
+        // VERIFICA SE O CAMPO ESTA VAZIO
+        if(localAVariaTxt == ''){
+            alert("Nenhum valor inserido.");
+            return false;
         }
+
+        var form = document.createElement('form');
+        form.innerHTML = `` +
+            `<input name="local" value="` + localAVariaTxt + `">`+
+            `<input name="_token" value="{{ csrf_token() }}">`
+        ;
+        var objForm = new FormData(form);
+
+        xmlHttpPost('/localAvaria', objForm, function(){
+            success(function(){
+                var retorno = JSON.parse(xhttp.responseText);
+                
+                // MOSTRAR MENSSAGEM DE SUCESSO
+                if (retorno.tipo == 1){
+                    localAvarias.push(retorno.dados);
+                    setSelect(selectAvaria.id, localAvarias, 'local', 'Selecione o local da avaria'); 
+                }
+                alert(retorno.msg)
+            });
+        });
+        
     }
 
     function storeTipoAVaria(selectAvaria){
@@ -221,7 +223,8 @@
                     tipoAvarias.push(retorno.dados);
                     setSelect(selectAvaria.id, tipoAvarias, 'tipo', 'Selecione o tipo da avaria'); 
                 }
-                alert(retorno.msg)
+                alert(retorno.msg);
+                mostrarSuccess('divMsg', retorno.msg, seg=3);
             });
         });
     }
