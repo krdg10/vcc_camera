@@ -100,7 +100,7 @@
 				</div>
 		    </div>
 		</div>
-		<br>
+		
 
 		<div class="accordion" id="accordionExample">
 			<div class="card">
@@ -115,6 +115,9 @@
 				<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
 					<div class="card-body">
 						<div class="accordion" id="accordionInterno">
+							@if(count($Avarias)==0)
+								<h3>Nenhuma Avaria Cadastrada</h3>
+							@endif
 							@foreach ($Avarias as $avaria) 
 								<form method="POST" action="{{ route('verificacao.update', $avaria->id) }}" enctype="multipart/form-data">
 									{{ csrf_field() }}

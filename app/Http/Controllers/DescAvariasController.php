@@ -18,7 +18,7 @@ class DescAvariasController extends Controller{
         if(isset($error)){
             return redirect()->back()->with('error', $error);
         }
-        $verificacao = Verificacao::findOrFail($id);;
+        $verificacao = Verificacao::findOrFail($id);
         for($i = 0; $i < count($request->local); $i++){
             $avaria = new Desc_avarias;
             $avaria->local_avaria_id = $request->local[$i];
