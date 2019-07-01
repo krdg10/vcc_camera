@@ -54,7 +54,7 @@
 		    </div>
 		</div>
 		<br>
-		<div class="accordion" id="accordionExample"> <!-- um tempo testando. primeiro com um if. ai depois colocando [{{}}] nas ids de um if. depois só {{}}. ai funcionou e foi geral. Ver nome depois. -->
+		<div class="accordion" id="accordionExample"> <!-- um tempo testando. primeiro com um if. ai depois colocando  nas ids de um if. depois só . ai funcionou e foi geral. Ver nome depois. -->
 			@foreach ($Avarias as $avaria)
 				<div class="card">
 					<div class="card-header" id="heading{{ $avaria->id }}">

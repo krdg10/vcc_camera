@@ -3302,17 +3302,18 @@ fieldset:disabled a.btn {
 
 .btn-link {
   font-weight: 400;
-  color: #007bff;
+  color: #41a58b;
   text-decoration: none;
 }
 
 .btn-link:hover {
-  color: #0056b3;
-  text-decoration: underline;
+  color: white;
+  background-color: #41a58b;
+  text-decoration: none;
 }
 
 .btn-link:focus, .btn-link.focus {
-  text-decoration: underline;
+  text-decoration: none;
   box-shadow: none;
 }
 
@@ -8286,6 +8287,10 @@ button.bg-dark:focus {
 .mb-0,
 .my-0 {
   margin-bottom: 0 !important;
+}
+.card-header h5{
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
 }
 
 .ml-0,
