@@ -23,9 +23,10 @@
                         <td>
                             @forelse  ($entrada->verificacoes as $verificacao)
                                 <a href="/verificacao/edit/{{$verificacao->id}}" class="iconesLista"><i class="fas fa-edit"></i></a>
+                                <a href="/verificacao/exibir/{{$verificacao->id}}" class="iconesLista"><i class="fas fa-eye"></i></a>
                             
                             @empty
-                            <a href="/verificacao/{{$entrada->id}}" class="iconesLista"><i class="fas fa-eye"></i></a>
+                            <a href="/verificacao/{{$entrada->id}}" class="iconesLista"><i class="fas fa-plus-circle"></i></a>
 
                             @endforelse
                              
