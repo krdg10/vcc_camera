@@ -73,7 +73,8 @@
 
             {{-- DIV CAMPO OBSERVAÇÃO --}}
             <div id="addObs">
-            	<input type="text" placeholder="Observação" name="observacao" id="observacao" class="form-control">
+            	{{-- <input type="text" placeholder="Observação" name="observacao" id="observacao" class="form-control"> --}}
+                <textarea placeholder="Observação" name="observacao" id="observacao" class="form-control"></textarea>
             	
     			<button id="addAvaria" type="button" class="btn-circle btn-outline-primary">+</button>
             </div>
