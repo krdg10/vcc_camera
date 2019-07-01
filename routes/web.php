@@ -50,6 +50,7 @@
         Route::post('/verificacao/edit/excluir/{id}','DescAvariasController@destroy')->name('descavarias.destroy');
         Route::post('/verificacao/edit/adicionar/{id}','DescAvariasController@store')->name('descavarias.store');
         Route::get('/verificacao/edit/adicionar/{id}','VerificacaoController@edit')->name('verificacao.edit');
+        Route::get('/verificacao/exibir/{id}','VerificacaoController@exibir')->name('verificacao.exibir');
   
 
 

@@ -23,15 +23,27 @@
 		<div class="form-control"  style="height: 400px">
             {{-- DIV QUE EXIBE OS DADOS DA ENTRADA --}}
 		    <div>
+                @php 
+                    $tester=1;
+                @endphp
                 <label>Nome: </label> {{$entradas->motorista->nome}} <br>
 		    	<label>Carro: </label> {{$entradas->carro->nome}} - {{$entradas->carro->placa}}
 
 				<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-				  <div class="carousel-inner">
+                <div class="carousel-inner">
 				  	@foreach ($entradas->fotos as $fotos)
+                        @if($tester==1)
 					    <div class="carousel-item active">
 					      <img class="d-block w-100" style="height: 300px" src="{{url('/storage/'.$fotos->path)}}" alt="Primeiro Slide">
 					    </div>
+                            @php
+                                $tester=2;
+                            @endphp
+                        @else
+                        <div class="carousel-item">
+					      <img class="d-block w-100" style="height: 300px" src="{{url('/storage/'.$fotos->path)}}" alt="Slide Secundário">
+					    </div>
+                        @endif
 				  	@endforeach
 				    
 				  </div>
