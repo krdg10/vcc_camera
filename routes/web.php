@@ -28,7 +28,7 @@
         Route::get('/motorista/listar/{id}','MotoristaController@edit')->name('motorista.edit');
         Route::post('/motorista/listar/{id}','MotoristaController@update')->name('motorista.update');
         Route::get('/motorista/listar/excluir/{id}','MotoristaController@delete')->name('motorista.delete');
-        Route::post('/motorista/listar/excluir/{id}','MotoristaController@destroy')->name('motorista.destroy');
+        Route::delete('/motorista/listar/excluir/{id}','MotoristaController@destroy')->name('motorista.destroy');
 
         // CARRO
         Route::get('/carro','CarroController@index')->name('carro');

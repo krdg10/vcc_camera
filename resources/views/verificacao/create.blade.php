@@ -26,8 +26,8 @@
                 @php 
                     $tester=1;
                 @endphp
-                <label>Nome: </label> {{$entradas->motorista->nome}} <br>
-		    	<label>Carro: </label> {{$entradas->carro->nome}} - {{$entradas->carro->placa}}
+                <h5>Motorista: {{$entradas->motorista->nome}}</h5>
+		    	<h5>Carro: {{$entradas->carro->nome}} - {{$entradas->carro->placa}}</h5>
 
 				<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -58,7 +58,7 @@
 				</div>
 		    </div>
 		</div>
-		<br>
+		
 
 		<div>
 		<form method="POST" action="{{ route('verificacao.store', $entradas->id) }}" enctype="multipart/form-data">
@@ -72,11 +72,11 @@
 			<select class="MineSelect" name="tipoAvaria" id="tipoAvaria" onchange="storeTipoAVaria(this)"></select>
 
             {{-- DIV CAMPO OBSERVAÇÃO --}}
-            <div id="addObs">
+            <div id="addObs" class="row" >
             	{{-- <input type="text" placeholder="Observação" name="observacao" id="observacao" class="form-control"> --}}
-                <textarea placeholder="Observação" name="observacao" id="observacao" class="form-control"></textarea>
+                <div class="col-sm-9 col-md-6 col-lg-8" style="flex: 0 0 76.666667%; max-width: 86.666667%;"><textarea placeholder="Observação" name="observacao" id="observacao"  ></textarea></div>
             	
-    			<button id="addAvaria" type="button" class="btn-circle btn-outline-primary">+</button>
+    			<div id="btnObs"><button id="addAvaria" type="button" class="btn btn-outline-primary">+</button></div>
             </div>
 			<div id="avarias"></div>
 
