@@ -23,6 +23,7 @@ class Avaria{
     }   
 
     storeAVaria(select, msg, pos, url){
+    	var obj = this;
         // VERIFICA SE O VALOR NOVO FOI SELECIONADO
         if (select.value != 'novo') return false;
 
@@ -39,29 +40,7 @@ class Avaria{
             if (r.tipo == 1){
                 avarias[pos].push(r.dados);
                 console.log(r.dados);
-                setSelect(select.id, avarias[pos], msg, 'Selecione o '+ msg +' da avaria'); 
-            }
-
-            metodos.msgSuccess(r.msg)
-        });
-    }
-
-    storeTipoAVaria(selectAvaria){
-        // VERIFICA SE O VALOR NOVO FOI SELECIONADO
-        if (selectAvaria.value != 'novo') return false;
-
-        var tipoAVariaTxt = prompt ("Inserir novo tipo avaria");
-
-        // VERIFICA SE O CAMPO ESTA VAZIO
-        if(tipoAVariaTxt == '' || tipoAVariaTxt == null){
-            alert("Nenhum valor inserido.");
-            return false;
-        }
-
-        metodos.post([{'tipo':localAVariaTxt}], '/tipoAvaria', function(r){
-            if (r.tipo == 1){
-               tipoAvarias.push(retorno.dados);
-                setSelect(selectAvaria.id, tipoAvarias, 'tipo', 'Selecione o tipo da avaria'); 
+                obj.setSelect(select.id, avarias[pos], msg, 'Selecione o '+ msg +' da avaria'); 
             }
 
             metodos.msgSuccess(r.msg)
