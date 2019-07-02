@@ -39,7 +39,7 @@ class CarroController extends Controller
         return redirect()->back()->with('message', 'Sucesso ao cadastrar carro!');
     }
     public function show(){
-        $carros = DB::table('carros')->paginate(10);
+        $carros = DB::table('carros')->paginate(5);
         return view('carro.show', compact('carros'));
     }
     public function edit($id)
