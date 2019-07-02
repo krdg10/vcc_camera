@@ -4,7 +4,7 @@
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <div class="fadeIn first">
-            <table class="table table-hover ">
+            <table class="table table-hover table-striped">
                 <thead>
                     <tr>
                         <th>ID</th>
