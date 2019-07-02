@@ -94,12 +94,9 @@ class Xhttp {
     }
 
     success(callback){
-        // var obj = this.xhttp.responseText != "" ? JSON.parse(this.xhttp.responseText) : 'expr2';
-
-        if(this.xhttp.readyState == 4 && this.xhttp.status ==200){
-            console.log('this.xhttp.responseText')
+        if(this.xhttp.readyState == 4 && this.xhttp.status ==200)
             callback(JSON.parse(this.xhttp.responseText));
-        }
+        
     }
 
     beforeSend(callback){

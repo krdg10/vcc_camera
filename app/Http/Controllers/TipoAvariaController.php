@@ -25,7 +25,7 @@ class TipoAvariaController extends Controller{
             $tipo_avarias->save();
             return Metodos::retorno(1, 'Sucesso ao adicinar "' . $request->tipo . '".', $tipo_avarias);
         } catch (Exception $e) {
-            return Metodos::retorno(0, 'Erro ao inserir novo tipo');
+            return Metodos::retorno(0, 'Erro ao inserir novo tipo', $e);
         }
     }
 
