@@ -94,8 +94,9 @@
     </div>
 </div>
 <script type="text/javascript">
-    var localAvarias, tipoAvarias;
+    var avaria;
     var avarias = new Array();
+    var localAvarias, tipoAvarias;
     @php
         echo "localAvarias = JSON.parse('" . $localAvarias . "');";
         echo "tipoAvarias = JSON.parse('" . $tipoAvarias . "');";
@@ -106,7 +107,8 @@
     var metodos;
 
     window.onload = function(){
-    metodos = new Metodos("{{ csrf_token() }}");
+        metodos = new Metodos("{{ csrf_token() }}");
+        avaria = new Avaria();
 
         $('#addAvaria').click(function(){
             var local = $('#localAvaria').val();
@@ -146,8 +148,8 @@
         })
 
         // FUNÇÃO PARA SETAR O OPTION EM SELECT DAS AVARIAS
-        setSelect('localAvaria', localAvarias, 'local', 'Selecione o local da avaria');
-        setSelect('tipoAvaria', tipoAvarias, 'tipo', 'Selecione o tipo da avaria'); 
+        avaria.setSelect('localAvaria', localAvarias, 'local', 'Selecione o local da avaria');
+        avaria.setSelect('tipoAvaria', tipoAvarias, 'tipo', 'Selecione o tipo da avaria'); 
     }
 
     function excluir(id){
@@ -164,87 +166,6 @@
         }
         element = document.getElementById('avarias')
         element.innerHTML = text
-    }
-
-    function storeLocalAVaria(selectAvaria){
-        var obj = this;
-        // VERIFICA SE O VALOR NOVO FOI SELECIONADO
-        if (selectAvaria.value != 'novo') return false;
-
-        var localAVariaTxt = prompt ("Inserir novo local avaria");
-
-        // VERIFICA SE O CAMPO ESTA VAZIO
-        if(localAVariaTxt == '' || localAVariaTxt == null){
-            metodos.msgSuccess("Nenhum valor inserido.");
-            return false;
-        }
-
-        metodos.post([{'local':localAVariaTxt}], '/localAvaria', function(r){
-            if (r.tipo == 1){
-                obj.localAvarias.push(r.dados);
-                setSelect(selectAvaria.id, obj.localAvarias, 'local', 'Selecione o local da avaria'); 
-            }
-
-            metodos.msgSuccess(r.msg)
-        });
-    }        
-    function storeAVaria(select, msg, pos, url){
-        // VERIFICA SE O VALOR NOVO FOI SELECIONADO
-        if (select.value != 'novo') return false;
-
-        var valor = prompt ("Inserir novo "+ msg +" avaria");
-
-        // VERIFICA SE O CAMPO ESTA VAZIO
-        if(valor == '' || valor == null){
-            alert("Nenhum valor inserido.");
-            return false;
-        }
-
-        var json = JSON.parse('[{"'+ msg +'":"'+ valor +'"}]');
-        metodos.post(json, url, function(r){
-            if (r.tipo == 1){
-                avarias[pos].push(r.dados);
-                console.log(r.dados);
-                setSelect(select.id, avarias[pos], msg, 'Selecione o '+ msg +' da avaria'); 
-            }
-
-            metodos.msgSuccess(r.msg)
-        });
-    }
-
-    function storeTipoAVaria(selectAvaria){
-        // VERIFICA SE O VALOR NOVO FOI SELECIONADO
-        if (selectAvaria.value != 'novo') return false;
-
-        var tipoAVariaTxt = prompt ("Inserir novo tipo avaria");
-
-        // VERIFICA SE O CAMPO ESTA VAZIO
-        if(tipoAVariaTxt == '' || tipoAVariaTxt == null){
-            alert("Nenhum valor inserido.");
-            return false;
-        }
-
-        metodos.post([{'tipo':localAVariaTxt}], '/tipoAvaria', function(r){
-            if (r.tipo == 1){
-               tipoAvarias.push(retorno.dados);
-                setSelect(selectAvaria.id, tipoAvarias, 'tipo', 'Selecione o tipo da avaria'); 
-            }
-
-            metodos.msgSuccess(r.msg)
-        });
-    }
-
-    // FUNÇÃO PARA CRIAR AS OPTION SETAR NA SELECT
-    function setSelect(id, array, chave, msg, novo=true){
-        var option = '<option value="false">'+ msg +'</option>';
-        for (var i = 0; i < array.length; i++) 
-            option = option + `<option value="`+ array[i].id +`">`+ array[i][chave] +`</option>`
-
-        // CASO NÃO QUEIRA CAMPO PARA REGISTRAR NOVO TIPO OU LOCAL
-        if (novo) 
-            option = option + `<option value="novo">Novo tipo de avaria</option>`;
-
-        document.getElementById(id).innerHTML = option;
     }
 </script>
 @endsection
