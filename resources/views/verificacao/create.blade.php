@@ -66,10 +66,12 @@
 
             <h4 style="margin-top: 0.5rem">Inserir Avaria (Caso Haja)</h4>
             {{-- SELECT LOCAL AVARIA --}}
-            <select class="MineSelect" name="localAvaria" id="localAvaria" onchange="storeLocalAVaria(this)"></select>
+            {{-- <select class="MineSelect" name="localAvaria" id="localAvaria" onchange="storeLocalAVaria(this)"></select> --}}
+            <select class="MineSelect" name="localAvaria" id="localAvaria" onchange="storeAVaria(this, 'local', 0, '/localAvaria')"></select>
 
             {{-- SELECT TIPO DE AVARIA --}}
-            <select class="MineSelect" name="tipoAvaria" id="tipoAvaria" onchange="storeTipoAVaria(this)"></select>
+            {{-- <select class="MineSelect" name="tipoAvaria" id="tipoAvaria" onchange="storeTipoAVaria(this)"></select> --}}
+            <select class="MineSelect" name="tipoAvaria" id="tipoAvaria" onchange="storeAVaria(this, 'tipo', 1, '/tipoAvaria')"></select>
 
             {{-- DIV CAMPO OBSERVAÇÃO --}}
             <div id="addObs" class="row" >
@@ -91,14 +93,15 @@
         </div>
     </div>
 </div>
-<script>
-    // var metodos = new Metodos();
-    // setInterval(function(){ console.log(new Metodos()); }, 3000);
+<script type="text/javascript">
+    var localAvarias, tipoAvarias;
+    var avarias = new Array();
     @php
-        echo "var localAvarias = JSON.parse('" . $localAvarias . "');";
-        echo "var tipoAvarias = JSON.parse('" . $tipoAvarias . "');";
+        echo "localAvarias = JSON.parse('" . $localAvarias . "');";
+        echo "tipoAvarias = JSON.parse('" . $tipoAvarias . "');";
     @endphp
-    var avarias = [];
+    avarias.push(localAvarias, tipoAvarias);
+
     var cont = 0;
     var metodos;
 
@@ -163,35 +166,51 @@
         element.innerHTML = text
     }
 
-    // function excluirElement(id){
-    //     $('#'+id).remove();
-    // }
-
     function storeLocalAVaria(selectAvaria){
+        var obj = this;
         // VERIFICA SE O VALOR NOVO FOI SELECIONADO
         if (selectAvaria.value != 'novo') return false;
 
         var localAVariaTxt = prompt ("Inserir novo local avaria");
 
         // VERIFICA SE O CAMPO ESTA VAZIO
-        if(localAVariaTxt == ''){
+        if(localAVariaTxt == '' || localAVariaTxt == null){
             metodos.msgSuccess("Nenhum valor inserido.");
             return false;
         }
 
         metodos.post([{'local':localAVariaTxt}], '/localAvaria', function(r){
-            // SUCESSO
-            // var retorno = JSON.parse(r);
-            console.log('Fui', r);
             if (r.tipo == 1){
-                localAvarias.push(r.dados);
-                setSelect(selectAvaria.id, localAvarias, 'local', 'Selecione o local da avaria'); 
+                obj.localAvarias.push(r.dados);
+                setSelect(selectAvaria.id, obj.localAvarias, 'local', 'Selecione o local da avaria'); 
             }
 
             metodos.msgSuccess(r.msg)
         });
-
     }        
+    function storeAVaria(select, msg, pos, url){
+        // VERIFICA SE O VALOR NOVO FOI SELECIONADO
+        if (select.value != 'novo') return false;
+
+        var valor = prompt ("Inserir novo "+ msg +" avaria");
+
+        // VERIFICA SE O CAMPO ESTA VAZIO
+        if(valor == '' || valor == null){
+            alert("Nenhum valor inserido.");
+            return false;
+        }
+
+        var json = JSON.parse('[{"'+ msg +'":"'+ valor +'"}]');
+        metodos.post(json, url, function(r){
+            if (r.tipo == 1){
+                avarias[pos].push(r.dados);
+                console.log(r.dados);
+                setSelect(select.id, avarias[pos], msg, 'Selecione o '+ msg +' da avaria'); 
+            }
+
+            metodos.msgSuccess(r.msg)
+        });
+    }
 
     function storeTipoAVaria(selectAvaria){
         // VERIFICA SE O VALOR NOVO FOI SELECIONADO
@@ -205,36 +224,27 @@
             return false;
         }
 
-        var form = document.createElement('form');
-        form.innerHTML = `` +
-            `<input name="_token" value="{{ csrf_token() }}">`+
-            `<input name="tipo" value="` + tipoAVariaTxt + `">`
-        ;
-        var objForm = new FormData(form);
+        metodos.post([{'tipo':localAVariaTxt}], '/tipoAvaria', function(r){
+            if (r.tipo == 1){
+               tipoAvarias.push(retorno.dados);
+                setSelect(selectAvaria.id, tipoAvarias, 'tipo', 'Selecione o tipo da avaria'); 
+            }
 
-        xmlHttpPost('/tipoAvaria', objForm, function(){
-            success(function(){
-                var retorno = JSON.parse(xhttp.responseText);
-
-                // MOSTRAR MENSSAGEM DE SUCESSO
-                if (retorno.tipo == 1){
-                    tipoAvarias.push(retorno.dados);
-                    setSelect(selectAvaria.id, tipoAvarias, 'tipo', 'Selecione o tipo da avaria'); 
-                }
-                alert(retorno.msg);
-                mostrarSuccess('divMsg', retorno.msg, seg=3);
-            });
+            metodos.msgSuccess(r.msg)
         });
     }
 
     // FUNÇÃO PARA CRIAR AS OPTION SETAR NA SELECT
-    function setSelect(id, array, chave, msg){
+    function setSelect(id, array, chave, msg, novo=true){
         var option = '<option value="false">'+ msg +'</option>';
-        for (var i = 0; i < array.length; i++) {
+        for (var i = 0; i < array.length; i++) 
             option = option + `<option value="`+ array[i].id +`">`+ array[i][chave] +`</option>`
-        }
 
-        document.getElementById(id).innerHTML = option + `<option value="novo">Novo tipo de avaria</option>`;
+        // CASO NÃO QUEIRA CAMPO PARA REGISTRAR NOVO TIPO OU LOCAL
+        if (novo) 
+            option = option + `<option value="novo">Novo tipo de avaria</option>`;
+
+        document.getElementById(id).innerHTML = option;
     }
 </script>
 @endsection
