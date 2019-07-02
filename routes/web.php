@@ -58,7 +58,7 @@
         Route::post('/tipoAvaria','TipoAvariaController@store')->name('tipoAvaria.store'); //STORE
 
         // LOCAL DE AVARIA
-        // Route::post('/localAvaria','LocalAVariasController@store')->name('localAvaria.store'); //STORE
+        Route::post('/localAvaria','LocalAVariasController@store')->name('localAvaria.store'); //STORE
 
         
         Route::get('image/upload','ImageUploadController@fileCreate');

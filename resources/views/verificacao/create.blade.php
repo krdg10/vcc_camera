@@ -3,7 +3,7 @@
 @section('content')
 <div class="wrapper fadeInDown">
     <div id="formContent">
-	    <h3>Verificar entrada</h3>
+        <h3>Verificar entrada</h3>
         {{-- EXIBE MENSAGEM DE SUCESSO. --}}
         @if( \Session::has('error') )
             @foreach(session()->get('error') as $key => $ms)
@@ -20,85 +20,91 @@
             </span>
         @endif
         <div id="divMsg"></div>
-		<div class="form-control"  style="height: 400px">
+        <div class="form-control"  style="height: 400px">
             {{-- DIV QUE EXIBE OS DADOS DA ENTRADA --}}
-		    <div>
+            <div>
                 @php 
                     $tester=1;
                 @endphp
                 <h5>Motorista: {{$entradas->motorista->nome}}</h5>
-		    	<h5>Carro: {{$entradas->carro->nome}} - {{$entradas->carro->placa}}</h5>
+                <h5>Carro: {{$entradas->carro->nome}} - {{$entradas->carro->placa}}</h5>
 
-				<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-				  	@foreach ($entradas->fotos as $fotos)
+                    @foreach ($entradas->fotos as $fotos)
                         @if($tester==1)
-					    <div class="carousel-item active">
-					      <img class="d-block w-100" style="height: 300px" src="{{url('/storage/'.$fotos->path)}}" alt="Primeiro Slide">
-					    </div>
+                        <div class="carousel-item active">
+                          <img class="d-block w-100" style="height: 300px" src="{{url('/storage/'.$fotos->path)}}" alt="Primeiro Slide">
+                        </div>
                             @php
                                 $tester=2;
                             @endphp
                         @else
                         <div class="carousel-item">
-					      <img class="d-block w-100" style="height: 300px" src="{{url('/storage/'.$fotos->path)}}" alt="Slide Secundário">
-					    </div>
+                          <img class="d-block w-100" style="height: 300px" src="{{url('/storage/'.$fotos->path)}}" alt="Slide Secundário">
+                        </div>
                         @endif
-				  	@endforeach
-				    
-				  </div>
-				  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				    <span class="sr-only">Anterior</span>
-				  </a>
-				  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-				    <span class="sr-only">Próximo</span>
-				  </a>
-				</div>
-		    </div>
-		</div>
-		
+                    @endforeach
+                    
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Anterior</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Próximo</span>
+                  </a>
+                </div>
+            </div>
+        </div>
+        
 
-		<div>
-		<form method="POST" action="{{ route('verificacao.store', $entradas->id) }}" enctype="multipart/form-data">
-	    	{{ csrf_field() }}
+        <div>
+        <form method="POST" action="{{ route('verificacao.store', $entradas->id) }}" enctype="multipart/form-data">
+            {{ csrf_field() }}
 
-			<h4 style="margin-top: 0.5rem">Inserir Avaria (Caso Haja)</h4>
+            <h4 style="margin-top: 0.5rem">Inserir Avaria (Caso Haja)</h4>
             {{-- SELECT LOCAL AVARIA --}}
-			<select class="MineSelect" name="localAvaria" id="localAvaria" onchange="storeTipoAVaria(this)"></select>
+            <select class="MineSelect" name="localAvaria" id="localAvaria" onchange="storeLocalAVaria(this)"></select>
 
             {{-- SELECT TIPO DE AVARIA --}}
-			<select class="MineSelect" name="tipoAvaria" id="tipoAvaria" onchange="storeTipoAVaria(this)"></select>
+            <select class="MineSelect" name="tipoAvaria" id="tipoAvaria" onchange="storeTipoAVaria(this)"></select>
 
             {{-- DIV CAMPO OBSERVAÇÃO --}}
             <div id="addObs" class="row" >
-            	{{-- <input type="text" placeholder="Observação" name="observacao" id="observacao" class="form-control"> --}}
-                <div class="col-sm-9 col-md-6 col-lg-8" style="flex: 0 0 76.666667%; max-width: 86.666667%;"><textarea placeholder="Observação" name="observacao" id="observacao"  ></textarea></div>
-            	
-    			<div id="btnObs"><button id="addAvaria" type="button" class="btn btn-outline-primary">+</button></div>
-            </div>
-			<div id="avarias"></div>
 
-		        <div id="formFooter">
-                    <!--<div id="marcaCheck">
+            {{-- <input type="text" placeholder="Observação" name="observacao" id="observacao" class="form-control"> --}}
+            <div class="col-sm-9 col-md-6 col-lg-8" style="flex: 0 0 76.666667%; max-width: 86.666667%;"><textarea placeholder="Observação" name="observacao" id="observacao"></textarea></div>
+                
+            <div id="btnObs"><button id="addAvaria" type="button" class="btn btn-outline-primary">+</button></div>
+            </div>
+            <div id="avarias"></div>
+
+                <div id="formFooter">
+                    <div id="marcaCheck">
                         <label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked>
-                    </div>-->
-		            <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Confirmar Verificação </button>
-		        </div>
-			</form>
-		</div>
-	</div>
+                    </div>
+                    <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Confirmar verificação </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <script>
+    // var metodos = new Metodos();
+    // setInterval(function(){ console.log(new Metodos()); }, 3000);
     @php
         echo "var localAvarias = JSON.parse('" . $localAvarias . "');";
         echo "var tipoAvarias = JSON.parse('" . $tipoAvarias . "');";
     @endphp
     var avarias = [];
     var cont = 0;
+    var metodos;
 
     window.onload = function(){
+    metodos = new Metodos("{{ csrf_token() }}");
+
         $('#addAvaria').click(function(){
             var local = $('#localAvaria').val();
             var tipo = $('#tipoAvaria').val();
@@ -157,9 +163,9 @@
         element.innerHTML = text
     }
 
-    function excluirElement(id){
-        $('#'+id).remove();
-    }
+    // function excluirElement(id){
+    //     $('#'+id).remove();
+    // }
 
     function storeLocalAVaria(selectAvaria){
         // VERIFICA SE O VALOR NOVO FOI SELECIONADO
@@ -169,31 +175,23 @@
 
         // VERIFICA SE O CAMPO ESTA VAZIO
         if(localAVariaTxt == ''){
-            alert("Nenhum valor inserido.");
+            metodos.msgSuccess("Nenhum valor inserido.");
             return false;
         }
 
-        var form = document.createElement('form');
-        form.innerHTML = `` +
-            `<input name="local" value="` + localAVariaTxt + `">`+
-            `<input name="_token" value="{{ csrf_token() }}">`
-        ;
-        var objForm = new FormData(form);
+        metodos.post([{'local':localAVariaTxt}], '/localAvaria', function(r){
+            // SUCESSO
+            // var retorno = JSON.parse(r);
+            console.log('Fui', r);
+            if (r.tipo == 1){
+                localAvarias.push(r.dados);
+                setSelect(selectAvaria.id, localAvarias, 'local', 'Selecione o local da avaria'); 
+            }
 
-        xmlHttpPost('/localAvaria', objForm, function(){
-            success(function(){
-                var retorno = JSON.parse(xhttp.responseText);
-                
-                // MOSTRAR MENSSAGEM DE SUCESSO
-                if (retorno.tipo == 1){
-                    localAvarias.push(retorno.dados);
-                    setSelect(selectAvaria.id, localAvarias, 'local', 'Selecione o local da avaria'); 
-                }
-                alert(retorno.msg)
-            });
+            metodos.msgSuccess(r.msg)
         });
-        
-    }
+
+    }        
 
     function storeTipoAVaria(selectAvaria){
         // VERIFICA SE O VALOR NOVO FOI SELECIONADO

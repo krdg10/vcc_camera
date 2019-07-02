@@ -157,9 +157,9 @@
         element.innerHTML = text
     }
 
-    function excluirElement(id){
-        $('#'+id).remove();
-    }
+    // function excluirElement(id){
+    //     $('#'+id).remove();
+    // }
 
     function storeLocalAVaria(selectAvaria){
         // VERIFICA SE O VALOR NOVO FOI SELECIONADO

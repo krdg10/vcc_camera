@@ -1,102 +1,114 @@
-var xhttp;
-var request;
+class Xhttp {
+    xhttp = '';
+    request = '';
 
-try{
-    request = new XMLHttpRequest();        
-}catch (IEAtual){
-    try{
-         request = new ActiveXObject("Msxml2.XMLHTTP");       
-    }catch(IEAntigo){
+    constructor(){
         try{
-             request = new ActiveXObject("Microsoft.XMLHTTP");          
-        }catch(falha){
-            request = false;
+            this.request = new XMLHttpRequest();        
+        }catch (IEAtual){
+            try{
+                this.request = new ActiveXObject("Msxml2.XMLHTTP");       
+            }catch(IEAntigo){
+                try{
+                    this.request = new ActiveXObject("Microsoft.XMLHTTP");          
+                }catch(falha){
+                    this.request = false;
+                }
+            }
+        }
+          
+        if (!this.request){
+            alert("Seu Navegador não suporta Ajax!");
+            this.xhttp = false;
+        }
+        else{
+         	this.xhttp = this.request;
         }
     }
-}
-  
-if (!request){
-    alert("Seu Navegador não suporta Ajax!");
-    xhttp = false;
-}
-else{
- 	xhttp = request;
-}
 
+    xmlHttpGet(url, callback=function(){}, callbackError=function(){}, callbackSend=function(){}) {
+        var obj = this;
+        this.xhttp.onreadystatechange = function(){
+            // OCORREU TUDO BEM
+            obj.success(callback);
 
-function xmlHttpGet(url, callback=function(){}, callbackError=function(){}, callbackSend=function(){}) {
-    xhttp.onreadystatechange = function(){
-        // OCORREU TUDO BEM
-        success(callback());
+            // ESTÁ ENVIANDO
+            obj.beforeSend(callbackSend);
 
-        // ESTÁ ENVIANDO
-        beforeSend(callbackSend());
+            // DEU ERRO
+            obj.error(callbackError)
+        };
+        this.xhttp.open('GET', url);
+        this.xhttp.send();
+    }
 
-        // DEU ERRO
-        error(callbackError())
-    };
-    xhttp.open('GET', url);
-    xhttp.send();
-}
+    xmlHttpPost(url, parameters, callback=function(){}, callbackError=function(){}, callbackSend=function(){}) {
+        var obj = this;
+        this.xhttp.onreadystatechange = function(){
+            // OCORREU TUDO BEM
+            obj.success(callback);
 
-function xmlHttpPost(url, parameters, callback=function(){}, callbackError=function(){}, callbackSend=function(){}) {
-    xhttp.onreadystatechange = function(){
-        // OCORREU TUDO BEM
-        success(callback());
+            // ESTÁ ENVIANDO
+            obj.beforeSend(callbackSend);
 
-        // ESTÁ ENVIANDO
-        beforeSend(callbackSend());
+            // DEU ERRO
+            obj.error(callbackError);
+        };
+        this.xhttp.open('POST', url);
+        this.xhttp.send(parameters);
+    }
 
-        // DEU ERRO
-        error(callbackError());
-    };
-    xhttp.open('POST', url);
-    xhttp.send(parameters);
-}
+    xmlHttpDelete(url, callback=function(){}, callbackError=function(){}, callbackSend=function(){}) {
+        var obj = this;
+        this.xhttp.open("DELETE", url);
+        this.xhttp.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+        xhttp.onreadystatechange = function(){
+            // OCORREU TUDO BEM
+            obj.success(callback());
 
-function xmlHttpDelete(url, callback=function(){}, callbackError=function(){}, callbackSend=function(){}) {
-    xhttp.open("DELETE", url);
-    xhttp.setRequestHeader("X-CSRF-TOKEN", csrfToken);
-    xhttp.onreadystatechange = function(){
-        // OCORREU TUDO BEM
-        success(callback());
+            // ESTÁ ENVIANDO
+            obj.beforeSend(callbackSend);
 
-        // ESTÁ ENVIANDO
-        beforeSend(callbackSend());
+            // DEU ERRO
+            obj.error(callbackError);
+        };
+        this.xhttp.send();
+    }
 
-        // DEU ERRO
-        error(callbackError());
-    };
-    xhttp.send();
-}
+    xmlHttpPut(url, parameters, callback=function(){}, callbackError=function(){}, callbackSend=function(){}) {
+        var obj = this;
+        var csrfToken = document.querySelector('#csrfToken');
+        this.xhttp.open("PUT", url);
+        this.xhttp.setRequestHeader("X-CSRF-TOKEN", csrfToken.value );
+        this.xhttp.onreadystatechange = function(){
+            // OCORREU TUDO BEM
+            obj.success(callback);
 
-function xmlHttpPut(url, parameters, callback=function(){}, callbackError=function(){}, callbackSend=function(){}) {
-    var csrfToken = document.querySelector('#csrfToken');
-    xhttp.open("PUT", url);
-    xhttp.setRequestHeader("X-CSRF-TOKEN", csrfToken.value );
-    xhttp.onreadystatechange = function(){
-        // OCORREU TUDO BEM
-        success(callback());
+            // ESTÁ ENVIANDO
+            obj.beforeSend(callbackSend);
 
-        // ESTÁ ENVIANDO
-        beforeSend(callbackSend());
+            // DEU ERRO
+            obj.error(callbackError);
+        };
+        this.xhttp.send(parameters);
+    }
 
-        // DEU ERRO
-        error(callbackError());
-    };
-    xhttp.send(parameters);
-}
+    success(callback){
+        // var obj = this.xhttp.responseText != "" ? JSON.parse(this.xhttp.responseText) : 'expr2';
 
-function success(callback){
-    if(xhttp.readyState == 4 && xhttp.status ==200)
-        callback(JSON.parse(xhttp.responseText));
-}
+        if(this.xhttp.readyState == 4 && this.xhttp.status ==200){
+            console.log('this.xhttp.responseText')
+            callback(JSON.parse(this.xhttp.responseText));
+        }
+    }
 
-function beforeSend(callback){
-	if(xhttp.readyState < 4 )
-		callback(JSON.parse(xhttp.responseText));
-}
+    beforeSend(callback){
+        var obj = this;
+    	if(this.xhttp.readyState < 4 )
+    		callback(obj.xhttp.responseText);
+    }
 
-function error(callback){
-	xhttp.onerror = callback(JSON.parse(xhttp.responseText));
+    error(callback){
+    	this.xhttp.onerror = callback(/*JSON.parse(this.xhttp.responseText)*/);
+    }
 }

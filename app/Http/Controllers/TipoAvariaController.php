@@ -15,7 +15,7 @@ class TipoAvariaController extends Controller{
     }
 
     public function store(Request $request){
-        // VERIFICA SE EXISTE ALGO CADASTRADO
+        // VERIFICA SE EXISTE ALGO CADASTRADO COM ESSE NOME
         if(Tipo_avarias::where('tipo', 'like', '%'. $request->tipo .'%')->count() > 0)
             return Metodos::retorno(0, 'Já existe "' . $request->tipo . '" cadastrado.');
 
