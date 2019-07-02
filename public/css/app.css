@@ -3071,7 +3071,7 @@ fieldset:disabled a.btn {
 
 .btn-outline-primary:hover {
   color: #fff;
-  background-color: #41a58b;
+  background-color: #558478;
   border-color: #41a58b;
 }
 
@@ -5342,7 +5342,7 @@ a.badge:hover, a.badge:focus {
 
 .badge-primary {
   color: #fff;
-  background-color: #007bff;
+  background-color: #41a58b;
 }
 
 a.badge-primary:hover, a.badge-primary:focus {

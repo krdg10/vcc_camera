@@ -53,13 +53,14 @@
         @endif
         <hr>
         <form method="POST" action="{{ route('carro.update', $Carro->id) }}" enctype="multipart/form-data" onsubmit="return validaCampos();" >
-        {{ csrf_field() }}
             <input type="text" placeholder="Nome" name="nome" class="form-control" value="{{ $Carro->nome }}">
             <input type="text" placeholder="Placa" name="placa" class="form-control" maxlength="7" minlength="7" value="{{ $Carro->placa }}">
             <input type="text" placeholder="Modelo" name="modelo" class="form-control" value="{{ $Carro->modelo }}">
             <input type="text" placeholder="Ano" name="ano" class="form-control" maxlength="4" minlength="4" value="{{ $Carro->ano }}">
             <div id="formFooter">
-                <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Atualizar </button>
+                <button type="submit" id="submit" class="fadeIn fourth btn btn-primary" value="put"> Atualizar </button>
+                @method('put')
+                @csrf
             </div>
 
         </form>

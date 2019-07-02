@@ -88,7 +88,7 @@
 			@endforeach
 		</div>
 		<div id="formFooter">
-            <div id="marcaCheck"><label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked disabled></div>
+           <!-- <div id="marcaCheck"><label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked disabled></div> -->
 		</div>
 	</div>
 	</div>

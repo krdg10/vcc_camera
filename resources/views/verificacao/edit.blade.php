@@ -107,7 +107,7 @@
 				<div class="card-header" id="headingOne">
 					<h5 class="mb-0">
 						<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-						Editar Avarias Existentes
+						Editar ou Excluir Avarias Existentes
 						</button>
 					</h5>
 				</div>
@@ -120,7 +120,6 @@
 							@endif
 							@foreach ($Avarias as $avaria) 
 								<form method="POST" action="{{ route('verificacao.update', $avaria->id) }}" enctype="multipart/form-data">
-									{{ csrf_field() }}
 									<div class="card">
 										<div class="card-header" id="heading{{$avaria->id}}">
 											<h5 class="mb-0">
@@ -156,8 +155,16 @@
 												@if ($avaria->verificacao_id == $Verificacao->id)
 													<input class="form-control" type="text" value="{{ $avaria->obs }} " name="obs" id="obs">
 												@endif
+												
 												<button type="submit" id="submit" class="btn btn-outline-primary"> Atualizar Avaria </button>
-												<button type="submit" id="submit" class="btn btn-outline-primary" formaction="{{ route('descavarias.destroy', $avaria->id) }}" > Excluir </button>
+												@method('put')
+                								@csrf
+								</form>
+								<form method="POST" action="{{ route('descavarias.destroy', $avaria->id)  }}" enctype="multipart/form-data"> <!-- antes n tinha esse form. Era só o button uma linha abaixo. dai ficava lado a lado na tela. Era tudo post, ai usava um formaction na tag com o mesmo endereço do form de baixo. tentei formmethod pra n precisar de dois form mas foi não-->
+									<button type="submit" id="submit" class="btn btn-outline-primary" value="delete" style="padding-left: 32px; padding-right: 32px; margin-top: 5px;"> <i class="fas fa-trash"></i> Excluir </button>
+										@method('delete')
+										@csrf
+								</form>
 											</div>
 										</div>
 									</div>
@@ -181,7 +188,7 @@
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 					<div class="card-body">
 						<form method="POST" action="{{ route('descavarias.store', $Verificacao->id) }}" enctype="multipart/form-data">
-							{{ csrf_field() }}
+							@csrf
 							<h4 style="margin-top: 0.5rem">Inserir Avaria Nova</h4>
 							<select class="MineSelect" name="localAvariaNovo" id="localAvariaNovo"> <!--tava form-control -->
 								<option value="false"> Selecione uma opção </option>
@@ -208,7 +215,7 @@
 			</div>
            
 		    <div id="formFooter">
-                <div id="marcaCheck"><label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked disabled></div>
+                <!--<div id="marcaCheck"><label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked disabled></div>-->
 		    </div>
 		</div>
 	</div>

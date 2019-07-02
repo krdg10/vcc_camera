@@ -34,19 +34,21 @@ class VerificacaoController extends Controller{
         }
         
         $verificacao = new Verificacao;
-        $verificacao->verificado = $request->verificado;
+        //$verificacao->verificado = $request->verificado;
         $verificacao->entrada_id = $id;
         $verificacao->users_id = Auth::id();
         $verificacao->save();
-        for($i = 0; $i < count($request->local); $i++){
-            $avaria = new Desc_avarias;
-            $avaria->local_avaria_id = $request->local[$i];
-            $avaria->tipo_avaria_id = $request->tipo[$i];
-            $avaria->obs = $request->obs[$i];
-            $avaria->verificacao_id = $verificacao->id;
+        if(isset($request->local)){
+            for($i = 0; $i < count($request->local); $i++){
+                $avaria = new Desc_avarias;
+                $avaria->local_avaria_id = $request->local[$i];
+                $avaria->tipo_avaria_id = $request->tipo[$i];
+                $avaria->obs = $request->obs[$i];
+                $avaria->verificacao_id = $verificacao->id;
 
-         /*   $expediente->negocio()->associate($negocio);*/
-            $avaria->save();
+            /*   $expediente->negocio()->associate($negocio);*/
+                $avaria->save();
+            }
         }
         return redirect()->back()->with('message', 'Sucesso ao criar o seu negócio!');
     }

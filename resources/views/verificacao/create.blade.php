@@ -81,10 +81,10 @@
 			<div id="avarias"></div>
 
 		        <div id="formFooter">
-                    <div id="marcaCheck">
+                    <!--<div id="marcaCheck">
                         <label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked>
-                    </div>
-		            <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Confirmar verificação </button>
+                    </div>-->
+		            <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Confirmar Verificação </button>
 		        </div>
 			</form>
 		</div>

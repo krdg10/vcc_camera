@@ -26,7 +26,7 @@
         Route::post('/motorista','MotoristaController@store')->name('motorista.store');
         Route::get('/motorista/listar','MotoristaController@show')->name('motorista.show');
         Route::get('/motorista/listar/{id}','MotoristaController@edit')->name('motorista.edit');
-        Route::post('/motorista/listar/{id}','MotoristaController@update')->name('motorista.update');
+        Route::put('/motorista/listar/{id}','MotoristaController@update')->name('motorista.update');
         Route::get('/motorista/listar/excluir/{id}','MotoristaController@delete')->name('motorista.delete');
         Route::delete('/motorista/listar/excluir/{id}','MotoristaController@destroy')->name('motorista.destroy');
 
@@ -35,9 +35,9 @@
         Route::post('/carro','CarroController@store')->name('carro.store');
         Route::get('/carro/listar','CarroController@show')->name('carro.show');
         Route::get('/carro/listar/{id}','CarroController@edit')->name('carro.edit');
-        Route::post('/carro/listar/{id}','CarroController@update')->name('carro.update');
+        Route::put('/carro/listar/{id}','CarroController@update')->name('carro.update');
         Route::get('/carro/listar/excluir/{id}','CarroController@delete')->name('carro.delete');
-        Route::post('/carro/listar/excluir/{id}','CarroController@destroy')->name('carro.destroy');
+        Route::delete('/carro/listar/excluir/{id}','CarroController@destroy')->name('carro.destroy');
 
         Route::get('/entrada','EntradaController@index')->name('entrada');
         Route::post('/entrada','EntradaController@store')->name('entrada.store');
@@ -46,8 +46,8 @@
         Route::get('/verificacao/{id}','VerificacaoController@show')->name('verificacao.show'); //SHOW
         Route::post('/verificacao/{id}','VerificacaoController@store')->name('verificacao.store'); //STORE
         Route::get('/verificacao/edit/{id}','VerificacaoController@edit')->name('verificacao.edit'); //edit
-        Route::post('/verificacao/edit/{id}','VerificacaoController@update')->name('verificacao.update'); //edit
-        Route::post('/verificacao/edit/excluir/{id}','DescAvariasController@destroy')->name('descavarias.destroy');
+        Route::put('/verificacao/edit/{id}','VerificacaoController@update')->name('verificacao.update'); //edit
+        Route::delete('/verificacao/edit/excluir/{id}','DescAvariasController@destroy')->name('descavarias.destroy');
         Route::post('/verificacao/edit/adicionar/{id}','DescAvariasController@store')->name('descavarias.store');
         Route::get('/verificacao/edit/adicionar/{id}','VerificacaoController@edit')->name('verificacao.edit');
         Route::get('/verificacao/exibir/{id}','VerificacaoController@exibir')->name('verificacao.exibir');
