@@ -1,15 +1,23 @@
-function mostrarErros(idCampo, msg, seg=3){
+function msgErros(idCampo, msg, seg=3){
 	var campo = document.querySelector('#'+idCampo);
-	campo.innerHTML = '<p class="alert alert-danger text-center">'+msg+'</p>';
-	setTimeout(function(){campo.innerHTML='';}, seg * 1000); 
-}
-
-function mostrarSuccess(idCampo, msg, seg=3){
-	`<span id="success" class="badge badge-success badge-pill">`+
+	campo.innerHTML = `<span id="error" class="badge badge-danger badge-pill">`+
         msg+
         `<a id="excluir" onClick="excluirElement('success')"><i class="fa fa-times" aria-hidden="true"></i></a>`+
     `</span>`;
 	setTimeout(function(){campo.innerHTML='';}, seg * 1000); 
+}
+
+function msgSuccess(idCampo, msg, seg=3){
+	var campo = document.querySelector('#'+idCampo);
+	campo.innerHTML = `<span id="success" class="badge badge-success badge-pill">`+
+        msg+
+        `<a id="excluir" onClick="excluirElement('success')"><i class="fa fa-times" aria-hidden="true"></i></a>`+
+    `</span>`;
+	setTimeout(function(){campo.innerHTML='';}, seg * 1000); 
+}
+
+function excluirElement(id){
+    $('#'+id).remove();
 }
 
 function mostrarImgProc(idCampo){
@@ -28,6 +36,23 @@ function verificarNavegador(){
         return false;
 }
 
-// function enviar(valor, ){
+function post(json, url, callback=function(){}, callbackError=function(){}, callbackSend=function(){}){
+	var campos = '';
+	var chave='';
+	for (var i = 0; i < json.length; i++) {
+		chave = Object.keys(json[i]);
+		campos = campos + `<input name="`+ chave +`" value="` + json[i][chave] + `"> `;
+	}
 
-// }
+	var form = document.createElement('form');
+    form.innerHTML = `<input name="_token" value="`+ csrfToken +`"> ` + campos;
+    var objForm = new FormData(form);
+
+    xmlHttpPost(url, objForm, function(){
+    	callback()
+    },function(){
+    	callbackError()
+    },function(){
+    	callbackSend()
+    },);
+}
