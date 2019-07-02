@@ -13,7 +13,7 @@ use App\Models\Verificacao;
 
 class EntradaController extends Controller{
     public function index(){
-        $entradas = Entrada::all();
+        $entradas = Entrada::paginate(5);
         $verificacoes = Verificacao::all();
         return view('entrada.index', compact('entradas', 'verificacoes'));
     }

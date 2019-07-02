@@ -14,23 +14,27 @@ class ImageUploadController extends Controller
     public function fileStore(Request $request)
     {
         $image = $request->file('file');
+
         $imageName = $image->getClientOriginalName();
-        $image->move(public_path('fotos'),$imageName);
+        $image->storeAs('file', $imageName);
+       
         
         $imageUpload = new Foto();
-        $imageUpload->path = $imageName;
+        $imageUpload->path = 'file/' . $imageName;
+        $imageUpload->entrada_id = 8;
         $imageUpload->save();
         return response()->json(['success'=>$imageName]);
     }
     public function fileDestroy(Request $request)
     {
         $filename =  $request->get('filename');
-        Foto::where('path',$filename)->delete();
-        $path=public_path().'/fotos/'.$filename;
+        $compare = 'file/' . $filename;
+        Foto::where('path', $compare)->delete();
+        $path=storage_path('app/public').'/'.$compare;
         if (file_exists($path)) {
             unlink($path);
         }
-        return $filename;  
+        return $filename;
     }
 
 

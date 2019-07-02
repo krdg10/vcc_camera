@@ -16,7 +16,7 @@
     <form method="post" action="{{url('image/upload/store')}}" enctype="multipart/form-data" 
                   class="dropzone" id="dropzone">
     @csrf
-    <input class="form-control" type="text">
+    <input class="form-control" type="text" value="8" id="teste">
 </form>   
 <script type="text/javascript">
         Dropzone.options.dropzone =
@@ -31,8 +31,10 @@
             addRemoveLinks: true,
             timeout: 50000,
             removedfile: function(file) 
-            {
+            {   
+                
                 var name = file.upload.filename;
+                console.log(file.upload.filename);
                 $.ajax({
                     headers: {
                                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -42,6 +44,7 @@
                     data: {filename: name},
                     success: function (data){
                         console.log("File has been successfully removed!!");
+                        console.log(data);
                     },
                     error: function(e) {
                         console.log(e);
