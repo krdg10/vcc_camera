@@ -19,7 +19,6 @@
 
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::group(['middleware' => ['auth']], function () {  
-        Route::resource('/entradas', 'EntradaController');
 
         // MOTORISTA
         Route::get('/motorista','MotoristaController@index')->name('motorista');
@@ -40,6 +39,7 @@
         Route::delete('/carro/listar/excluir/{id}','CarroController@destroy')->name('carro.destroy');
 
         Route::get('/entrada','EntradaController@index')->name('entrada');
+        Route::get('/entrada/create','EntradaController@create')->name('entrada.create');
         Route::post('/entrada','EntradaController@store')->name('entrada.store');
 
         // VERIFICAÇÃO
