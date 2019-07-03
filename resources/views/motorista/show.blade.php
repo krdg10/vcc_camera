@@ -2,33 +2,42 @@
 @section('content')
 <div class="wrapper fadeInDown">
     <div id="formContent">
-        <!-- Tabs Titles -->
-
-        <!-- Icon -->
         <div class="fadeIn first">
-        <h3>Lista de Motoristas </h3>
-        <a data-toggle="modal" href="#modalBusca" data-target="#modalBusca"><i class="fas fa-search">Buscar</i></a>
-        </div>
-            <hr>
-            <div class="container">
-                <div class="list-group">
+            <h3>Lista de Motoristas </h3>
+            <a data-toggle="modal" href="#modalBusca" data-target="#modalBusca"><i class="fas fa-search">Buscar</i></a>
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Código VCC</th>
+                        <th>Código Transdata</th>
+                        <th>Apagar/
+                        Editar</th>
+                    </tr>
+                </thead>
+                <tbody>
                     @if(count($motoristas)==0)
-                        <h3>Nenhum Veículo Encontrado</h3>
+                        <h3>Nenhum Motorista Encontrado</h3>
                     @endif
-                    @foreach ($motoristas as $motorista) 
-                    <li class="list-group-item list-group-item-action"><div class="d-flex"> <div class="mr-auto p-2"> {{ $motorista->nome }} - {{ $motorista->cpf }} </div><div class="p-2 iconesLista"><a href="{{ url('/motorista/listar/excluir/'.$motorista->id) }}">  <i class="fas fa-trash"></i> </a> <a href="{{ url('/motorista/listar/'.$motorista->id) }}"> <i class="fas fa-edit"></i></a></div></li>
+                    @foreach ($motoristas as $motorista)
+                        <tr>
+                            <td>{{$motorista->nome}}</td>
+                            <td>{{$motorista->cpf}}</td>
+                            <td>{{$motorista->codigo_empresa}}</td>
+                            <td>{{$motorista->codigo_transdata}}</td>
+                            <td><div class="p-2 iconesLista"><a href="{{ url('/motorista/listar/excluir/'.$motorista->id) }}">  <i class="fas fa-trash"></i> </a> <a href="{{ url('/motorista/listar/'.$motorista->id) }}"> <i class="fas fa-edit"></i></a></div></td>
+                        </tr>
                     @endforeach
-
-                </div>
-            </div>
+                </tbody>
+            </table>   
             <div id="formFooter">
                 <div class="d-flex justify-content-center">
                 {{ $motoristas->links() }}
                 </div>
             </div>
-        
     
-
+        </div>
     </div>
 </div>
 <div class="modal fade" id="modalBusca" tabindex="-1" role="dialog" aria-labelledby="busca" aria-hidden="true">
