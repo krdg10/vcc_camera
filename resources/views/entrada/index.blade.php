@@ -42,7 +42,7 @@
         </div>
         <div id="formFooter">
             <div class="d-flex justify-content-center">
-              
+                {{ $entradas->links() }}
             </div>
         </div>
     </div>

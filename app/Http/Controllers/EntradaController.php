@@ -10,6 +10,9 @@ use App\Models\Motorista;
 use App\Models\Foto;
 use App\Models\Verificacao;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\LengthAwarePaginator;
+//quando procurei isDate achei uma coisa assim mas n sabia como usar.
+
 
 
 class EntradaController extends Controller{
@@ -35,18 +38,43 @@ class EntradaController extends Controller{
                 ->orderBy('entradas.horario', 'desc')
                 ->get('entradas.id');
         }
+        //https://medium.com/justlaravel/paginated-data-with-search-functionality-in-laravel-ee0b1668b687
         //select `entradas`.`id` from `entradas` inner join `motoristas` on `motoristas`.`id` = `entradas`.`motorista_id` inner join `carros` on `carros`.`id` = `entradas`.`carro_id` inner join `verificacoes` on `verificacoes`.`entrada_id` = `entradas`.`id` where `entradas`.`horario` = '2019-07-01 15:15:00' or `motoristas`.`nome` is null or `carros`.`nome` is null
         //quando select * ou get() tava dando ruim.
         //esse código não tinha o orderBy
         //error_log($query);
         foreach($query as $entrada){
-            $entradas[]= Entrada::find($entrada->id);
+            $teste[]= Entrada::find($entrada->id);
         }
+        /*if(isset($teste)==0){
+            $entradas = Entrada::orderBy('horario', 'desc')->paginate(5);
+            return view('entrada.busca', compact('entradas'));
+        }*/
+       // Get current page form url e.x. &page=1
+       $currentPage = LengthAwarePaginator::resolveCurrentPage();
+ 
+       // Create a new Laravel collection from the array data
+       $itemCollection = collect($teste);
+
+       // Define how many items we want to be visible in each page
+       $perPage = 1;
+
+       // Slice the collection to get the items to display in current page
+       $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+
+       // Create our paginator and pass it to the view
+       $entradas= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+
+       // set url path for generted links
+       $entradas->setPath($request->url());
+   
+        
+     
 
 
         //deixei um count na view como verificação. Podia mandar mensagem, mas ia ter que colocar todo aquele código lá. 
         //O problema: quando abrir view, se não tiver nada cadastrado, vai aparecer a mensagem como se fosse busca
-        return view('entrada.index', compact('entradas'));
+        return view('entrada.busca', compact('entradas'));
     }
 
     public function store(Request $request){
