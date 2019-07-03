@@ -45,6 +45,9 @@
         Route::get('/entrada','EntradaController@index')->name('entrada');
         Route::get('/entrada/create','EntradaController@create')->name('entrada.create');
         Route::post('/entrada','EntradaController@store')->name('entrada.store');
+        Route::post('/entrada/buscar', 'EntradaController@busca')->name('entrada.busca');
+        Route::get('/entrada/buscar', 'EntradaController@index');
+
 
         // VERIFICAÇÃO
         Route::get('/verificacao/{id}','VerificacaoController@show')->name('verificacao.show'); //SHOW

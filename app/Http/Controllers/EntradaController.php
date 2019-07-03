@@ -9,13 +9,44 @@ use App\Models\Carro;
 use App\Models\Motorista;
 use App\Models\Foto;
 use App\Models\Verificacao;
+use Illuminate\Support\Facades\DB;
 
 
 class EntradaController extends Controller{
     public function index(){
         $entradas = Entrada::orderBy('horario', 'desc')->paginate(5);
-        $verificacoes = Verificacao::all();
-        return view('entrada.index', compact('entradas', 'verificacoes'));
+        return view('entrada.index', compact('entradas'));
+    }
+    public function busca(Request $request){
+        if($request->verificado==1){
+            $query = DB::table('entradas')
+                ->join('motoristas', 'motoristas.id', '=', 'entradas.motorista_id')
+                ->join('carros', 'carros.id', '=', 'entradas.carro_id')
+                ->join('verificacoes', 'verificacoes.entrada_id', '=', 'entradas.id')
+                ->where('entradas.horario', $request->horario)->orWhere('motoristas.nome', $request->nome)->orWhere('carros.nome', $request->carro)
+                ->orderBy('entradas.horario', 'desc')
+                ->get('entradas.id');
+        }
+        else{
+            $query = DB::table('entradas')
+                ->join('motoristas', 'motoristas.id', '=', 'entradas.motorista_id')
+                ->join('carros', 'carros.id', '=', 'entradas.carro_id')
+                ->where('entradas.horario', $request->horario)->orWhere('motoristas.nome', $request->nome)->orWhere('carros.nome', $request->carro)
+                ->orderBy('entradas.horario', 'desc')
+                ->get('entradas.id');
+        }
+        //select `entradas`.`id` from `entradas` inner join `motoristas` on `motoristas`.`id` = `entradas`.`motorista_id` inner join `carros` on `carros`.`id` = `entradas`.`carro_id` inner join `verificacoes` on `verificacoes`.`entrada_id` = `entradas`.`id` where `entradas`.`horario` = '2019-07-01 15:15:00' or `motoristas`.`nome` is null or `carros`.`nome` is null
+        //quando select * ou get() tava dando ruim.
+        //esse código não tinha o orderBy
+        //error_log($query);
+        foreach($query as $entrada){
+            $entradas[]= Entrada::find($entrada->id);
+        }
+
+
+        //deixei um count na view como verificação. Podia mandar mensagem, mas ia ter que colocar todo aquele código lá. 
+        //O problema: quando abrir view, se não tiver nada cadastrado, vai aparecer a mensagem como se fosse busca
+        return view('entrada.index', compact('entradas'));
     }
 
     public function store(Request $request){
