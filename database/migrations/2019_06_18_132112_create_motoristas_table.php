@@ -10,7 +10,7 @@ class CreateMotoristasTable extends Migration{
             $table->increments('id');
             $table->string('nome');
             $table->string('cpf', 45);
-            $table->dateTime('data_nascimento');
+            $table->date('data_nascimento');
             $table->string('codigo_empresa', 4);
             $table->string('codigo_transdata', 5);
             $table->timestamps();
