@@ -2,21 +2,24 @@
 
 @section('content')
 <script type="text/javascript">
-    var avaria;
-    var avarias = new Array();
-    var localAvarias, tipoAvarias;
-    @php
-        echo "localAvarias = JSON.parse('" . $localAvarias . "');";
-        echo "tipoAvarias = JSON.parse('" . $tipoAvarias . "');";
-    @endphp
-    avarias.push(localAvarias, tipoAvarias);
-
+    var avaria, fotos;    
     var cont = 0;
     var metodos;
 
     window.onload = function(){
-        metodos = new Metodos("{{ csrf_token() }}");
-        avaria = new Avaria();
+        
+        @php
+            echo "
+                metodos = new Metodos('". csrf_token() ."');
+                avaria = new Avaria('". $localAvarias ."', '" . $tipoAvarias . "'); 
+                fotos = JSON.parse('". $entradas->fotos ."');
+            ";
+        @endphp
+
+        // FUNÇÃO PARA SETAR O OPTION EM SELECT DAS AVARIAS
+        avaria.setSelect('localAvaria', 'local');
+        avaria.setSelect('tipoAvaria', 'tipo'); 
+        avaria.carousel('divExibebeImagens', fotos)
 
         $('#addAvaria').click(function(){
             var local = $('#localAvaria').val();
@@ -54,10 +57,6 @@
             }
             document.getElementById('avarias').innerHTML = text;
         })
-
-        // FUNÇÃO PARA SETAR O OPTION EM SELECT DAS AVARIAS
-        avaria.setSelect('localAvaria', localAvarias, 'local', 'Selecione o local da avaria');
-        avaria.setSelect('tipoAvaria', tipoAvarias, 'tipo', 'Selecione o tipo da avaria'); 
     }
 
     function excluir(id){
@@ -94,74 +93,67 @@
                     <a id="excluir" onClick="excluirElement('success')"><i class="fa fa-times" aria-hidden="true"></i></a>
             </span>
         @endif
-        <div id="divMsg"></div>
-        <div class="form-control"  style="height: 400px">
-            {{-- DIV QUE EXIBE OS DADOS DA ENTRADA --}}
-            <div>
-                @php 
-                    $tester=1;
-                @endphp
-                <h5>Motorista: {{$entradas->motorista->nome}}</h5>
-                <h5>Carro: {{$entradas->carro->nome}} - {{$entradas->carro->placa}}</h5>
 
+        {{-- DIV PARA EXIBIR MENSAGENS --}}
+        <div id="divMsg"></div>
+
+        <div class="form-control"  style="height: 120px">
+            <h5>Motorista: {{$entradas->motorista->nome}}</h5>
+            <h5>Carro: {{$entradas->carro->nome}} - {{$entradas->carro->placa}}</h5>
+        </div>
+
+        {{-- DIV QUE EXIBE OS DADOS DA ENTRADA --}}
+        <div id="divExibebeImagens" class="form-control"  style="height: 400px">
+            {{-- <div>
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     @foreach ($entradas->fotos as $fotos)
-                        @if($tester==1)
-                        <div class="carousel-item active">
-                          <img class="d-block w-100" style="height: 300px" src="{{url('/storage/'.$fotos->path)}}" alt="Primeiro Slide">
-                        </div>
-                            @php
-                                $tester=2;
-                            @endphp
-                        @else
                         <div class="carousel-item">
-                          <img class="d-block w-100" style="height: 300px" src="{{url('/storage/'.$fotos->path)}}" alt="Slide Secundário">
+                        <div class="carousel-item active">
+                          <img class="d-block w-100" src="{{url('/storage/'.$fotos->path)}}" alt="Slide Secundário">
                         </div>
-                        @endif
                     @endforeach
-                    
-                  </div>
-                  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Anterior</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Próximo</span>
-                  </a>
+
                 </div>
-            </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Anterior</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Próximo</span>
+                    </a>
+                </div>
+            </div> --}}
         </div>
         
 
         <div>
-        <form method="POST" action="{{ route('verificacao.store', $entradas->id) }}" enctype="multipart/form-data">
-            {{ csrf_field() }}
+            <form method="POST" action="{{ route('verificacao.store', $entradas->id) }}" enctype="multipart/form-data">
+                {{ csrf_field() }}
 
-            <h4 style="margin-top: 0.5rem">Inserir Avaria (Caso Haja)</h4>
-            {{-- SELECT LOCAL AVARIA --}}
-            {{-- <select class="MineSelect" name="localAvaria" id="localAvaria" onchange="storeLocalAVaria(this)"></select> --}}
-            <select class="MineSelect" name="localAvaria" id="localAvaria" onchange="avaria.storeAVaria(this, 'local', 0, '/localAvaria')"></select>
+                <h4 style="margin-top: 0.5rem">Inserir Avaria (Caso Haja)</h4>
+                {{-- SELECT LOCAL AVARIA --}}
+                <select class="MineSelect" name="localAvaria" id="localAvaria" onchange="avaria.storeAVaria(this, 'local', 0, '/localAvaria')"></select>
 
-            {{-- SELECT TIPO DE AVARIA --}}
-            {{-- <select class="MineSelect" name="tipoAvaria" id="tipoAvaria" onchange="storeTipoAVaria(this)"></select> --}}
-            <select class="MineSelect" name="tipoAvaria" id="tipoAvaria" onchange="avaria.storeAVaria(this, 'tipo', 1, '/tipoAvaria')"></select>
+                {{-- SELECT TIPO DE AVARIA --}}
+                <select class="MineSelect" name="tipoAvaria" id="tipoAvaria" onchange="avaria.storeAVaria(this, 'tipo', 1, '/tipoAvaria')"></select>
 
-            {{-- DIV CAMPO OBSERVAÇÃO --}}
-            <div id="addObs" class="row" >
+                <div id="addObs" class="row" >
+                    {{-- DIV CAMPO OBSERVAÇÃO --}}
+                    <div class="col-sm-9 col-md-6 col-lg-8" style="flex: 0 0 76.666667%; max-width: 86.666667%;">
+                        <textarea placeholder="Observação" name="observacao" id="observacao"></textarea>
+                    </div>
+                    
+                    {{-- BUTTON PARA ADICIONAR NOVA VERIFICAÇÃO --}}
+                    <div id="btnObs"><button id="addAvaria" type="button" class="btn btn-outline-primary">+</button></div>
+                </div>
 
-            {{-- <input type="text" placeholder="Observação" name="observacao" id="observacao" class="form-control"> --}}
-            <div class="col-sm-9 col-md-6 col-lg-8" style="flex: 0 0 76.666667%; max-width: 86.666667%;"><textarea placeholder="Observação" name="observacao" id="observacao"></textarea></div>
-                
-            <div id="btnObs"><button id="addAvaria" type="button" class="btn btn-outline-primary">+</button></div>
-            </div>
-            <div id="avarias"></div>
+                {{-- DIV PARA LISTAR AS VERIFICAÇÕES --}}
+                <div id="avarias"></div>
 
                 <div id="formFooter">
-                    <!--<div id="marcaCheck">
-                        <label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked>
-                    </div>-->
+                    {{-- <label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked> --}}
                     <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Confirmar verificação </button>
                 </div>
             </form>
