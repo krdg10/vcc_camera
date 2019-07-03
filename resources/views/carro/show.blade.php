@@ -52,6 +52,8 @@
                     @csrf
                     <input type="text" name="nome" id="nome" placeholder="Nome" class="form-control">
                     <input type="text" name="placa" id="placa" placeholder="Placa" class="form-control">
+                    <input type="text" name="modelo" id="modelo" placeholder="Modelo" class="form-control">
+                    <input type="text" name="ano" id="ano" placeholder="Ano" class="form-control">
                     <div id="formFooter">
                         <button type="submit" id="submit" class="btn btn-primary">Buscar</button>
                     </div>

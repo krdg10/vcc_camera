@@ -43,7 +43,7 @@ class CarroController extends Controller
         return view('carro.show', compact('carros'));
     }
     public function busca(Request $request){
-        $carros = DB::table('carros')->where('placa', $request->placa)->orWhere('nome', $request->nome)->orderBy('nome')->paginate(5);
+        $carros = DB::table('carros')->where('placa', $request->placa)->orWhere('nome', $request->nome)->orWhere('modelo', $request->modelo)->orWhere('ano', $request->ano)->orderBy('nome')->paginate(5);
         //deixei um count na view como verificação. Podia mandar mensagem, mas ia ter que colocar todo aquele código lá. 
         //O problema: quando abrir view, se não tiver nada cadastrado, vai aparecer a mensagem como se fosse busca
         return view('carro.show', compact('carros'));
