@@ -94,8 +94,8 @@
                         </button>
                         <div class="dropdown-menu">
                             <div class="list-group">
-                            <a class="list-group-item list-group-item-action" href="{{ url('/entrada/create') }}">Cadastrar entradas</a>
-                            <a class="list-group-item list-group-item-action" href="{{ url('/entrada') }}">Visualizar entradas</a>
+                            <a class="list-group-item list-group-item-action" href="{{ url('/entrada/create') }}">Cadastrar Entradas</a>
+                            <a class="list-group-item list-group-item-action" href="{{ url('/entrada') }}">Ver Entradas</a>
                             </div>
                         </div>
 
