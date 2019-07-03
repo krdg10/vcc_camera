@@ -22,7 +22,7 @@ class LocalAVariasController extends Controller{
             $local_avaria = new Local_avaria;
             $local_avaria->local = $request->local;
             $local_avaria->save();
-            return Metodos::retorno(1, 'Sucesso ao adicinar "' . $local_avaria . '".', $local_avaria);
+            return Metodos::retorno(1, 'Sucesso ao adicinar "' . $local_avaria->local . '".', $local_avaria);
         } catch (Exception $e) {
             return Metodos::retorno(0, 'Erro ao inserir "' . $request->local . '".', $e);
         }
