@@ -76,6 +76,7 @@ class Avaria{
     	var selectLocal = document.getElementById(idSelectLocal);
     	var selectTipo = document.getElementById(idSelectTipo);
     	var obs = document.getElementById(idObs);
+    	var obj = this;
 
     	// VERIFICA SE O TIPO E LOCAL DE AVARIA FORAM PREENCHIDOS
         if (selectLocal == 'false' || selectTipo == 'false')
@@ -102,35 +103,43 @@ class Avaria{
         }
 
         this.registroAvarias.push({'local': selectLocal.value, 'tipo': selectTipo.value, 'obs': obs.value });
+        this.setRegistroVerificacao(idExibirRegistroAvarias);
+    }
 
-        var text = '';
+    deleteRegistro(pos, idExibirRegistroAvarias){
+        this.registroAvarias.splice(pos, 1);
+    	this.setRegistroVerificacao(idExibirRegistroAvarias);
+    }
+
+    setRegistroVerificacao(idExibirRegistroAvarias){
+        var text = '', localString = '', tipoString = '';
         for(var z in this.registroAvarias){
+        	localString = this.procura(this.registroAvarias[z].id, 'local');
+        	tipoString = this.procura(this.registroAvarias[z].id, 'tipo');
+
             text += '<span id="'+ this.registroAvarias[z].id +'" class="badge badge-primary badge-pill">'+ 
 		            	localString +' - '+ tipoString +' - '+ this.registroAvarias[z].obs +
 		            	'<input type="text" value="'+ this.registroAvarias[z].local +'" name="local[]" class="d-none">'+
 		            	'<input type="text" value="'+ this.registroAvarias[z].tipo +'" name="tipo[]" class="d-none">'+
 		            	'<input type="text" value="'+ this.registroAvarias[z].obs +'" name="obs[]" class="d-none">  '+
-		            	'<a onClick="' + this.deleteRegistro(z) +'"><i class="fa fa-times" aria-hidden="true"></i></a>'+
+		            	'<a onClick="avaria.deleteRegistro('+ z +', '+ idExibirRegistroAvarias +')"><i class="fa fa-times" aria-hidden="true"></i></a>'+
 	            	'</span> ';
         }
         document.getElementById(idExibirRegistroAvarias).innerHTML = text;
     }
 
-    deleteRegistro(pos){
-        // var remove = -1;
-        // this.registroAvarias.splice(pos, 1);
-        console.log(this.registroAvarias[pos]);
-        // for(i in avarias){
-        //     if(id == avarias[i].id){
-        //         avarias.splice(i, 1);
-        //         break;
-        //     }
-        // }
-        // var text = ''
-        // for(i in avarias){
-        //     text += ' <span id="'+avarias[i].id+'" class="badge badge-primary badge-pill">'+avarias[i].loc+' - '+avarias[i].tip+' - '+avarias[i].ob+' <input type="text" value="'+avarias[i].loc+'" name="local[]" class="d-none"> <input type="text" value="'+avarias[i].tip+'" name="tipo[]" class="d-none"> <input type="text" value="'+avarias[i].obs+'" name="obs[]" class="d-none"> <a id="excluir" onClick="excluir(`'+avarias[i].id+'`)"><i class="fa fa-times" aria-hidden="true"></i></a> </span>'
-        // }
-        // element = document.getElementById('avarias')
-        // element.innerHTML = text
-    }
+    procura(id, chave){
+    	console.log('id', id);
+    	console.log('chave', chave);
+		var campo = 'Nada', a;
+        for (var w = 0; w < this.avarias[chave + 'Avarias'].length; w++){
+        	a = this.avarias[chave + 'Avarias'][w];
+
+            if(a.id == id){
+            	// console.log(id);
+            	// console.log(a.id);
+                return campo = a[chave];
+            }
+        }
+	}
 }
