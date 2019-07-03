@@ -146,11 +146,12 @@
                     </div>
                     
                     {{-- BUTTON PARA ADICIONAR NOVA VERIFICAÇÃO --}}
-                    <div id="btnObs"><button id="addAvaria" type="button" class="btn btn-outline-primary">+</button></div>
+                    {{-- <div id="btnObs"><button id="addAvaria" type="button" class="btn btn-outline-primary">+</button></div> --}}
+                    <div id="btnObs"><button type="button" class="btn btn-outline-primary" onclick="avaria.registrarVerificacao('localAvaria', 'tipoAvaria', 'observacao', 'divRegistroAvarias')">+</button></div>
                 </div>
 
-                {{-- DIV PARA LISTAR AS VERIFICAÇÕES --}}
-                <div id="avarias"></div>
+                {{-- DIV PARA LISTAR O REGISTRO DE AVARIAS --}}
+                <div id="divRegistroAvarias"></div>
 
                 <div id="formFooter">
                     {{-- <label>Verificado:</label><input type="checkbox" name="verificado" id="verificado" value="1" class="form-control" checked> --}}
