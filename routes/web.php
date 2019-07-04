@@ -40,7 +40,7 @@
         Route::get('/carro/listar/excluir/{id}','CarroController@delete')->name('carro.delete');
         Route::delete('/carro/listar/excluir/{id}','CarroController@destroy')->name('carro.destroy');
         Route::post('/carro/buscar', 'CarroController@busca')->name('carro.busca');
-        Route::get('/carro/buscar', 'CarroController@show');
+        Route::get('/carro/buscar', 'CarroController@busca');
 
         Route::get('/entrada','EntradaController@index')->name('entrada');
         Route::get('/entrada/create','EntradaController@create')->name('entrada.create');
