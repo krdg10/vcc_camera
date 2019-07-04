@@ -6,26 +6,28 @@ class Metodos {
 		this.xhttp = new Xhttp()
 	}
 
-	msgSuccess(msg, idCampo='divMsg', seg=3){
+	msgSuccess(msg, idCampo='divMsg', seg=false){
 		var campo = document.querySelector('#'+idCampo);
-		campo.innerHTML = `<span id="success" class="badge badge-success badge-pill">`+
+		var rand = Math.floor(Math.random() * (10000 - 1));
+		campo.innerHTML = `<span id="success`+ rand +`" class="badge badge-success badge-pill">`+
 	        msg+
-	        `<a id="excluir" onClick="excluirElement('success')"><i class="fa fa-times" aria-hidden="true"></i></a>`+
+	        `<a id="excluir" onClick="metodos.excluirElement('success`+ rand +`')"><i class="fa fa-times" aria-hidden="true"></i></a>`+
 	    `</span>`;
-		setTimeout(function(){campo.innerHTML='';}, seg * 1000); 
+		if(seg)setTimeout(function(){campo.innerHTML='';}, seg * 1000); 
 	}
 
-	msgError(msg, idCampo='divMsg', seg=3){
+	msgError(msg, idCampo='divMsg', seg=false){
 		var campo = document.querySelector('#'+idCampo);
-		campo.innerHTML = `<span id="error" class="badge badge-danger badge-pill">`+
+		var rand = Math.floor(Math.random() * (10000 - 1));
+		campo.innerHTML = `<span id="error`+ rand +`" class="badge badge-danger badge-pill">`+
 	        msg+
-	        `<a id="excluir" onClick="excluirElement('success')"><i class="fa fa-times" aria-hidden="true"></i></a>`+
+	        `<a id="excluir" onClick="metodos.excluirElement('error`+ rand +`')"><i class="fa fa-times" aria-hidden="true"></i></a>`+
 	    `</span>`;
-		setTimeout(function(){campo.innerHTML='';}, seg * 1000); 
+		if(seg)setTimeout(function(){campo.innerHTML='';}, seg * 1000); 
 	}
 
 	excluirElement(id){
-	    $('#'+id).remove();
+	    $('#'+id).remove();;
 	}
 
 	mostrarImgProc(idCampo){
@@ -53,8 +55,6 @@ class Metodos {
 			for (var z = 0; z < colunas.length; z++) 
 				campos += `<input name="`+ colunas[z] +`" value="` + json[i][colunas[z]] + `"> `;
 		}
-
-		console.log(campos);
 
 		var form = document.createElement('form');
 	    form.innerHTML = campos;

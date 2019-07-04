@@ -2,9 +2,9 @@ class Avaria{
 	avarias;
 	registroAvarias;
 
-	constructor(localAvarias, tipoAvarias){
+	constructor(local, tipo){
 		this.registroAvarias = new Array();
-		this.avarias = {localAvarias:JSON.parse(localAvarias), tipoAvarias:JSON.parse(tipoAvarias)};
+		this.avarias = {local:JSON.parse(local), tipo:JSON.parse(tipo)};
 	}
 
     storeAVaria(select, chave, pos, url){
@@ -23,7 +23,7 @@ class Avaria{
         var json = JSON.parse('[{"'+ chave +'":"'+ valor +'"}]');
         metodos.post(json, url, function(r){
             if (r.tipo == 1){
-                obj.avarias[chave  + 'Avarias'].push(r.dados);
+                obj.avarias[chave].push(r.dados);
                 obj.setSelect(select.id, chave); 
             }
 
@@ -35,8 +35,8 @@ class Avaria{
     setSelect(id, chave, novo=true){
     	// CRIA AS OPTION
         var option = '<option value="false">Selecione o '+ chave +' da avaria</option>';
-        for (var i = 0; i < this.avarias[chave + 'Avarias'].length; i++) 
-            option = option + `<option value="`+ this.avarias[chave + 'Avarias'][i].id +`">`+this.avarias[chave + 'Avarias'][i].id + `-` + this.avarias[chave + 'Avarias'][i][chave] +`</option>`
+        for (var i = 0; i < this.avarias[chave].length; i++) 
+            option = option + `<option value="`+ this.avarias[chave][i].id +`">`+this.avarias[chave][i].id + `-` + this.avarias[chave][i][chave] +`</option>`
 
         // CASO NÃO QUEIRA CAMPO PARA REGISTRAR NOVO TIPO OU LOCAL
         if (novo) 
@@ -72,7 +72,7 @@ class Avaria{
         `</div>`;
     }
 
-    registrarVerificacao(idSelectLocal, idSelectTipo, idObs, idExibirRegistroAvarias){
+    setRegistrarVerificacao(idSelectLocal, idSelectTipo, idObs, idExibirRegistroAvarias){
     	var selectLocal = document.getElementById(idSelectLocal);
     	var selectTipo = document.getElementById(idSelectTipo);
     	var obs = document.getElementById(idObs);
@@ -82,64 +82,40 @@ class Avaria{
         if (selectLocal == 'false' || selectTipo == 'false')
             return alert('Selecione local e tipo.');
 
-        // PROCURA PELO VALOR DO LOCAL DA AVARIA
-        var localString = 'Nada', l;
-        for (var x = 0; x < this.avarias['localAvarias'].length; x++){
-        	l = this.avarias['localAvarias'][x];
-            if(l.id == selectLocal.value){
-                localString = l.local;
-                break;
-            }
-        }
-
-        // PROCURA PELO VALOR DO TIPO DE AVARIA
-        var tipoString = 'Nada', t;
-        for (var w = 0; w < this.avarias['tipoAvarias'].length; w++){
-        	t = this.avarias['tipoAvarias'][w];
-            if(t.id == selectTipo.value){
-                tipoString = t.tipo;
-                break;
-            }
-        }
-
         this.registroAvarias.push({'local': selectLocal.value, 'tipo': selectTipo.value, 'obs': obs.value });
-        this.setRegistroVerificacao(idExibirRegistroAvarias);
+        this.exibirRegistroAvarias(idExibirRegistroAvarias);
     }
 
     deleteRegistro(pos, idExibirRegistroAvarias){
         this.registroAvarias.splice(pos, 1);
-    	this.setRegistroVerificacao(idExibirRegistroAvarias);
+    	this.exibirRegistroAvarias(idExibirRegistroAvarias);
     }
 
-    setRegistroVerificacao(idExibirRegistroAvarias){
+    exibirRegistroAvarias(idExibirRegistroAvarias){
         var text = '', localString = '', tipoString = '';
         for(var z in this.registroAvarias){
-        	localString = this.procura(this.registroAvarias[z].id, 'local');
-        	tipoString = this.procura(this.registroAvarias[z].id, 'tipo');
+        	localString = this.procura(z, 'local');
+        	tipoString = this.procura(z, 'tipo');
 
-            text += '<span id="'+ this.registroAvarias[z].id +'" class="badge badge-primary badge-pill">'+ 
-		            	localString +' - '+ tipoString +' - '+ this.registroAvarias[z].obs +
-		            	'<input type="text" value="'+ this.registroAvarias[z].local +'" name="local[]" class="d-none">'+
-		            	'<input type="text" value="'+ this.registroAvarias[z].tipo +'" name="tipo[]" class="d-none">'+
-		            	'<input type="text" value="'+ this.registroAvarias[z].obs +'" name="obs[]" class="d-none">  '+
-		            	'<a onClick="avaria.deleteRegistro('+ z +', '+ idExibirRegistroAvarias +')"><i class="fa fa-times" aria-hidden="true"></i></a>'+
-	            	'</span> ';
+            text += `<span id="registroAvaria`+ z +`" class="badge badge-primary badge-pill">`+
+		            	localString +` - `+ tipoString +` - `+ this.registroAvarias[z].obs +
+		            	`<input type="text" value="`+ this.registroAvarias[z].local +`" name="local[]" class="d-none">`+
+		            	`<input type="text" value="`+ this.registroAvarias[z].tipo +`" name="tipo[]" class="d-none">`+
+		            	`<input type="text" value="`+ this.registroAvarias[z].obs +`" name="obs[]" class="d-none">  `+
+		            	`<a onClick="avaria.deleteRegistro(`+ z +`, '`+ idExibirRegistroAvarias +`')"><i class="fa fa-times" aria-hidden="true"></i></a>`+
+	            	`</span> `;
         }
         document.getElementById(idExibirRegistroAvarias).innerHTML = text;
     }
 
-    procura(id, chave){
-    	console.log('id', id);
-    	console.log('chave', chave);
+    procura(pos, chave){
+    	var r = this.registroAvarias[pos][chave];
 		var campo = 'Nada', a;
-        for (var w = 0; w < this.avarias[chave + 'Avarias'].length; w++){
-        	a = this.avarias[chave + 'Avarias'][w];
+        for (var w = 0; w < this.avarias[chave].length; w++){
+        	a = this.avarias[chave][w];
 
-            if(a.id == id){
-            	// console.log(id);
-            	// console.log(a.id);
+            if(a.id == r)
                 return campo = a[chave];
-            }
         }
 	}
 }
