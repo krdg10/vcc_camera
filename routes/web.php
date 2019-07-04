@@ -29,7 +29,7 @@
         Route::get('/motorista/listar/excluir/{id}','MotoristaController@delete')->name('motorista.delete');
         Route::delete('/motorista/listar/excluir/{id}','MotoristaController@destroy')->name('motorista.destroy');
         Route::post('/motorista/buscar', 'MotoristaController@busca')->name('motorista.busca');
-        Route::get('/motorista/buscar', 'MotoristaController@show');
+        Route::get('/motorista/buscar', 'MotoristaController@busca');
 
         // CARRO
         Route::get('/carro','CarroController@index')->name('carro');
