@@ -1,5 +1,37 @@
 @extends('layouts.app')
 @section('content')
+<script>
+    function valida() {
+        var cpf = document.getElementsByName('cpf')[0].value;
+        var codigo_empresa = document.getElementsByName('codigo_empresa')[0].value;
+        var codigo_transdata = document.getElementsByName('codigo_transdata')[0].value;
+        var nome = document.getElementsByName('nome')[0].value;
+        var temCaracterAlfanumerico = /\w$/;
+        var valida = /^\d+$/;
+        if(temCaracterAlfanumerico.test(cpf) == false  && temCaracterAlfanumerico.test(codigo_empresa) == false && temCaracterAlfanumerico.test(codigo_transdata) == false && temCaracterAlfanumerico.test(nome) == false){
+            alert("Digite caracteres alfanuméricos em algum campo de pesquisa!");
+            return false;
+        }
+        if ((cpf == '' || (cpf != '' && valida.test(cpf)==true)) && (codigo_empresa == '' || (codigo_empresa != '' && valida.test(codigo_empresa)==true)) && (codigo_transdata == '' || (codigo_transdata != '' && valida.test(codigo_transdata)==true ))) {
+            return true;
+        } 
+        else if (valida.test(cpf)==false){
+            alert("Verifique o CPF. Apenas números são permitidos!");
+            return false;
+        }
+        else if (valida.test(codigo_empresa)==false){
+            alert("Verifique o código da empresa. Apenas números são permitidos!");
+            return false;
+        }
+        else if (valida.test(codigo_transdata)==false){
+            alert("Verifique o código transdata. Apenas números são permitidos!");
+            return false;
+        }
+        else {
+            return false;
+        }
+    }
+</script>
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <div class="fadeIn first">
@@ -46,12 +78,12 @@
                 </button>
             </div>
             <div class="fadeIn first">
-                <form method="POST" action="{{route('motorista.busca')}}" enctype="multipart/form-data">
+                <form method="POST" action="{{route('motorista.busca')}}" enctype="multipart/form-data" onsubmit="return valida();">
                     @csrf
                     <input type="text" name="nome" id="nome" placeholder="Nome" class="form-control">
-                    <input type="text" name="cpf" id="cpf" placeholder="CPF" class="form-control">
-                    <input type="text" name="codigo_empresa" id="codigo_empresa" placeholder="Código VCC" class="form-control">
-                    <input type="text" name="codigo_transdata" id="codigo_transdata" placeholder="Código Transdata" class="form-control">
+                    <input type="text" name="cpf" id="cpf" placeholder="CPF" class="form-control" maxlength="11" minlength="11">
+                    <input type="text" name="codigo_empresa" id="codigo_empresa" placeholder="Código VCC" class="form-control" maxlength="4" minlength="4">
+                    <input type="text" name="codigo_transdata" id="codigo_transdata" placeholder="Código Transdata" class="form-control" maxlength="5" minlength="5">
 
                     <div id="formFooter">
                         <button type="submit" id="submit" class="btn btn-primary">Buscar</button>
