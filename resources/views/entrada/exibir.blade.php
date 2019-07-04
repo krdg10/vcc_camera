@@ -20,7 +20,8 @@
     <div id="formContent">
         <div class="fadeIn first">
             <h3>Lista de Entradas</h3>
-            <a data-toggle="modal" href="#modalBusca" data-target="#modalBusca"><i class="fas fa-search">Buscar</i></a>
+            @yield('search')
+            <p><a data-toggle="modal" href="#modalBusca" data-target="#modalBusca"><i class="fas fa-search">Buscar</i></a></p>
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
