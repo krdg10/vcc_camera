@@ -21,6 +21,10 @@ class EntradaController extends Controller{
         return view('entrada.index', compact('entradas'));
     }
     public function busca(Request $request){
+        if($request->nome == null && $request->carro == null && $request->horario == null){
+            $entradas = Entrada::orderBy('horario', 'desc')->paginate(5);
+            return view('entrada.index', compact('entradas'));
+        }
         if($request->verificado==1){
             $query = DB::table('entradas')
                 ->join('motoristas', 'motoristas.id', '=', 'entradas.motorista_id')
@@ -43,6 +47,7 @@ class EntradaController extends Controller{
         //quando select * ou get() tava dando ruim.
         //esse código não tinha o orderBy
         //error_log($query);
+        $teste = null;
         foreach($query as $entrada){
             $teste[]= Entrada::find($entrada->id);
         }
@@ -50,6 +55,8 @@ class EntradaController extends Controller{
             $entradas = Entrada::orderBy('horario', 'desc')->paginate(5);
             return view('entrada.busca', compact('entradas'));
         }*/
+        //funcionando sem dar outro return pra caso teste null. Melhor assim ate pq n saberia o que
+        //voltar caso fosse null msm
        // Get current page form url e.x. &page=1
        $currentPage = LengthAwarePaginator::resolveCurrentPage();
  
@@ -57,7 +64,7 @@ class EntradaController extends Controller{
        $itemCollection = collect($teste);
 
        // Define how many items we want to be visible in each page
-       $perPage = 1;
+       $perPage = 5;
 
        // Slice the collection to get the items to display in current page
        $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
@@ -74,7 +81,8 @@ class EntradaController extends Controller{
 
         //deixei um count na view como verificação. Podia mandar mensagem, mas ia ter que colocar todo aquele código lá. 
         //O problema: quando abrir view, se não tiver nada cadastrado, vai aparecer a mensagem como se fosse busca
-        return view('entrada.busca', compact('entradas'));
+        return view('entrada.busca', ['entradas' => $entradas, 'nome' => $request->nome, 
+        'horario' => $request->horario, 'carro' => $request->carro, 'verificado' => $request->verificado]);
     }
 
     public function store(Request $request){
