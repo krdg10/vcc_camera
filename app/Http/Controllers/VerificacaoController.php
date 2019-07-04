@@ -65,8 +65,7 @@ class VerificacaoController extends Controller{
         return view('verificacao.create', compact('tipoAvarias', 'localAvarias', 'entradas'));
     }
 
-    public function edit($id)
-    {
+    public function edit($id){
         $Verificacao = Verificacao::findOrFail($id);
         $User = User::findOrFail($Verificacao->users_id);
         $entradas = Entrada::findOrFail($Verificacao->entrada_id);
@@ -82,22 +81,30 @@ class VerificacaoController extends Controller{
         return view('verificacao.edit', compact('Verificacao', 'localAvaria2', 'tipoAvaria2', 'Motoristas', 'Fotos', 'User', 'entradas', 'Avarias', 'tipoAvaria', 'localAvaria'));
     }
 
-    public function exibir($id)
-    {
-        $Verificacao = Verificacao::findOrFail($id);
-        $User = User::findOrFail($Verificacao->users_id);
-        $entradas = Entrada::findOrFail($Verificacao->entrada_id);
-        $Avarias = DB::table('desc_avarias')->where('verificacao_id', '=', $Verificacao->id)->get();
-        $Fotos = DB::table('fotos')->where('entrada_id', '=', $entradas->id)->get();
-        $Motoristas = DB::table('motoristas')->where('id', '=', $entradas->motoristas_id)->get();
-        $tipoAvaria = Tipo_avarias::all();
-        $tipoAvaria2 = Tipo_avarias::all(); //gambiarra
-        $localAvaria = Local_avaria::all();
-        $localAvaria2 = Local_avaria::all(); //gambiarra
-        
+    public function exibir($id){
+        // $Verificacao = Verificacao::findOrFail($id);
+        // $User = User::findOrFail($Verificacao->users_id);
+        // $entradas = Entrada::findOrFail($Verificacao->entrada_id);
+        // $Avarias = DB::table('desc_avarias')->where('verificacao_id', '=', $Verificacao->id)->get();
+        // $Fotos = DB::table('fotos')->where('entrada_id', '=', $entradas->id)->get();
+        // $Motoristas = DB::table('motoristas')->where('id', '=', $entradas->motoristas_id)->get();
+        // $tipoAvaria = Tipo_avarias::all();
+        // $tipoAvaria2 = Tipo_avarias::all(); //gambiarra
+        // $localAvaria = Local_avaria::all();
+        // $localAvaria2 = Local_avaria::all(); //gambiarra
 
+        // return view('verificacao.exibir', compact('Verificacao', 'localAvaria2', 'tipoAvaria2', 'Motoristas', 'Fotos', 'User', 'entradas', 'Avarias', 'tipoAvaria', 'localAvaria'));
 
-        return view('verificacao.exibir', compact('Verificacao', 'localAvaria2', 'tipoAvaria2', 'Motoristas', 'Fotos', 'User', 'entradas', 'Avarias', 'tipoAvaria', 'localAvaria'));
+        $tipo_avariaController = new TipoAvariaController;
+        $local_avariasController = new LocalAVariasController;
+        $entradaController = new EntradaController;
+
+        $verificacao = Verificacao::find($id);
+        $tipo_avarias = $tipo_avariaController->show();
+        $local_avarias = $local_avariasController->show();
+        $fotos = $entradaController->show($verificacao->entrada_id)->fotos;
+
+        return view('verificacao.exibir', compact('verificacao', 'tipo_avarias', 'local_avarias', 'fotos'));
     }
 
     public function update(Request $request, $id){
