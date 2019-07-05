@@ -54,17 +54,17 @@
 					<div id="collapse{{ $avaria->id }}" class="collapse" aria-labelledby="heading{{ $avaria->id }}" 
 						data-parent="#accordionExample">
 						<div class="card-body">
-							
+
 							{{-- PROCURA PELA DESCRIÇÃO DO LOCAL DA AVARIA --}}
 							@foreach ($local_avarias as $local_avaria)
-								@if ($local_avaria->id == $avaria->local_avaria_id)
+								@if ($avaria->local_avaria_id == $local_avaria->id)
 									<input type="text" placeholder="Local Avaria" name="localAvaria" class="form-control" value="{{ $local_avaria->local }}" disabled>				
 								@endif
 							@endforeach
 
 							{{-- PROCURA PELA DESCRIÇÃO DO TIPO DE AVARIA --}}
 							@foreach ($tipo_avarias as $tipo_avaria)
-								@if ($tipo_avaria->id == $avaria->tipo_avaria_id)
+								@if ($avaria->tipo_avaria_id == $tipo_avaria->id)
 									<input type="text" placeholder="Local Avaria" name="localAvaria" class="form-control" value="{{ $tipo_avaria->tipo }}" disabled>				
 								@endif
 							@endforeach

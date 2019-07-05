@@ -66,19 +66,36 @@ class VerificacaoController extends Controller{
     }
 
     public function edit($id){
-        $Verificacao = Verificacao::findOrFail($id);
-        $User = User::findOrFail($Verificacao->users_id);
-        $entradas = Entrada::findOrFail($Verificacao->entrada_id);
-        $Avarias = DB::table('desc_avarias')->where('verificacao_id', '=', $Verificacao->id)->get();
-        $Fotos = DB::table('fotos')->where('entrada_id', '=', $entradas->id)->get();
-        $Motoristas = DB::table('motoristas')->where('id', '=', $entradas->motoristas_id)->get();
-        $tipoAvaria = Tipo_avarias::all();
-        $tipoAvaria2 = Tipo_avarias::all(); //gambiarra
-        $localAvaria = Local_avaria::all();
-        $localAvaria2 = Local_avaria::all(); //gambiarra
+        // $entradaController = new EntradaController;
+        // $entradas = $entradaController->show($verificacao->entrada_id);
+
+        // $Verificacao = Verificacao::findOrFail($id);
+        // $User = User::findOrFail($Verificacao->users_id);
+        // $entradas = $entradaController->show($id);
+        // $Avarias = DB::table('desc_avarias')->where('verificacao_id', '=', $Verificacao->id)->get();
+        // $Fotos = DB::table('fotos')->where('entrada_id', '=', $entradas->id)->get();
+        // $Motoristas = DB::table('motoristas')->where('id', '=', $entradas->motoristas_id)->get();
+        // $tipoAvaria = Tipo_avarias::all();
+        // $tipoAvaria2 = Tipo_avarias::all(); //gambiarra
+        // $localAvaria = Local_avaria::all();
+        // $localAvaria2 = Local_avaria::all(); //gambiarra
 
 
-        return view('verificacao.edit', compact('Verificacao', 'localAvaria2', 'tipoAvaria2', 'Motoristas', 'Fotos', 'User', 'entradas', 'Avarias', 'tipoAvaria', 'localAvaria'));
+        // return view('verificacao.edit', compact('Verificacao', 'localAvaria2', 'tipoAvaria2', 'Motoristas', 'Fotos', 'User', 'entradas', 'Avarias', 'tipoAvaria', 'localAvaria'));
+
+        $entradaController = new EntradaController;
+        $tipo_avariaController = new TipoAvariaController;
+        $local_avariasController = new LocalAVariasController;
+        
+        $verificacao = Verificacao::find($id);
+        $entradas = $entradaController->show($verificacao->entrada_id);
+        $tipo_avarias = $tipo_avariaController->show();
+        $local_avarias = $local_avariasController->show();
+
+        // DD($verificacao->descAvaria);
+
+        // return view('verificacao.create', compact('tipoAvarias', 'localAvarias', 'entradas'));
+        return view('verificacao.edit', compact('verificacao', 'tipo_avarias', 'local_avarias', 'entradas'));
     }
 
     public function exibir($id){
@@ -108,20 +125,14 @@ class VerificacaoController extends Controller{
     }
 
     public function update(Request $request, $id){
-      
         $avaria = Desc_avarias::findOrFail($id);;
-        
-            $avaria->local_avaria_id = $request->localAvaria;
-            $avaria->tipo_avaria_id = $request->tipoAvaria;
-            $avaria->obs = $request->obs;
-
-            
-            $avaria->save();
+        $avaria->local_avaria_id = $request->localAvaria;
+        $avaria->tipo_avaria_id = $request->tipoAvaria;
+        $avaria->obs = $request->obs;
+        $avaria->save();
         
         return redirect()->back()->with('message', 'Sucesso ao atualizar a avaria!');
     }
 
-    public function destroy($id){
-        //
-    }
+    public function destroy($id){}
 }
