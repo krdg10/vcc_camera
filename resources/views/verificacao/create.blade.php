@@ -2,9 +2,8 @@
 
 @section('content')
 <script type="text/javascript">
-    var avaria, fotos;    
+    var avaria, fotos, metodos;
     var cont = 0;
-    var metodos;
 
     window.onload = function(){
         @php
