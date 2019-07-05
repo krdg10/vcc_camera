@@ -47,7 +47,7 @@ class CarroController extends Controller
             $carros = DB::table('carros')->orderBy('nome')->paginate(5);
             return view('carro.show', compact('carros'));
         }
-        
+        //
         if ($request->nome != null && $request->modelo != null && $request->placa != null && $request->ano != null){
             $carros = DB::table('carros')->where('placa', $request->placa)->where('nome', 'like', '%' . $request->nome . '%')->where('modelo', 'like', '%' . $request->modelo . '%')->where('ano', $request->ano)->orderBy('nome')->paginate(5);
         }
