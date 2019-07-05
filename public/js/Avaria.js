@@ -32,7 +32,7 @@ class Avaria{
     }
 
     // FUNÇÃO PARA CRIAR AS OPTION SETAR NA SELECT
-    setSelect(id, chave, novo=true){
+    setSelect(id, chave, value_padrao=false, novo=true){
     	// CRIA AS OPTION
         var option = '<option value="false">Selecione o '+ chave +' da avaria</option>';
         for (var i = 0; i < this.avarias[chave].length; i++) 
@@ -43,6 +43,7 @@ class Avaria{
             option = option + `<option value="novo">Novo `+ chave +` de avaria</option>`;
 
         document.getElementById(id).innerHTML = option;
+        if(value_padrao) document.getElementById(id).value = value_padrao;
     }
 
     carousel(id, imagens){
