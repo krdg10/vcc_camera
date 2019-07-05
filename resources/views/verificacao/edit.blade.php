@@ -130,22 +130,16 @@
 
 					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 						<div class="card-body">
+							{{-- INCLUDE DO CAMPO PARA INSERÇÃO DE DADOS --}}
+            				@include('verificacao/novaVerificacao')
+
 							<form method="POST" action="{{ route('descavarias.store', $verificacao->id) }}" enctype="multipart/form-data">
 								@csrf
-								<h4 style="margin-top: 0.5rem">Inserir Avaria Nova</h4>
 
-								{{-- SELECT LOCAL AVARIA --}}
-								<select class="MineSelect" name="localAvariaNovo" id="localAvariaNovo" onchange="avaria.storeAVaria(this, 'local', 0, '/localAvaria')"></select>
-
-				                {{-- SELECT TIPO DE AVARIA --}}
-				                <select class="MineSelect" name="tipoAvariaNovo" id="tipoAvariaNovo" onchange="avaria.storeAVaria(this, 'tipo', 1, '/tipoAvaria')"></select>
-
-				                {{-- CAMPO OBSERVAÇÃO --}}
-								<div id="addObs">
-									<input type="text" placeholder="Observação" name="observacaoNovo" id="observacaoNovo" class="form-control">
-									<button id="addAvaria" type="button" class="btn-circle btn-outline-primary" onclick="avaria.setRegistrarVerificacao('localAvariaNovo', 'tipoAvariaNovo', 'observacaoNovo', 'divRegistroAvarias')">+</button>
-								</div>
+                				{{-- DIV PARA LISTAR O REGISTRO DE AVARIAS --}}
 								<div id="divRegistroAvarias"></div>
+
+								{{-- BOTÃO PARA SUBMETER --}}
 								<button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Cadastrar nova avaria </button>
 							</form>
 						</div>

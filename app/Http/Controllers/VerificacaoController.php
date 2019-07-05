@@ -47,6 +47,12 @@ class VerificacaoController extends Controller{
     }
 
     public function show($id){
+        // VERIFICA SE A ENTRADA JÁ FOI VERIFICADA
+        if (DB::table('verificacoes')->where('entrada_id', '=', $id)->exists()){
+            $error[] = 'Essa entrada já foi verificada!';
+            return redirect('/entrada')->with('error', $error);
+        }
+        
         $tipoAvariaController = new TipoAvariaController;
         $localAvariasController = new LocalAVariasController;
         $entradaController = new EntradaController;
