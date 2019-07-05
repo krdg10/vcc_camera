@@ -47,10 +47,15 @@ class MotoristaController extends Controller
         return view('motorista.show', compact('motoristas'));
     }
     public function busca(Request $request){
+        if($request->nome == null && $request->cpf == null && $request->codigo_empresa == null && $request->codigo_transdata == null){
+            $motoristas = DB::table('motoristas')->orderBy('nome')->paginate(5);
+        return view('motorista.show', compact('motoristas'));
+        }
         $motoristas = DB::table('motoristas')->where('cpf', $request->cpf)->orWhere('codigo_empresa', $request->codigo_empresa)->orWhere('codigo_transdata', $request->codigo_transdata)->orWhere('nome', $request->nome)->orderBy('nome')->paginate(5);
         //deixei um count na view como verificação. Podia mandar mensagem, mas ia ter que colocar todo aquele código lá. 
         //O problema: quando abrir view, se não tiver nada cadastrado, vai aparecer a mensagem como se fosse busca
-        return view('motorista.show', compact('motoristas'));
+        return view('motorista.busca', ['motoristas' => $motoristas, 'nome' => $request->nome, 
+        'cpf' => $request->cpf, 'codigo_empresa' => $request->codigo_empresa, 'codigo_transdata' => $request->codigo_transdata]);
     }
     public function edit($id)
     {

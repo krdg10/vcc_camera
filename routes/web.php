@@ -29,7 +29,7 @@
         Route::get('/motorista/listar/excluir/{id}','MotoristaController@delete')->name('motorista.delete');
         Route::delete('/motorista/listar/excluir/{id}','MotoristaController@destroy')->name('motorista.destroy');
         Route::post('/motorista/buscar', 'MotoristaController@busca')->name('motorista.busca');
-        Route::get('/motorista/buscar', 'MotoristaController@show');
+        Route::get('/motorista/buscar', 'MotoristaController@busca');
 
         // CARRO
         Route::get('/carro','CarroController@index')->name('carro');
@@ -40,7 +40,7 @@
         Route::get('/carro/listar/excluir/{id}','CarroController@delete')->name('carro.delete');
         Route::delete('/carro/listar/excluir/{id}','CarroController@destroy')->name('carro.destroy');
         Route::post('/carro/buscar', 'CarroController@busca')->name('carro.busca');
-        Route::get('/carro/buscar', 'CarroController@show');
+        Route::get('/carro/buscar', 'CarroController@busca');
 
         Route::get('/entrada','EntradaController@index')->name('entrada');
         Route::get('/entrada/create','EntradaController@create')->name('entrada.create');
