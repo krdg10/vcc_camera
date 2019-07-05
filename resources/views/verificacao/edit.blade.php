@@ -41,6 +41,12 @@
 
 		    {{-- DIV PARA EXIBIR MENSAGENS --}}
 		    <div id="divMsg"></div>
+
+	        {{-- EXIBE OS DADOS DO MOTORISTA --}}
+	        <div class="form-control"  style="height: 120px">
+	            <h5>Motorista: {{$entradas->motorista->nome}}</h5>
+	            <h5>Carro: {{$entradas->carro->nome}} - {{$entradas->carro->placa}}</h5>
+	        </div>
 	       
        		{{-- DIV PARA EXIBIR AS IMAGENS --}}
 			<div class="form-control" id="divExibebeImagens" style="height: 400px"></div>
