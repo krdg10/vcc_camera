@@ -15,8 +15,8 @@
 
 	        // SETA DINAMICAMENTE OS CAMPOS DA SELECT
 	        @foreach ($verificacao->descAvaria as $a)
-        		avaria.setSelect('localAvaria{{$a->local_avaria_id}}', 'local', {{$a->local_avaria_id}});
-	        	avaria.setSelect('tipoAvaria{{$a->tipo_avaria_id}}', 'tipo', {{$a->tipo_avaria_id}});
+        		avaria.setSelect('localAvaria{{$a->local_avaria_id}}', 'local', {{$a->local_avaria_id}}, false);
+	        	avaria.setSelect('tipoAvaria{{$a->tipo_avaria_id}}', 'tipo', {{$a->tipo_avaria_id}}, false);
         	@endforeach
 
 	        avaria.setSelect('localAvariaNovo', 'local');
@@ -63,6 +63,7 @@
 						</h5>
 					</div>
 
+					{{-- EXIBE AS INFORMAÇÕES JÁ CADASTRADAS --}}
 					<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
 						<div class="card-body">
 							<div class="accordion" id="accordionInterno">
