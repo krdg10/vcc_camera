@@ -25,31 +25,50 @@ class EntradaController extends Controller{
             $entradas = Entrada::orderBy('horario', 'desc')->paginate(5);
             return view('entrada.index', compact('entradas'));
         }
+        //tinha um join do laravel com os or. Qualquer coisa tá no git. 
+        
+        $pesquisa="select `entradas`.`id` from `entradas` inner join `motoristas` on `motoristas`.`id` = `entradas`.`motorista_id` inner join `carros` on `carros`.`id` = `entradas`.`carro_id`";
+        $primeiro=0;
         if($request->verificado==1){
-            $query = DB::table('entradas')
-                ->join('motoristas', 'motoristas.id', '=', 'entradas.motorista_id')
-                ->join('carros', 'carros.id', '=', 'entradas.carro_id')
-                ->join('verificacoes', 'verificacoes.entrada_id', '=', 'entradas.id')
-                ->where('entradas.horario', $request->horario)->orWhere('motoristas.nome', $request->nome)->orWhere('carros.nome', $request->carro)
-                ->orderBy('entradas.horario', 'desc')
-                ->get('entradas.id');
+            $pesquisa = $pesquisa . ' ' . "inner join `verificacoes` on `verificacoes`.`entrada_id` = `entradas`.`id`";
         }
-        else{
-            $query = DB::table('entradas')
-                ->join('motoristas', 'motoristas.id', '=', 'entradas.motorista_id')
-                ->join('carros', 'carros.id', '=', 'entradas.carro_id')
-                ->where('entradas.horario', $request->horario)->orWhere('motoristas.nome', $request->nome)->orWhere('carros.nome', $request->carro)
-                ->orderBy('entradas.horario', 'desc')
-                ->get('entradas.id');
+        if($request->nome != null){
+            if ($primeiro==0){
+                $pesquisa = $pesquisa . ' ' . "where `motoristas`.`nome` LIKE '%$request->nome%'";
+                $primeiro=1;
+            }
         }
+        if($request->carro != null){
+            if ($primeiro==0){
+                $pesquisa = $pesquisa . ' ' . "where `carros`.`nome` LIKE '%$request->carro%'";
+                $primeiro=1;
+            }
+            else {
+                $pesquisa = $pesquisa . ' ' . "and `carros`.`nome` LIKE '%$request->carro%'";
+            }
+        }
+        if ($request->horario != null){
+            if ($primeiro==0){
+                $pesquisa = $pesquisa . ' ' . "where `entradas`.`horario` = '$request->horario'";
+                $primeiro=1;
+            }
+            else {
+                $pesquisa = $pesquisa . ' ' . "and `entradas`.`horario` = '$request->horario'";
+            }
+        }
+        $pesquisa = $pesquisa . ' ' . "order by `entradas`.`horario` desc";
+        //error_log($pesquisa);
+
+        $query=DB::select(DB::raw($pesquisa));
+    
         //https://medium.com/justlaravel/paginated-data-with-search-functionality-in-laravel-ee0b1668b687
         //select `entradas`.`id` from `entradas` inner join `motoristas` on `motoristas`.`id` = `entradas`.`motorista_id` inner join `carros` on `carros`.`id` = `entradas`.`carro_id` inner join `verificacoes` on `verificacoes`.`entrada_id` = `entradas`.`id` where `entradas`.`horario` = '2019-07-01 15:15:00' or `motoristas`.`nome` is null or `carros`.`nome` is null
         //quando select * ou get() tava dando ruim.
         //esse código não tinha o orderBy
         //error_log($query);
-        $teste = null;
+        $temp = null;
         foreach($query as $entrada){
-            $teste[]= Entrada::find($entrada->id);
+            $temp[]= Entrada::find($entrada->id);
         }
         /*if(isset($teste)==0){
             $entradas = Entrada::orderBy('horario', 'desc')->paginate(5);
@@ -61,7 +80,7 @@ class EntradaController extends Controller{
        $currentPage = LengthAwarePaginator::resolveCurrentPage();
  
        // Create a new Laravel collection from the array data
-       $itemCollection = collect($teste);
+       $itemCollection = collect($temp);
 
        // Define how many items we want to be visible in each page
        $perPage = 5;
