@@ -47,7 +47,51 @@ class CarroController extends Controller
             $carros = DB::table('carros')->orderBy('nome')->paginate(5);
             return view('carro.show', compact('carros'));
         }
-        $carros = DB::table('carros')->where('placa', $request->placa)->orWhere('nome', $request->nome)->orWhere('modelo', $request->modelo)->orWhere('ano', $request->ano)->orderBy('nome')->paginate(5);
+        
+        if ($request->nome != null && $request->modelo != null && $request->placa != null && $request->ano != null){
+            $carros = DB::table('carros')->where('placa', $request->placa)->where('nome', 'like', '%' . $request->nome . '%')->where('modelo', 'like', '%' . $request->modelo . '%')->where('ano', $request->ano)->orderBy('nome')->paginate(5);
+        }
+        else if ($request->nome != null && $request->modelo != null && $request->placa){
+            $carros = DB::table('carros')->where('placa', $request->placa)->where('nome', 'like', '%' . $request->nome . '%')->where('modelo', 'like', '%' . $request->modelo . '%')->orderBy('nome')->paginate(5);
+        }
+        else if ($request->nome != null && $request->modelo != null && $request->ano){
+            $carros = DB::table('carros')->where('ano', $request->ano)->where('nome', 'like', '%' . $request->nome . '%')->where('modelo', 'like', '%' . $request->modelo . '%')->orderBy('nome')->paginate(5);
+        }
+        else if ($request->nome != null && $request->ano != null && $request->placa){
+            $carros = DB::table('carros')->where('placa', $request->placa)->where('nome', 'like', '%' . $request->nome . '%')->where('ano', $request->ano)->orderBy('nome')->paginate(5);
+        }
+        else if ($request->ano != null && $request->modelo != null && $request->placa){
+            $carros = DB::table('carros')->where('placa', $request->placa)->where('ano', $request->ano)->where('modelo', 'like', '%' . $request->modelo . '%')->orderBy('nome')->paginate(5);
+        }
+        else if ($request->nome != null && $request->modelo != null ){
+            $carros = DB::table('carros')->where('nome', 'like', '%' . $request->nome . '%')->where('modelo', 'like', '%' . $request->modelo . '%')->orderBy('nome')->paginate(5);
+        }
+        else if ($request->nome != null && $request->ano != null ){
+            $carros = DB::table('carros')->where('nome', 'like', '%' . $request->nome . '%')->where('ano', $request->ano)->orderBy('nome')->paginate(5);
+        }
+        else if ($request->nome != null && $request->placa != null ){
+            $carros = DB::table('carros')->where('nome', 'like', '%' . $request->nome . '%')->where('placa', $request->placa)->orderBy('nome')->paginate(5);
+        }
+        else if ($request->placa != null && $request->modelo != null ){
+            $carros = DB::table('carros')->where('placa', $request->placa)->where('modelo', 'like', '%' . $request->modelo . '%')->orderBy('nome')->paginate(5);
+        }
+        else if ($request->placa != null && $request->ano != null ){
+            $carros = DB::table('carros')->where('placa', $request->placa)->where('ano', $request->ano)->orderBy('nome')->paginate(5);
+        }
+        else if ($request->ano != null && $request->modelo != null ){
+            $carros = DB::table('carros')->where('ano', $request->ano)->where('modelo', 'like', '%' . $request->modelo . '%')->orderBy('nome')->paginate(5);
+        }
+        else if ($request->nome !=null){
+            $carros = DB::table('carros')->where('nome', 'like', '%' . $request->nome . '%')->orderBy('nome')->paginate(5);
+        }
+        else if ($request->modelo != null){
+            $carros = DB::table('carros')->where('modelo', 'like', '%' . $request->modelo . '%')->orderBy('nome')->paginate(5);
+        }
+        else{
+            $carros = DB::table('carros')->where('placa', $request->placa)->orWhere('ano', $request->ano)->orderBy('nome')->paginate(5);
+        }
+
+       
         //deixei um count na view como verificação. Podia mandar mensagem, mas ia ter que colocar todo aquele código lá. 
         //O problema: quando abrir view, se não tiver nada cadastrado, vai aparecer a mensagem como se fosse busca
         return view('carro.busca', ['carros' => $carros, 'nome' => $request->nome, 
