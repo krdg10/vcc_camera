@@ -47,7 +47,43 @@ class CarroController extends Controller
             $carros = DB::table('carros')->orderBy('nome')->paginate(5);
             return view('carro.show', compact('carros'));
         }
-        //
+        //$pesquisa = "select count(*) as aggregate from `carros`"; // a pesquisa que o DB:: faz
+        /*$pesquisa = "select * from `carros`";
+        $primeiro=0;
+        if($request->nome != null){
+            if ($primeiro==0){
+                $pesquisa = $pesquisa . ' ' . "where `nome` LIKE '%$request->nome%'";
+                $primeiro=1;
+            }
+        }
+        if($request->modelo != null){
+            if ($primeiro==0){
+                $pesquisa = $pesquisa . ' ' . "where `modelo` LIKE '%$request->modelo%'";
+                $primeiro=1;
+            }
+            else {
+                $pesquisa = $pesquisa . ' ' . "and `modelo` LIKE '%$request->modelo%'";
+            }
+        }
+        if ($request->placa != null){
+            if ($primeiro==0){
+                $pesquisa = $pesquisa . ' ' . "where `placa` = '$request->placa'";
+                $primeiro=1;
+            }
+            else {
+                $pesquisa = $pesquisa . ' ' . "and `placa` = '$request->placa'";
+            }
+        }
+        if ($request->ano != null){
+            if ($primeiro==0){
+                $pesquisa = $pesquisa . ' ' . "where `ano` = '$request->ano'";
+                $primeiro=1;
+            }
+            else {
+                $pesquisa = $pesquisa . ' ' . "and `ano` = '$request->ano'";
+            }
+        }
+        $pesquisa = $pesquisa . ' ' . "order by `nome`";*/
         if ($request->nome != null && $request->modelo != null && $request->placa != null && $request->ano != null){
             $carros = DB::table('carros')->where('placa', $request->placa)->where('nome', 'like', '%' . $request->nome . '%')->where('modelo', 'like', '%' . $request->modelo . '%')->where('ano', $request->ano)->orderBy('nome')->paginate(5);
         }
