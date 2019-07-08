@@ -80,7 +80,7 @@ class Avaria{
     	var obj = this;
 
     	// VERIFICA SE O TIPO E LOCAL DE AVARIA FORAM PREENCHIDOS
-        if (selectLocal == 'false' || selectTipo == 'false')
+        if (selectLocal.value == 'false' || selectTipo.value == 'false')
             return alert('Selecione local e tipo.');
 
         this.registroAvarias.push({'local': selectLocal.value, 'tipo': selectTipo.value, 'obs': obs.value });

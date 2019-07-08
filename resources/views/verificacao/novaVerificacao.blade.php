@@ -1,9 +1,9 @@
 <h4 style="margin-top: 0.5rem">Inserir Avaria (Caso Haja)</h4>
 {{-- SELECT LOCAL AVARIA --}}
-<select class="MineSelect" name="" id="localAvariaNovo" onchange="avaria.storeAVaria(this, 'local', 0, '/localAvaria'); avaria.habilitarTipo(this, 'tipoAvariaNovo')"></select>
+<select class="MineSelect" name="" id="localAvariaNovo" onchange="avaria.storeAVaria(this, 'local', 0, '/localAvaria')"></select>
 
 {{-- SELECT TIPO DE AVARIA --}}
-<select class="MineSelect" name="tipoAvaria" id="tipoAvariaNovo" onchange="avaria.storeAVaria(this, 'tipo', 1, '/tipoAvaria')" disabled></select>
+<select class="MineSelect" name="tipoAvaria" id="tipoAvariaNovo" onchange="avaria.storeAVaria(this, 'tipo', 1, '/tipoAvaria')"></select>
 
 <div id="addObs" class="row" >
     {{-- DIV CAMPO OBSERVAÇÃO --}}
