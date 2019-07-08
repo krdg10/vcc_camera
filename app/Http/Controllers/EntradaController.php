@@ -20,53 +20,20 @@ class EntradaController extends Controller{
         $entradas = Entrada::orderBy('horario', 'desc')->paginate(5);
         return view('entrada.index', compact('entradas'));
     }
+    
     public function busca(Request $request){
         if($request->nome == null && $request->carro == null && $request->horario == null){
             $entradas = Entrada::orderBy('horario', 'desc')->paginate(5);
             return view('entrada.index', compact('entradas'));
         }
-        //tinha um join do laravel com os or. Qualquer coisa tá no git. 
-        
-       /* $pesquisa="select `entradas`.`id` from `entradas` inner join `motoristas` on `motoristas`.`id` = `entradas`.`motorista_id` inner join `carros` on `carros`.`id` = `entradas`.`carro_id`";
-        $primeiro=0;
-        if($request->verificado==1){
-            $pesquisa = $pesquisa . ' ' . "inner join `verificacoes` on `verificacoes`.`entrada_id` = `entradas`.`id`";
-        }
-        if($request->nome != null){
-            if ($primeiro==0){
-                $pesquisa = $pesquisa . ' ' . "where `motoristas`.`nome` LIKE '%$request->nome%'";
-                $primeiro=1;
-            }
-        }
-        if($request->carro != null){
-            if ($primeiro==0){
-                $pesquisa = $pesquisa . ' ' . "where `carros`.`nome` LIKE '%$request->carro%'";
-                $primeiro=1;
-            }
-            else {
-                $pesquisa = $pesquisa . ' ' . "and `carros`.`nome` LIKE '%$request->carro%'";
-            }
-        }
-        if ($request->horario != null){
-            if ($primeiro==0){
-                $pesquisa = $pesquisa . ' ' . "where `entradas`.`horario` = '$request->horario'";
-                $primeiro=1;
-            }
-            else {
-                $pesquisa = $pesquisa . ' ' . "and `entradas`.`horario` = '$request->horario'";
-            }
-        }
-        $pesquisa = $pesquisa . ' ' . "order by `entradas`.`horario` desc";
-        $query=DB::select(DB::raw($pesquisa));*/
-        //isso aqui em cima funciona também.
-        //error_log($pesquisa);
+       
         $nome = $request->nome;
         $horario = $request->horario;
         $carro = $request->carro;
         $query = DB::table('entradas')
                 ->join('motoristas', 'motoristas.id', '=', 'entradas.motorista_id')
                 ->join('carros', 'carros.id', '=', 'entradas.carro_id')
-                //->join('verificacoes', 'verificacoes.entrada_id', '=', 'entradas.id')
+                
                 ->when($request->verificado=='1', function($consulta){
                     $consulta->join('verificacoes', 'verificacoes.entrada_id', '=', 'entradas.id');
                 })
@@ -81,55 +48,33 @@ class EntradaController extends Controller{
                 })
                 ->orderBy('entradas.horario', 'desc')
                 ->get('entradas.id');
-        /* desse jeito dá pra paginar na própria consulta. Mas preferi deixar assim. Acessar os campos
-        poderia ser confuso porque teria repetição. E pegar só os valores não seria tão útil: melhor manter
-        essa estrutura de collection que tá sendo usada pra pegar os valores diretos nas views.
-        Esse negócio de armazenar na collection é bem útil mas nunca usei. Ai a view já tava assim, fiz
-        aquele foreach pra pegá-las em vez de mandar os dados pegos das tables.
-        alternativa: especificar tudo que for necessário no get em vez de pegar tudo.*/
-
+       
 
        
     
-        //https://medium.com/justlaravel/paginated-data-with-search-functionality-in-laravel-ee0b1668b687
-        //select `entradas`.`id` from `entradas` inner join `motoristas` on `motoristas`.`id` = `entradas`.`motorista_id` inner join `carros` on `carros`.`id` = `entradas`.`carro_id` inner join `verificacoes` on `verificacoes`.`entrada_id` = `entradas`.`id` where `entradas`.`horario` = '2019-07-01 15:15:00' or `motoristas`.`nome` is null or `carros`.`nome` is null
-        //quando select * ou get() tava dando ruim.
-        //esse código não tinha o orderBy
-        //error_log($query);
+      
         $temp = null;
         foreach($query as $entrada){
             $temp[]= Entrada::find($entrada->id);
         }
-        /*if(isset($teste)==0){
-            $entradas = Entrada::orderBy('horario', 'desc')->paginate(5);
-            return view('entrada.busca', compact('entradas'));
-        }*/
-        //funcionando sem dar outro return pra caso teste null. Melhor assim ate pq n saberia o que
-        //voltar caso fosse null msm
-       // Get current page form url e.x. &page=1
-       $currentPage = LengthAwarePaginator::resolveCurrentPage();
+       
+        // Get current page form url e.x. &page=1
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
  
-       // Create a new Laravel collection from the array data
-       $itemCollection = collect($temp);
+        // Create a new Laravel collection from the array data
+        $itemCollection = collect($temp);
 
-       // Define how many items we want to be visible in each page
-       $perPage = 5;
+        // Define how many items we want to be visible in each page
+        $perPage = 5;
 
-       // Slice the collection to get the items to display in current page
-       $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+        // Slice the collection to get the items to display in current page
+        $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
 
-       // Create our paginator and pass it to the view
-       $entradas= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+        // Create our paginator and pass it to the view
+        $entradas= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
 
-       // set url path for generted links
-       $entradas->setPath($request->url());
-   
-        
-     
-
-
-        //deixei um count na view como verificação. Podia mandar mensagem, mas ia ter que colocar todo aquele código lá. 
-        //O problema: quando abrir view, se não tiver nada cadastrado, vai aparecer a mensagem como se fosse busca
+        // set url path for generted links
+        $entradas->setPath($request->url());
         return view('entrada.busca', ['entradas' => $entradas, 'nome' => $request->nome, 
         'horario' => $request->horario, 'carro' => $request->carro, 'verificado' => $request->verificado]);
     }

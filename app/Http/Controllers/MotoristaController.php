@@ -51,45 +51,7 @@ class MotoristaController extends Controller
             $motoristas = DB::table('motoristas')->orderBy('nome')->paginate(5);
             return view('motorista.show', compact('motoristas'));
         }
-       /* if ($request->nome != null && $request->cpf != null && $request->codigo_empresa != null && $request->codigo_transdata != null){
-            $motoristas = DB::table('motoristas')->where('cpf', $request->cpf)->where('nome', 'like', '%' . $request->nome . '%')->where('codigo_transdata',  $request->codigo_transdata)->where('codigo_empresa', $request->codigo_empresa)->orderBy('nome')->paginate(5);
-        }
-        else if ($request->nome != null && $request->cpf != null && $request->codigo_empresa){
-            $motoristas = DB::table('motoristas')->where('cpf', $request->cpf)->where('nome', 'like', '%' . $request->nome . '%')->where('codigo_empresa', $request->codigo_empresa)->orderBy('nome')->paginate(5);
-        }
-        else if ($request->nome != null && $request->cpf != null && $request->codigo_transdata){
-            $motoristas = DB::table('motoristas')->where('cpf', $request->cpf)->where('nome', 'like', '%' . $request->nome . '%')->where('codigo_transdata', $request->codigo_transdata)->orderBy('nome')->paginate(5);
-        }
-        else if ($request->nome != null && $request->codigo_transdata != null && $request->codigo_empresa){
-            $motoristas = DB::table('motoristas')->where('codigo_transdata', $request->codigo_transdata)->where('nome', 'like', '%' . $request->nome . '%')->where('codigo_empresa', $request->codigo_empresa)->orderBy('nome')->paginate(5);
-        }
-        else if ($request->codigo_transdata != null && $request->cpf != null && $request->codigo_empresa){
-            $motoristas = DB::table('motoristas')->where('codigo_transdata', $request->codigo_transdata)->where('cpf', $request->cpf)->where('codigo_empresa', $request->codigo_empresa)->orderBy('nome')->paginate(5);
-        }
-        else if ($request->nome != null && $request->cpf != null ){
-            $motoristas = DB::table('motoristas')->where('nome', 'like', '%' . $request->nome . '%')->where('cpf', $request->cpf)->orderBy('nome')->paginate(5);
-        }
-        else if ($request->nome != null && $request->codigo_empresa != null ){
-            $motoristas = DB::table('motoristas')->where('nome', 'like', '%' . $request->nome . '%')->where('codigo_empresa', $request->codigo_empresa)->orderBy('nome')->paginate(5);
-        }
-        else if ($request->nome != null && $request->codigo_transdata != null ){
-            $motoristas = DB::table('motoristas')->where('nome', 'like', '%' . $request->nome . '%')->where('codigo_transdata', $request->codigo_transdata)->orderBy('nome')->paginate(5);
-        }
-        else if ($request->cpf != null && $request->codigo_transdata != null ){
-            $motoristas = DB::table('motoristas')->where('cpf', $request->cpf)->where('codigo_transdata', $request->codigo_transdata)->orderBy('nome')->paginate(5);
-        }
-        else if ($request->cpf != null && $request->codigo_empresa != null ){
-            $motoristas = DB::table('motoristas')->where('cpf', $request->cpf)->where('codigo_empresa', $request->codigo_empresa)->orderBy('nome')->paginate(5);
-        }
-        else if ($request->codigo_empresa != null && $request->codigo_transdata != null ){
-            $motoristas = DB::table('motoristas')->where('codigo_empresa', $request->codigo_empresa)->where('codigo_transdata', $request->codigo_transdata)->orderBy('nome')->paginate(5);
-        }
-        else if ($request->nome !=null){
-            $motoristas = DB::table('motoristas')->where('nome', 'like', '%' . $request->nome . '%')->orderBy('nome')->paginate(5);
-        }
-        else{
-            $motoristas = DB::table('motoristas')->where('cpf', $request->cpf)->orWhere('codigo_empresa', $request->codigo_empresa)->orWhere('codigo_transdata', $request->codigo_transdata)->orderBy('nome')->paginate(5);
-        }*/
+      
         $cpf = $request->cpf;
         $nome = $request->nome;
         $codigo_empresa = $request->codigo_empresa;
@@ -108,10 +70,7 @@ class MotoristaController extends Controller
                         })
                         ->orderBy('nome')
                         ->paginate(5);
-                        //https://cursos.alura.com.br/forum/topico-consulta-com-filtro-via-eloquent-orm-35886
-        //$motoristas = DB::table('motoristas')->where('cpf', $request->cpf)->orWhere('codigo_empresa', $request->codigo_empresa)->orWhere('codigo_transdata', $request->codigo_transdata)->orWhere('nome', $request->nome)->orderBy('nome')->paginate(5);
-        //deixei um count na view como verificação. Podia mandar mensagem, mas ia ter que colocar todo aquele código lá. 
-        //O problema: quando abrir view, se não tiver nada cadastrado, vai aparecer a mensagem como se fosse busca
+                    
         return view('motorista.busca', ['motoristas' => $motoristas, 'nome' => $request->nome, 
         'cpf' => $request->cpf, 'codigo_empresa' => $request->codigo_empresa, 'codigo_transdata' => $request->codigo_transdata]);
     }
