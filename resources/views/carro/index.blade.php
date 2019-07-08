@@ -56,7 +56,7 @@
         <form method="POST" action="{{ route('carro.store') }}" enctype="multipart/form-data" onsubmit="return validaCampos();">
         {{ csrf_field() }}
             <input type="text" placeholder="Nome" name="nome" class="form-control">
-            <input type="text" placeholder="Placa" name="placa" class="form-control" maxlength="7" minlength="7" onblur="caps();">
+            <input type="text" placeholder="Placa" name="placa" class="form-control" maxlength="8" minlength="8" onblur="caps();">
             <input type="text" placeholder="Modelo" name="modelo" class="form-control">
             <input type="text" placeholder="Ano" name="ano" class="form-control" maxlength="4" minlength="4">
             <div id="formFooter">

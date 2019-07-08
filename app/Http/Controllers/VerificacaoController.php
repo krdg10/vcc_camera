@@ -43,7 +43,7 @@ class VerificacaoController extends Controller{
                 // $avaria->save();
             }
         }
-        return redirect('/entrada')->with('message', 'Sucesso ao criar o seu negócio!');
+        return redirect('/entrada')->with('message', 'Sucesso ao verificar entrada!');
     }
 
     public function show($id){

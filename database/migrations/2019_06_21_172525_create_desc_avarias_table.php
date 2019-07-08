@@ -11,7 +11,7 @@ class CreateDescAvariasTable extends Migration{
             $table->integer('local_avaria_id')->unsigned();
             $table->integer('tipo_avaria_id')->unsigned();
             $table->integer('verificacao_id')->unsigned();
-            $table->text('obs');
+            $table->text('obs')->nullable();
             $table->timestamps();
 
             $table->foreign('local_avaria_id')->references('id')->on('local_avarias')->onDelete('cascade');

@@ -206,7 +206,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   transform: scale(0.95);
 }
 
-input[type=text], input[type=password]{
+input[type=text], input[type=password], input[type="email"]{
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -269,12 +269,12 @@ input[type=date], input[type=datetime-local], input[type=file] {
 }
 
 
-input[type=text]:focus, input[type=password]:focus, input[type=date]:focus, input[type=datetime-local]:focus, input[type=file]:focus {
+input[type=text]:focus, input[type="email"]:focus, input[type=password]:focus, input[type=date]:focus, input[type=datetime-local]:focus, input[type=file]:focus {
   background-color: #fff;
   border-bottom: 2px solid #41a58b;
 }
 
-input[type=text]:placeholder, input[type=password]:placeholder, input[type=date]:placeholder, input[type=datetime-local]:placeholder, input[type=file]:placeholder {
+input[type=text]:placeholder, input[type="email"]:placeholder, input[type=password]:placeholder, input[type=date]:placeholder, input[type=datetime-local]:placeholder, input[type=file]:placeholder {
   color: #cccccc;
 }
 
@@ -2765,7 +2765,7 @@ fieldset:disabled a.btn {
   background-color: #41a58b;
     border: none;
     color: white;
-    padding: 15px 80px;
+    padding: 15px 40px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
