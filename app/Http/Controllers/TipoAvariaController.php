@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Tipo_avarias;
 
 class TipoAvariaController extends Controller{
-    public function index(){}
+    public function index(){
+        $tipo_avarias = Tipo_avarias::all();
+        // return dd($tipo_avarias);
+        return view('avaria.index_tipoAvaria', compact('tipo_avarias'));
+    }
 
     public function create(){}
 
@@ -25,8 +29,12 @@ class TipoAvariaController extends Controller{
         }
     }
 
-    public function show($id=""){
-        return Tipo_avarias::all();
+    public function show($id=false){
+        if($id)
+            return Tipo_avarias::where('id', '=', $id);
+        else
+            return Tipo_avarias::all();
+
     }
 
     public function edit($id){}

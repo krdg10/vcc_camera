@@ -60,11 +60,12 @@
         Route::get('/verificacao/exibir/{id}','VerificacaoController@exibir')->name('verificacao.exibir');
   
 
-
         // TIPO DE AVARIA
+        Route::get('/tipoAvaria','TipoAvariaController@index')->name('tipoAvaria'); //INDEX
         Route::post('/tipoAvaria','TipoAvariaController@store')->name('tipoAvaria.store'); //STORE
 
         // LOCAL DE AVARIA
+        Route::post('/localAvaria','LocalAVariasController@index')->name('localAvaria'); //INDEX
         Route::post('/localAvaria','LocalAVariasController@store')->name('localAvaria.store'); //STORE
 
         
