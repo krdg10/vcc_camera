@@ -10,8 +10,8 @@
 	        @php
 	            echo "
 	                metodos = new Metodos('". csrf_token() ."');
-	        		avaria.carousel('divExibebeImagens', JSON.parse('". $fotos ."'));
-	                avaria = new Avaria('". $local_avarias ."', '" . $tipo_avarias . "'); 
+	                avaria = new Avaria('". $local_avarias ."', '" . $tipo_avarias . "');
+	        		avaria.carousel('divExibebeImagens', JSON.parse('". $fotos ."')); 
 	            ";
 	        @endphp
 

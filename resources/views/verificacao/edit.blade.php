@@ -15,8 +15,8 @@
 
 	        // SETA DINAMICAMENTE OS CAMPOS DA SELECT
 	        @foreach ($verificacao->descAvaria as $a)
-        		avaria.setSelect('localAvaria{{$a->local_avaria_id}}', 'local', {{$a->local_avaria_id}});
-	        	avaria.setSelect('tipoAvaria{{$a->tipo_avaria_id}}', 'tipo', {{$a->tipo_avaria_id}});
+        		avaria.setSelect('localAvaria{{$a->local_avaria_id}}', 'local', {{$a->local_avaria_id}}, false);
+	        	avaria.setSelect('tipoAvaria{{$a->tipo_avaria_id}}', 'tipo', {{$a->tipo_avaria_id}}, false);
         	@endforeach
 
 	        avaria.setSelect('localAvariaNovo', 'local');
@@ -41,6 +41,12 @@
 
 		    {{-- DIV PARA EXIBIR MENSAGENS --}}
 		    <div id="divMsg"></div>
+
+	        {{-- EXIBE OS DADOS DO MOTORISTA --}}
+	        <div class="form-control"  style="height: 120px">
+	            <h5>Motorista: {{$entradas->motorista->nome}}</h5>
+	            <h5>Carro: {{$entradas->carro->nome}} - {{$entradas->carro->placa}}</h5>
+	        </div>
 	       
        		{{-- DIV PARA EXIBIR AS IMAGENS --}}
 			<div class="form-control" id="divExibebeImagens" style="height: 400px"></div>
@@ -57,6 +63,7 @@
 						</h5>
 					</div>
 
+					{{-- EXIBE AS INFORMAÇÕES JÁ CADASTRADAS --}}
 					<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
 						<div class="card-body">
 							<div class="accordion" id="accordionInterno">
@@ -120,22 +127,16 @@
 
 					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 						<div class="card-body">
+							{{-- INCLUDE DO CAMPO PARA INSERÇÃO DE DADOS --}}
+            				@include('verificacao/novaVerificacao')
+
 							<form method="POST" action="{{ route('descavarias.store', $verificacao->id) }}" enctype="multipart/form-data">
 								@csrf
-								<h4 style="margin-top: 0.5rem">Inserir Avaria Nova</h4>
 
-								{{-- SELECT LOCAL AVARIA --}}
-								<select class="MineSelect" name="localAvariaNovo" id="localAvariaNovo" onchange="avaria.storeAVaria(this, 'local', 0, '/localAvaria')"></select>
-
-				                {{-- SELECT TIPO DE AVARIA --}}
-				                <select class="MineSelect" name="tipoAvariaNovo" id="tipoAvariaNovo" onchange="avaria.storeAVaria(this, 'tipo', 1, '/tipoAvaria')"></select>
-
-				                {{-- CAMPO OBSERVAÇÃO --}}
-								<div id="addObs">
-									<input type="text" placeholder="Observação" name="observacaoNovo" id="observacaoNovo" class="form-control">
-									<button id="addAvaria" type="button" class="btn-circle btn-outline-primary" onclick="avaria.setRegistrarVerificacao('localAvariaNovo', 'tipoAvariaNovo', 'observacaoNovo', 'divRegistroAvarias')">+</button>
-								</div>
+                				{{-- DIV PARA LISTAR O REGISTRO DE AVARIAS --}}
 								<div id="divRegistroAvarias"></div>
+
+								{{-- BOTÃO PARA SUBMETER --}}
 								<button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Cadastrar nova avaria </button>
 							</form>
 						</div>
