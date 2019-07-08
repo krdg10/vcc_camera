@@ -89,20 +89,17 @@
 													
 													{{-- BOTÃO PARA ENVIAR ATUALIZAÇÃO --}}
 													<button type="submit" id="submit" class="btn btn-outline-primary"> Atualizar Avaria </button>
+													
+									</form>
+													{{-- BOTÃO PARA DELETAR O DADO DA AVARIA --}}
+													<form method="POST" action="{{ route('descavarias.destroy', $avaria->id)  }}" enctype="multipart/form-data"> <!-- antes n tinha esse form. Era só o button uma linha abaixo. dai ficava lado a lado na tela. Era tudo post, ai usava um formaction na tag com o mesmo endereço do form de baixo. tentei formmethod pra n precisar de dois form mas foi não-->
+														<button type="submit" id="submit" class="btn btn-outline-primary" value="delete" style="padding-left: 32px; padding-right: 32px; margin-top: 5px;"> <i class="fas fa-trash"></i> Excluir </button>
+														@method('delete')
+														@csrf
+													</form>
     											</div>
     										</div>
     									</div>
-									</form>
-
-									{{-- BOTÃO PARA DELETAR O DADO DA AVARIA --}}
-									<form method="POST" action="{{ route('descavarias.destroy', $avaria->id)  }}" enctype="multipart/form-data"> 
-										@method('delete')
-										@csrf
-										<button type="submit" id="submit" class="btn btn-outline-primary" value="delete" style="padding-left: 32px; padding-right: 32px; margin-top: 5px;"> 
-											<i class="fas fa-trash"></i> 
-											Excluir 
-										</button>
-									</form>
 								@empty
 									<h3>Nenhuma Avaria Cadastrada</h3>
 								@endforelse
