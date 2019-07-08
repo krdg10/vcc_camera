@@ -36,7 +36,7 @@ class CarroController extends Controller
         $carro->ano = $request->ano;
         $carro->save();
         
-        return redirect()->back()->with('message', 'Sucesso ao cadastrar carro!');
+        return redirect('/carro/listar')->with('message', 'Sucesso ao cadastrar veículo!');
     }
     public function show(){
         $carros = DB::table('carros')->orderBy('nome')->paginate(5);

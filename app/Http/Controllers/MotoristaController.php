@@ -40,7 +40,7 @@ class MotoristaController extends Controller
         $motorista->codigo_transdata = $request->codigo_transdata;
         $motorista->save();
         
-        return redirect()->back()->with('message', 'Sucesso ao cadastrar motorista!');
+        return redirect('/motorista/listar')->with('message', 'Sucesso ao cadastrar motorista!');
     }
     public function show(){
         $motoristas = DB::table('motoristas')->orderBy('nome')->paginate(5);
