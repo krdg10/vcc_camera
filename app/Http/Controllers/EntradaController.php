@@ -27,7 +27,7 @@ class EntradaController extends Controller{
         }
         //tinha um join do laravel com os or. Qualquer coisa tá no git. 
         
-        $pesquisa="select `entradas`.`id` from `entradas` inner join `motoristas` on `motoristas`.`id` = `entradas`.`motorista_id` inner join `carros` on `carros`.`id` = `entradas`.`carro_id`";
+       /* $pesquisa="select `entradas`.`id` from `entradas` inner join `motoristas` on `motoristas`.`id` = `entradas`.`motorista_id` inner join `carros` on `carros`.`id` = `entradas`.`carro_id`";
         $primeiro=0;
         if($request->verificado==1){
             $pesquisa = $pesquisa . ' ' . "inner join `verificacoes` on `verificacoes`.`entrada_id` = `entradas`.`id`";
@@ -57,9 +57,39 @@ class EntradaController extends Controller{
             }
         }
         $pesquisa = $pesquisa . ' ' . "order by `entradas`.`horario` desc";
+        $query=DB::select(DB::raw($pesquisa));*/
+        //isso aqui em cima funciona também.
         //error_log($pesquisa);
+        $nome = $request->nome;
+        $horario = $request->horario;
+        $carro = $request->carro;
+        $query = DB::table('entradas')
+                ->join('motoristas', 'motoristas.id', '=', 'entradas.motorista_id')
+                ->join('carros', 'carros.id', '=', 'entradas.carro_id')
+                //->join('verificacoes', 'verificacoes.entrada_id', '=', 'entradas.id')
+                ->when($request->verificado=='1', function($consulta){
+                    $consulta->join('verificacoes', 'verificacoes.entrada_id', '=', 'entradas.id');
+                })
+                ->when($request->nome,function($consulta, $nome){
+                    $consulta->where('motoristas.nome', 'like', '%' . $nome . '%');
+                })
+                ->when($request->horario,function($consulta, $horario){
+                    $consulta->where('entradas.horario', $horario);
+                })
+                ->when($request->carro,function($consulta, $carro){
+                    $consulta->where('carros.nome', $carro);
+                })
+                ->orderBy('entradas.horario', 'desc')
+                ->get('entradas.id');
+        /* desse jeito dá pra paginar na própria consulta. Mas preferi deixar assim. Acessar os campos
+        poderia ser confuso porque teria repetição. E pegar só os valores não seria tão útil: melhor manter
+        essa estrutura de collection que tá sendo usada pra pegar os valores diretos nas views.
+        Esse negócio de armazenar na collection é bem útil mas nunca usei. Ai a view já tava assim, fiz
+        aquele foreach pra pegá-las em vez de mandar os dados pegos das tables.
+        alternativa: especificar tudo que for necessário no get em vez de pegar tudo.*/
 
-        $query=DB::select(DB::raw($pesquisa));
+
+       
     
         //https://medium.com/justlaravel/paginated-data-with-search-functionality-in-laravel-ee0b1668b687
         //select `entradas`.`id` from `entradas` inner join `motoristas` on `motoristas`.`id` = `entradas`.`motorista_id` inner join `carros` on `carros`.`id` = `entradas`.`carro_id` inner join `verificacoes` on `verificacoes`.`entrada_id` = `entradas`.`id` where `entradas`.`horario` = '2019-07-01 15:15:00' or `motoristas`.`nome` is null or `carros`.`nome` is null

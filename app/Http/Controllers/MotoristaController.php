@@ -108,6 +108,7 @@ class MotoristaController extends Controller
                         })
                         ->orderBy('nome')
                         ->paginate(5);
+                        //https://cursos.alura.com.br/forum/topico-consulta-com-filtro-via-eloquent-orm-35886
         //$motoristas = DB::table('motoristas')->where('cpf', $request->cpf)->orWhere('codigo_empresa', $request->codigo_empresa)->orWhere('codigo_transdata', $request->codigo_transdata)->orWhere('nome', $request->nome)->orderBy('nome')->paginate(5);
         //deixei um count na view como verificação. Podia mandar mensagem, mas ia ter que colocar todo aquele código lá. 
         //O problema: quando abrir view, se não tiver nada cadastrado, vai aparecer a mensagem como se fosse busca
