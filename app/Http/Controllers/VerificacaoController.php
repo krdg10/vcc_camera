@@ -40,7 +40,7 @@ class VerificacaoController extends Controller{
                 $avaria->obs = $request->obs[$i];
                 $avaria->verificacao_id = $verificacao->id;
 
-                $avaria->save();
+                // $avaria->save();
             }
         }
         return redirect('/entrada')->with('message', 'Sucesso ao criar o seu negócio!');

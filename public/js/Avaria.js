@@ -119,4 +119,17 @@ class Avaria{
                 return campo = a[chave];
         }
 	}
+
+    habilitarTipo(selectLocal, idSelectTipo){
+        var selectTipo = document.getElementById(idSelectTipo);
+
+        if(selectLocal.value == 'false' || selectLocal.value == 'novo'){
+            selectTipo.disabled = true;
+            selectTipo.value = false;
+        }
+
+        else{
+            selectTipo.disabled = false;
+        }    
+    }
 }
