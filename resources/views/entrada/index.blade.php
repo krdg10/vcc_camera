@@ -1,6 +1,6 @@
 @extends('entrada.exibir')
 
-@section('footer')
+@section('search')
 	<script type="text/javascript">
 		var metodos;
 	 	window.onload = function(){
@@ -23,6 +23,8 @@
 	</script>
 
 	<div id="divMsg"></div>
+@endsection
+@section('footer')
 	<div id="formFooter">
 	    <div class="d-flex justify-content-center">
 	        {{ $entradas->links() }}
