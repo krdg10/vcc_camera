@@ -84,7 +84,7 @@ class CarroController extends Controller
             }
         }
         $pesquisa = $pesquisa . ' ' . "order by `nome`";*/
-        if ($request->nome != null && $request->modelo != null && $request->placa != null && $request->ano != null){
+        /*if ($request->nome != null && $request->modelo != null && $request->placa != null && $request->ano != null){
             $carros = DB::table('carros')->where('placa', $request->placa)->where('nome', 'like', '%' . $request->nome . '%')->where('modelo', 'like', '%' . $request->modelo . '%')->where('ano', $request->ano)->orderBy('nome')->paginate(5);
         }
         else if ($request->nome != null && $request->modelo != null && $request->placa){
@@ -125,7 +125,27 @@ class CarroController extends Controller
         }
         else{
             $carros = DB::table('carros')->where('placa', $request->placa)->orWhere('ano', $request->ano)->orderBy('nome')->paginate(5);
-        }
+        }*/
+        $placa = $request->placa;
+        $nome = $request->nome;
+        $modelo = $request->modelo;
+        $ano = $request->ano;
+        $carros = DB::table('carros')->when($request->placa,function($query, $placa){
+                            $query->where('placa', $placa);
+                        })
+                        ->when($request->nome,function($query, $nome){
+                            $query->where('nome', 'like', '%' . $nome . '%');
+                        })
+                        ->when($request->modelo, function($query, $modelo){
+                            $query->where('modelo', 'like', '%' . $modelo . '%');
+                        })
+                        ->when($request->ano, function($query, $ano){
+                            $query->where('ano', $ano);
+                        })
+                        ->orderBy('nome')
+                        ->paginate(5);
+        //quando tem só um, só chama ele. Quando tem mais de um, bota um and. 
+
 
        
         //deixei um count na view como verificação. Podia mandar mensagem, mas ia ter que colocar todo aquele código lá. 

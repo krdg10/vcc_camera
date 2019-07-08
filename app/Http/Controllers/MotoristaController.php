@@ -51,7 +51,7 @@ class MotoristaController extends Controller
             $motoristas = DB::table('motoristas')->orderBy('nome')->paginate(5);
             return view('motorista.show', compact('motoristas'));
         }
-        if ($request->nome != null && $request->cpf != null && $request->codigo_empresa != null && $request->codigo_transdata != null){
+       /* if ($request->nome != null && $request->cpf != null && $request->codigo_empresa != null && $request->codigo_transdata != null){
             $motoristas = DB::table('motoristas')->where('cpf', $request->cpf)->where('nome', 'like', '%' . $request->nome . '%')->where('codigo_transdata',  $request->codigo_transdata)->where('codigo_empresa', $request->codigo_empresa)->orderBy('nome')->paginate(5);
         }
         else if ($request->nome != null && $request->cpf != null && $request->codigo_empresa){
@@ -89,7 +89,25 @@ class MotoristaController extends Controller
         }
         else{
             $motoristas = DB::table('motoristas')->where('cpf', $request->cpf)->orWhere('codigo_empresa', $request->codigo_empresa)->orWhere('codigo_transdata', $request->codigo_transdata)->orderBy('nome')->paginate(5);
-        }
+        }*/
+        $cpf = $request->cpf;
+        $nome = $request->nome;
+        $codigo_empresa = $request->codigo_empresa;
+        $codigo_transdata = $request->codigo_transdata;
+        $motoristas = DB::table('motoristas')->when($request->cpf,function($query, $cpf){
+                            $query->where('cpf', $cpf);
+                        })
+                        ->when($request->nome,function($query, $nome){
+                            $query->where('nome', 'like', '%' . $nome . '%');
+                        })
+                        ->when($request->codigo_empresa, function($query, $codigo_empresa){
+                            $query->where('codigo_empresa', $codigo_empresa);
+                        })
+                        ->when($request->codigo_transdata, function($query, $codigo_transdata){
+                            $query->where('codigo_transdata', $codigo_transdata);
+                        })
+                        ->orderBy('nome')
+                        ->paginate(5);
         //$motoristas = DB::table('motoristas')->where('cpf', $request->cpf)->orWhere('codigo_empresa', $request->codigo_empresa)->orWhere('codigo_transdata', $request->codigo_transdata)->orWhere('nome', $request->nome)->orderBy('nome')->paginate(5);
         //deixei um count na view como verificação. Podia mandar mensagem, mas ia ter que colocar todo aquele código lá. 
         //O problema: quando abrir view, se não tiver nada cadastrado, vai aparecer a mensagem como se fosse busca
