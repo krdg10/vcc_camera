@@ -10,13 +10,15 @@
 	                metodos = new Metodos('". csrf_token() ."');
 	                avaria = new Avaria('". $local_avarias ."', '" . $tipo_avarias . "'); 
 	        		avaria.carousel('divExibebeImagens', JSON.parse('". $entradas->fotos ."'));
+	        		console.log($verificacao->descAvaria)
 	            ";
 	        @endphp
 
 	        // SETA DINAMICAMENTE OS CAMPOS DA SELECT
 	        @foreach ($verificacao->descAvaria as $a)
-        		avaria.setSelect('localAvaria{{$a->local_avaria_id}}', 'local', {{$a->local_avaria_id}}, false);
-	        	avaria.setSelect('tipoAvaria{{$a->tipo_avaria_id}}', 'tipo', {{$a->tipo_avaria_id}}, false);
+	        	console.log("{{$a}}");
+        		avaria.setSelect('localAvaria{{$a->id}}', 'local', {{$a->local_avaria_id}}, false);
+	        	avaria.setSelect('tipoAvaria{{$a->id}}', 'tipo', {{$a->tipo_avaria_id}}, false);
         	@endforeach
 
 	        avaria.setSelect('localAvariaNovo', 'local');
@@ -86,10 +88,10 @@
 											<div id="collapse{{$avaria->id}}" class="collapse" aria-labelledby="heading{{ $avaria->id }}" data-parent="#accordionInterno">
 												<div class="card-body">
 													{{-- SELECT LOCAL AVARIA --}}
-												 	<select class="MineSelect" name="localAvaria" id="localAvaria{{$avaria->local_avaria_id}}" ></select>
+												 	<select class="MineSelect" name="localAvaria" id="localAvaria{{$avaria->id}}" ></select>
 													
 													{{-- SELECT LOCAL AVARIA --}}
-													<select class="MineSelect" name="tipoAvaria" id="tipoAvaria{{$avaria->tipo_avaria_id}}"></select>
+													<select class="MineSelect" name="tipoAvaria" id="tipoAvaria{{$avaria->id}}"></select>
 
 													{{-- CAMPO OBSERVAÇÃO --}}
 													<input class="form-control" type="text" value="{{ $avaria->obs }} " name="obs" id="obs">
