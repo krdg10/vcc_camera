@@ -1,8 +1,11 @@
 class Xhttp {
     xhttp = '';
     request = '';
+    csrfToken;
 
-    constructor(){
+    constructor(csrfToken){
+        this.csrfToken = csrfToken
+
         try{
             this.request = new XMLHttpRequest();        
         }catch (IEAtual){
@@ -61,10 +64,10 @@ class Xhttp {
     xmlHttpDelete(url, callback=function(){}, callbackError=function(){}, callbackSend=function(){}) {
         var obj = this;
         this.xhttp.open("DELETE", url);
-        this.xhttp.setRequestHeader("X-CSRF-TOKEN", csrfToken);
-        xhttp.onreadystatechange = function(){
+        this.xhttp.setRequestHeader("X-CSRF-TOKEN", this.csrfToken);
+        this.xhttp.onreadystatechange = function(){
             // OCORREU TUDO BEM
-            obj.success(callback());
+            obj.success(callback);
 
             // ESTÁ ENVIANDO
             obj.beforeSend(callbackSend);
@@ -77,9 +80,8 @@ class Xhttp {
 
     xmlHttpPut(url, parameters, callback=function(){}, callbackError=function(){}, callbackSend=function(){}) {
         var obj = this;
-        var csrfToken = document.querySelector('#csrfToken');
         this.xhttp.open("PUT", url);
-        this.xhttp.setRequestHeader("X-CSRF-TOKEN", csrfToken.value );
+        this.xhttp.setRequestHeader("X-CSRF-TOKEN", obj.csrfToken );
         this.xhttp.onreadystatechange = function(){
             // OCORREU TUDO BEM
             obj.success(callback);
@@ -106,6 +108,7 @@ class Xhttp {
     }
 
     error(callback){
-    	this.xhttp.onerror = callback(/*JSON.parse(this.xhttp.responseText)*/);
+        console.log(this.xhttp.responseText)
+    	this.xhttp.onerror = callback(JSON.parse(this.xhttp.responseText));
     }
 }

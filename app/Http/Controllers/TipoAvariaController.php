@@ -41,5 +41,14 @@ class TipoAvariaController extends Controller{
 
     public function update(Request $request, $id){}
 
-    public function destroy($id){}
+    public function destroy($id){
+        try {
+            $d = Tipo_avarias::find($id);
+            $d->delete();
+            return Metodos::retorno(1, 'Sucesso ao eliminar');
+        } catch (Exception $e) {
+            return Metodos::retorno(0, 'Erro ao eliminar');     
+        }
+
+    }
 }

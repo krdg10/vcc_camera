@@ -3,7 +3,7 @@ class Metodos {
 	csrfToken;
 	constructor(csrfToken){
 		this.csrfToken = csrfToken;
-		this.xhttp = new Xhttp()
+		this.xhttp = new Xhttp(this.csrfToken);
 	}
 
 	msgSuccess(msg, idCampo='divMsg', seg=false){

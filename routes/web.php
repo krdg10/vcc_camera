@@ -63,6 +63,7 @@
         // TIPO DE AVARIA
         Route::get('/tipoAvaria','TipoAvariaController@index')->name('tipoAvaria'); //INDEX
         Route::post('/tipoAvaria','TipoAvariaController@store')->name('tipoAvaria.store'); //STORE
+        Route::delete('/tipoAvaria/{id}','TipoAvariaController@destroy')->name('tipoAvaria.destroy'); // DELETE
 
         // LOCAL DE AVARIA
         Route::post('/localAvaria','LocalAVariasController@index')->name('localAvaria'); //INDEX

@@ -1,10 +1,13 @@
 class Avaria{
 	avarias;
 	registroAvarias;
+    xhttp;
 
-	constructor(local, tipo){
+	constructor(local='{}', tipo='{}', xhttp=false){
 		this.registroAvarias = new Array();
 		this.avarias = {local:JSON.parse(local), tipo:JSON.parse(tipo)};
+
+        if (xhttp) this.xhttp = xhttp;
 	}
 
     storeAVaria(select, chave, pos, url){
@@ -120,16 +123,21 @@ class Avaria{
         }
 	}
 
-    habilitarTipo(selectLocal, idSelectTipo){
-        var selectTipo = document.getElementById(idSelectTipo);
+    edit(chave, pos, event=false){
+        var obj = this;
+        var idCampo = document.getElementById('idUpdateAVaria');
+        var chaveCampo = document.getElementById('chaveUpdateAVaria');
+        var descricaoCampo = document.getElementById('descricaoUpdateAVaria');
 
-        if(selectLocal.value == 'false' || selectLocal.value == 'novo'){
-            selectTipo.disabled = true;
-            selectTipo.value = false;
-        }
+        idCampo.value = this.avarias[chave][pos].id;
+        chaveCampo.value = chave;
+        descricaoCampo.value = this.avarias[chave][pos][chave];
+    }
 
-        else{
-            selectTipo.disabled = false;
-        }    
+    updateAVaria(event){
+        var formUpdateAvaria = document.getElementById('formUpdateAvaria');
+        event.preventDefault();
+
+
     }
 }
