@@ -32,6 +32,8 @@
 
         {{-- DIV PARA EXIBIR MENSAGENS --}}
         <div id="divMsg"></div>
+
+        
        
        	{{-- DIV PARA EXIBIR AS IMAGENS --}}
 		<div class="form-control" id="divExibebeImagens" style="height: 400px"></div>
