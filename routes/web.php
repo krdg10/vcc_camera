@@ -66,8 +66,9 @@
         Route::delete('/tipoAvaria/{id}','TipoAvariaController@destroy')->name('tipoAvaria.destroy'); // DELETE
 
         // LOCAL DE AVARIA
-        Route::post('/localAvaria','LocalAVariasController@index')->name('localAvaria'); //INDEX
+        Route::get('/localAvaria','LocalAVariasController@index')->name('localAvaria'); //INDEX
         Route::post('/localAvaria','LocalAVariasController@store')->name('localAvaria.store'); //STORE
+        Route::delete('/tipoAvaria/{id}','LocalAvariaController@destroy')->name('localAvaria.destroy'); //DELETE
 
         
         Route::get('image/upload','ImageUploadController@fileCreate');

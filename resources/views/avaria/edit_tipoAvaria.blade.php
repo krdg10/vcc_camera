@@ -9,12 +9,15 @@
             </div>
             <div class="fadeIn first">
               <form id="formUpdateAvaria">
-                <input id="idUpdateAVaria" name="id" disabled>
-                <input id="posUpdateAVaria" name="pos" disabled>
-                <input id="chaveUpdateAVaria" name="chave" disabled>
-                <input id="descricaoUpdateAVaria" name="descricao">
-
-                <button onclick="avaria.updateAVaria(event)">SALVAR</button>
+                <input type="text" id="idUpdateAVaria" name="id" disabled>
+                <input type="text" id="posUpdateAVaria" name="pos" disabled>
+                <input type="text" id="chaveUpdateAVaria" name="chave" disabled>
+                <input type="text" id="descricaoUpdateAVaria" name="descricao">
+                <div id="formFooter">
+                  <div class="d-flex justify-content-center">
+                    <button onclick="avaria.updateAVaria(event)" type="submit" id="submit" class="fadeIn fourth btn btn-primary">SALVAR</button>
+                  </div>
+                </div>
               </form>
             </div>
         </div>
