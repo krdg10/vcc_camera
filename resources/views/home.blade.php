@@ -101,13 +101,13 @@
                     {{-- INICIO BOTÃO ENTRADA --}}
                     <div class="dropdown">
                         <button type="button" class="list-group-item list-group-item-action" data-toggle="dropdown">
-                            Avarias salvas
+                            Avarias Salvas
                         </button>
                         <div class="dropdown-menu">
                             <div class="list-group">
                             {{-- <a class="list-group-item list-group-item-action" href="{{ url('/tipoAvaria') }}">Cadastrar Entradas</a> --}}
-                            <a class="list-group-item list-group-item-action" href="{{ url('/tipoAvaria') }}">Ver tipos de avarias</a>
-                            <a class="list-group-item list-group-item-action" href="{{ url('/entrada') }}">Ver local de avarias</a>
+                            <a class="list-group-item list-group-item-action" href="{{ url('/tipoAvaria') }}">Ver Tipos de Avarias</a>
+                            <a class="list-group-item list-group-item-action" href="{{ url('/localAvaria') }}">Ver Local de Avarias</a>
                             </div>
                         </div>
 

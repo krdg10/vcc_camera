@@ -16,16 +16,19 @@ class TipoAvariaController extends Controller{
 
     public function store(Request $request){
         // VERIFICA SE EXISTE ALGO CADASTRADO COM ESSE NOME
-        if(Tipo_avarias::where('tipo', 'like', '%'. $request->tipo .'%')->count() > 0)
-            return Metodos::retorno(0, 'Já existe "' . $request->tipo . '" cadastrado.');
+        if(Tipo_avarias::where('tipo', $request->tipoAvaria)->count() > 0){
+            $error[] = "Tipo de Avaria $request->tipoAvaria já existe!";
+            return redirect()->back()->with('error', $error);
+        }
 
         try {
             $tipo_avarias = new Tipo_avarias;
-            $tipo_avarias->tipo = $request->tipo;
+            $tipo_avarias->tipo = $request->tipoAvaria;
             $tipo_avarias->save();
-            return Metodos::retorno(1, 'Sucesso ao adicinar "' . $request->tipo . '".', $tipo_avarias);
+            //return Metodos::retorno(1, 'Sucesso ao adicinar "' . $request->tipo . '".', $tipo_avarias);
+            return redirect()->back()->with('message', 'Sucesso ao cadastrar novo tipo de avaria!');
         } catch (Exception $e) {
-            return Metodos::retorno(0, 'Erro ao inserir novo tipo', $e);
+            return redirect()->back()->with('error', 'Falha ao cadastrar novo tipo de avaria!');
         }
     }
 

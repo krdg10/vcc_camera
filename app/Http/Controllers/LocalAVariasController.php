@@ -7,7 +7,9 @@ use App\Models\Local_avaria;
 
 class LocalAVariasController extends Controller{
     public function index(){
-        //
+        $local_avarias = Local_avaria::all();
+        // return dd($tipo_avarias);
+        return view('avaria.index_localAvaria', compact('local_avarias'));
     }
 
     public function create(){

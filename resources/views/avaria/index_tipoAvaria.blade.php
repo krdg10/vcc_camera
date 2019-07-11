@@ -17,6 +17,21 @@
 
 	<div class="wrapper fadeInDown">
 	    <div id="formContent">
+			<h3>Lista de Tipos de Avaria</h3>
+			@if( \Session::has('error') )
+                @foreach(session()->get('error') as $key => $ms)
+                    <span id="{{ $key }}error" class="badge badge-danger badge-pill">
+                        {{ $ms }}
+                        <a id="excluir" onClick="excluirElement('{{ $key }}error')"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    </span>
+                @endforeach
+            @endif
+            @if( \Session::has('message') )
+                <span id="success" class="badge badge-success badge-pill">
+                    {{ \Session::get('message') }}
+                        <a id="excluir" onClick="excluirElement('success')"><i class="fa fa-times" aria-hidden="true"></i></a>
+                </span>
+            @endif
 	        <div class="fadeIn first">
 		        <table class="table table-hover table-striped">
 	                <thead>
@@ -45,10 +60,17 @@
 	                    @endforeach
 	                </tbody>
 	            </table>
-	        </div>
+			</div>
+			<div id="formFooter">
+                <div class="d-flex justify-content-center">
+                    <button data-toggle="modal" href="#modalCreateAvaria" data-target="#modalCreateAvaria" class="fadeIn fourth btn btn-primary">Adicionar Novo</button>
+                </div>
+            </div>
+			
 		</div>
 	</div>
 
-	@include('avaria.edit')
+	@include('avaria.edit_tipoAvaria')
+	@include('avaria.create_tipoAvaria')
 
 @endsection 
