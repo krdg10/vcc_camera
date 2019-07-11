@@ -8,7 +8,7 @@
             @php
                 echo "
                     metodos = new Metodos('". csrf_token() ."');
-                    avaria = new Avaria('". $localAvarias ."', '" . $tipoAvarias . "'); 
+                    avaria = new Avaria('avaria', '". $localAvarias ."', '" . $tipoAvarias . "'); 
                     fotos = JSON.parse('". $entradas->fotos ."');
                 ";
             @endphp
@@ -16,7 +16,7 @@
             // FUNÇÃO PARA SETAR O OPTION EM SELECT DAS AVARIAS
             avaria.setSelect('localAvariaNovo', 'local');
             avaria.setSelect('tipoAvariaNovo', 'tipo'); 
-            avaria.carousel('divExibebeImagens', fotos);
+            avaria.carousel('divExibebeImagens', 'modalImg', fotos);
 
             // EXIBE MENSAGEM DE SUCESSO.
             @if( \Session::has('error') )
@@ -37,17 +37,8 @@
             {{-- DIV PARA EXIBIR MENSAGENS --}}
             <div id="divMsg"></div>
 
-            <!-- MODAL DA IMAGEM -->
-            <div id="modalImag" class="modal">
-                <!-- The Close Button -->
-                <span class="close">&times;</span>
-
-                <!-- Modal Content (The Image) -->
-                <img class="modal-content" id="img01">
-
-                <!-- Modal Caption (Image Text) -->
-                <div id="caption"></div>
-            </div>
+            {{-- MODAL DA IMAGEM --}}
+            <div id="modalImg"></div>
 
             {{-- DIV QUE EXIBE OS DADOS DA ENTRADA --}}
             <div class="form-control"  style="height: 120px">

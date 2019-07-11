@@ -1,10 +1,12 @@
 class Avaria{
-	avarias;
-	registroAvarias;
     xhttp;
+	avarias;
+    nomeObj;
+	registroAvarias;
 
-	constructor(local='{}', tipo='{}', xhttp=false){
+	constructor(nomeObj, local='{}', tipo='{}', xhttp=false){
 		this.registroAvarias = new Array();
+        this.nomeObj = nomeObj;
 		this.avarias = {local:JSON.parse(local), tipo:JSON.parse(tipo)};
 
         if (xhttp) this.xhttp = xhttp;
@@ -49,13 +51,17 @@ class Avaria{
         if(value_padrao) document.getElementById(id).value = value_padrao;
     }
 
-    carousel(id, imagens){
+    carousel(id, idDivMOdal, imagens){
     	var divImg = '';
+
+        this.setarModal(idDivMOdal);
+
     	var activeClass = 'active';
     	for (var i = 0; i < imagens.length; i++) {
     		divImg = divImg + 
     		`<div class="carousel-item `+ activeClass +`">` +
-                `<img class="d-block w-100" style="height: 300px" src="/storage/`+ imagens[i].path +`" alt="Primeiro Slide">` +
+                `<img class="d-block w-100" id="img`+ imagens[i].id +`" style="height: 300px" src="/storage/`+ imagens[i].path +`" alt="Primeiro Slide"`+
+                `onClick="`+ this.nomeObj +`.modalImage('modalImag', 'img`+ imagens[i].id +`', 'img01', 'caption')">` +
             `</div> `;
             activeClass = '';
     	}
@@ -74,6 +80,32 @@ class Avaria{
                 `<span class="sr-only">Próximo</span>` +
             `</a>` +
         `</div>`;
+    }
+
+    // INJETA O CÓDIGO DO MODAL NA DIV
+    setarModal(idDivMOdal){
+        document.getElementById(idDivMOdal).innerHTML = `` +
+            `<div id="modalImag" class="modal">`+
+                `<span class="close" onclick="`+ this.nomeObj +`.fecharModal('modalImag')">&times;</span>`+
+
+                `<img class="modal-content" id="img01">`+
+
+                `<div id="caption"></div>`+
+            `</div>`;
+    }
+
+    // EXIBE O MODAL QUANDO A IMAGEM É SELECIONADA
+    modalImage(idModal, idImg, idModalImg, idCapion){
+        var img = document.getElementById(idImg);
+
+        document.getElementById(idModal).style.display = "block";
+        document.getElementById(idModalImg).src = img.src;
+        document.getElementById(idCapion).innerHTML = img.alt;
+    }
+
+    // FECHA O MODAL
+    fecharModal(idModal){
+        document.getElementById(idModal).style.display = "none";
     }
 
     setRegistrarVerificacao(idSelectLocal, idSelectTipo, idObs, idExibirRegistroAvarias){
@@ -106,7 +138,7 @@ class Avaria{
 		            	`<input type="text" value="`+ this.registroAvarias[z].local +`" name="local[]" class="d-none">`+
 		            	`<input type="text" value="`+ this.registroAvarias[z].tipo +`" name="tipo[]" class="d-none">`+
 		            	`<input type="text" value="`+ this.registroAvarias[z].obs +`" name="obs[]" class="d-none">  `+
-		            	`<a onClick="avaria.deleteRegistro(`+ z +`, '`+ idExibirRegistroAvarias +`')"><i class="fa fa-times" aria-hidden="true"></i></a>`+
+		            	`<a onClick="`+ this.nomeObj +`.deleteRegistro(`+ z +`, '`+ idExibirRegistroAvarias +`')"><i class="fa fa-times" aria-hidden="true"></i></a>`+
 	            	`</span> `;
         }
         document.getElementById(idExibirRegistroAvarias).innerHTML = text;
@@ -137,7 +169,5 @@ class Avaria{
     updateAVaria(event){
         var formUpdateAvaria = document.getElementById('formUpdateAvaria');
         event.preventDefault();
-
-
     }
 }
