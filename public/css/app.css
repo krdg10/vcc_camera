@@ -1940,6 +1940,26 @@ pre code {
   color: #212529;
 }
 
+#modalImag span{
+  float: right;
+  font-size: 5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: white;
+  text-shadow: 0 1px 0 #696969; 
+  opacity: 0.75;
+}
+#modalImag span:hover{
+  opacity: 1;
+}
+.carousel-item img {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.carousel-item img:hover {
+  opacity: 0.7;
+}
 .table th,
 .table td {
   padding: 0.75rem;
@@ -6269,6 +6289,12 @@ a.close.disabled {
 .modal-dialog-centered.modal-dialog-scrollable::before {
   content: none;
 }
+#modalImag{
+  padding-top: 75px;
+}
+#divExibebeImagens{
+  padding-bottom:10px;
+}
 
 .modal-content {
   position: relative;
@@ -6277,6 +6303,7 @@ a.close.disabled {
   -ms-flex-direction: column;
   flex-direction: column;
   width: 100%;
+  max-height: 500px;
   pointer-events: auto;
   background-color: #fff;
   background-clip: padding-box;

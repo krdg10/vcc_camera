@@ -83,11 +83,12 @@ class VerificacaoController extends Controller{
         $entradaController = new EntradaController;
 
         $verificacao = Verificacao::find($id);
+        $entradas = $verificacao->entrada;
         $tipo_avarias = $tipo_avariaController->show();
         $local_avarias = $local_avariasController->show();
         $fotos = $entradaController->show($verificacao->entrada_id)->fotos;
 
-        return view('verificacao.exibir', compact('verificacao', 'tipo_avarias', 'local_avarias', 'fotos'));
+        return view('verificacao.exibir', compact('verificacao', 'entradas', 'tipo_avarias', 'local_avarias', 'fotos'));
     }
 
     public function update(Request $request, $id){

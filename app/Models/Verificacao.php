@@ -12,4 +12,7 @@ class Verificacao extends Model
     public function descAvaria(){
         return $this->hasMany(\App\Models\Desc_avarias::class);
     }
+    public function entrada(){
+    	return $this->hasOne(\App\Models\Entrada::class, 'id', 'entrada_id');
+	}
 }
