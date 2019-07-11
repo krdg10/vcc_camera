@@ -33,12 +33,14 @@
 	                            <td>{{$tipo_avaria->id}}</td>
 	                            <td>{{$tipo_avaria->tipo}}</td>
 	                            <td>
-	                            	<a data-toggle="modal" href="#editAvaria" data-target="#editAvaria" onclick="avaria.edit('tipo', {{$loop->iteration }} - 1, event)" >
-	                            		<i class="fas fa-edit"></i>
-	                            	</a>
+									<div class="p-2 iconesLista"><a data-toggle="modal" href="#editAvaria" data-target="#editAvaria" onclick="avaria.edit('tipo', {{$loop->iteration }} - 1, event)" >
+											<i class="fas fa-edit"></i>
+										</a>
+									
 
-	                            	<a href="/tipoAvaria" ><i class="fas fa-trash" onclick="metodos.xhttp.xmlHttpDelete('/tipoAvaria/{{$tipo_avaria->id}}')"></i></a>
-	                            </td>
+	                            		<a href="/tipoAvaria" ><i class="fas fa-trash" onclick="metodos.xhttp.xmlHttpDelete('/tipoAvaria/{{$tipo_avaria->id}}')"></i></a>
+									</div>
+								</td>
 	                        </tr>
 	                    @endforeach
 	                </tbody>
