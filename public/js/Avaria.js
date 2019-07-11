@@ -51,7 +51,8 @@ class Avaria{
         if(value_padrao) document.getElementById(id).value = value_padrao;
     }
 
-    carousel(id, idDivMOdal, imagens){
+    carousel(id, idDivMOdal, imagensString){
+        var imagens = JSON.parse(imagensString);
     	var divImg = '';
 
         this.setarModal(idDivMOdal);

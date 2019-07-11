@@ -8,8 +8,8 @@
 	        @php
 	            echo "
 	                metodos = new Metodos('". csrf_token() ."');
-	                avaria = new Avaria('". $local_avarias ."', '" . $tipo_avarias . "'); 
-	        		avaria.carousel('divExibebeImagens', JSON.parse('". $entradas->fotos ."'));
+	                avaria = new Avaria('avaria', '". $local_avarias ."', '" . $tipo_avarias . "'); 
+	        		avaria.carousel('divExibebeImagens', 'modalImg', '". $entradas->fotos ."');
 	            ";
 	        @endphp
 
@@ -41,6 +41,9 @@
 
 		    {{-- DIV PARA EXIBIR MENSAGENS --}}
 		    <div id="divMsg"></div>
+
+            {{-- MODAL DA IMAGEM --}}
+            <div id="modalImg"></div>
 
 	        {{-- EXIBE OS DADOS DO MOTORISTA --}}
 	        <div class="form-control"  style="height: 120px">

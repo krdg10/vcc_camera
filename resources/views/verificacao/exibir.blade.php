@@ -10,8 +10,8 @@
 	        @php
 	            echo "
 	                metodos = new Metodos('". csrf_token() ."');
-	                avaria = new Avaria('". $local_avarias ."', '" . $tipo_avarias . "');
-	        		avaria.carousel('divExibebeImagens', JSON.parse('". $fotos ."')); 
+	                avaria = new Avaria('avaria', '". $local_avarias ."', '" . $tipo_avarias . "');
+	        		avaria.carousel('divExibebeImagens', 'modalImg', '". $fotos ."'); 
 	            ";
 	        @endphp
 
@@ -32,11 +32,12 @@
 
         {{-- DIV PARA EXIBIR MENSAGENS --}}
         <div id="divMsg"></div>
-
         
-       
        	{{-- DIV PARA EXIBIR AS IMAGENS --}}
 		<div class="form-control" id="divExibebeImagens" style="height: 400px"></div>
+
+        {{-- MODAL DA IMAGEM --}}
+        <div id="modalImg"></div>
 		
 		<div class="accordion" id="accordionExample">
 			@forelse ($verificacao->descAvaria as $avaria)

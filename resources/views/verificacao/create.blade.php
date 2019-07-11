@@ -9,7 +9,7 @@
                 echo "
                     metodos = new Metodos('". csrf_token() ."');
                     avaria = new Avaria('avaria', '". $localAvarias ."', '" . $tipoAvarias . "'); 
-                    fotos = JSON.parse('". $entradas->fotos ."');
+                    fotos = '". $entradas->fotos ."';
                 ";
             @endphp
 
