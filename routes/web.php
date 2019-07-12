@@ -30,6 +30,7 @@
         Route::delete('/motorista/listar/excluir/{id}','MotoristaController@destroy')->name('motorista.destroy');
         Route::post('/motorista/buscar', 'MotoristaController@busca')->name('motorista.busca');
         Route::get('/motorista/buscar', 'MotoristaController@busca');
+        
 
         // CARRO
         Route::get('/carro','CarroController@index')->name('carro');
@@ -41,6 +42,7 @@
         Route::delete('/carro/listar/excluir/{id}','CarroController@destroy')->name('carro.destroy');
         Route::post('/carro/buscar', 'CarroController@busca')->name('carro.busca');
         Route::get('/carro/buscar', 'CarroController@busca');
+
 
         Route::get('/entrada','EntradaController@index')->name('entrada');
         Route::get('/entrada/create','EntradaController@create')->name('entrada.create');
@@ -63,7 +65,8 @@
         // TIPO DE AVARIA
         Route::get('/tipoAvaria','TipoAvariaController@index')->name('tipoAvaria'); //INDEX
         Route::post('/tipoAvaria','TipoAvariaController@store')->name('tipoAvaria.store'); //STORE
-        Route::delete('/tipoAvaria/{id}','TipoAvariaController@destroy')->name('tipoAvaria.destroy'); // DELETE
+        Route::put('/tipoAvaria/{id}','TipoAvariaController@update')->name('tipoAvaria.update'); //UPDATE
+        Route::delete('/tipoAvaria/{id}','TipoAvariaController@destroy')->name('tipoAvaria.update'); // DELETE
 
         // LOCAL DE AVARIA
         Route::get('/localAvaria','LocalAVariasController@index')->name('localAvaria'); //INDEX

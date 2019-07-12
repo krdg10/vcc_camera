@@ -108,7 +108,6 @@ class Xhttp {
     }
 
     error(callback){
-        console.log(this.xhttp.responseText)
     	this.xhttp.onerror = callback(JSON.parse(this.xhttp.responseText));
     }
 }

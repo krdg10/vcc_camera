@@ -8,9 +8,19 @@
 	        @php
 	            echo "
 	                metodos = new Metodos('". csrf_token() ."');
-	                avaria = new Avaria('{}', '". $tipo_avarias ."')
+	                avaria = new Avaria('avaria', '{}', '". $tipo_avarias ."', '". csrf_token() ."');
 	            ";
 	        @endphp
+
+            // EXIBE MENSAGEM DE SUCESSO.
+            @if( \Session::has('error') )
+                @foreach(session()->get('error') as $key => $ms)
+                    metodos.msgError("{{ $ms }}", 'divMsg');
+                @endforeach
+            @endif
+            @if( \Session::has('message') )
+                metodos.msgSuccess("{{ \Session::get('message') }}", 'divMsg');
+            @endif
 	    }
 		
 	</script>
@@ -18,20 +28,10 @@
 	<div class="wrapper fadeInDown">
 	    <div id="formContent">
 			<h3>Lista de Tipos de Avaria</h3>
-			@if( \Session::has('error') )
-                @foreach(session()->get('error') as $key => $ms)
-                    <span id="{{ $key }}error" class="badge badge-danger badge-pill">
-                        {{ $ms }}
-                        <a id="excluir" onClick="excluirElement('{{ $key }}error')"><i class="fa fa-times" aria-hidden="true"></i></a>
-                    </span>
-                @endforeach
-            @endif
-            @if( \Session::has('message') )
-                <span id="success" class="badge badge-success badge-pill">
-                    {{ \Session::get('message') }}
-                        <a id="excluir" onClick="excluirElement('success')"><i class="fa fa-times" aria-hidden="true"></i></a>
-                </span>
-            @endif
+
+            {{-- DIV PARA EXIBIR MENSAGENS --}}
+            <div id="divMsg"></div>
+
 	        <div class="fadeIn first">
 		        <table class="table table-hover table-striped">
 	                <thead>
@@ -48,7 +48,7 @@
 	                            <td>{{$tipo_avaria->id}}</td>
 	                            <td>{{$tipo_avaria->tipo}}</td>
 	                            <td>
-									<div class="p-2 iconesLista"><a data-toggle="modal" href="#editAvaria" data-target="#editAvaria" onclick="avaria.edit('tipo', {{$loop->iteration }} - 1, event)" >
+									<div class="p-2 iconesLista"><a data-toggle="modal" href="#editAvaria" data-target="#editAvaria" onclick="avaria.setEdit('tipo', {{$loop->iteration }} - 1)" >
 											<i class="fas fa-edit"></i>
 										</a>
 									
@@ -70,7 +70,6 @@
 		</div>
 	</div>
 
-	@include('avaria.edit_tipoAvaria')
-	@include('avaria.create_tipoAvaria')
+	@include('avaria.edit_avaria')
 
 @endsection 

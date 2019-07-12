@@ -7,19 +7,28 @@
             <span aria-hidden="true">&times;</span>
           </button>
       </div>
+
       <div class="fadeIn first">
         <form id="formUpdateAvaria">
+          @csrf
+          {{ method_field('PUT') }}
+
           <input type="text" id="idUpdateAVaria" name="id" disabled>
-          <input type="text" id="posUpdateAVaria" name="pos" disabled>
+          {{-- <input type="text" name="_method" value="put" disabled> --}}
+          <input type="text" id="posUpdateAVaria" name="pos" hidden>
           <input type="text" id="chaveUpdateAVaria" name="chave" disabled>
           <input type="text" id="descricaoUpdateAVaria" name="descricao">
+
           <div id="formFooter">
             <div class="d-flex justify-content-center">
-              <button onclick="avaria.updateAVaria(event)" type="submit" id="submit" class="fadeIn fourth btn btn-primary">SALVAR</button>
+              <button onclick="avaria.updateAVaria('formUpdateAvaria', event)" type="submit" id="submit" class="fadeIn fourth btn btn-primary">
+                SALVAR
+              </button>
             </div>
           </div>
         </form>
       </div>
+
     </div>
   </div>
 </div>

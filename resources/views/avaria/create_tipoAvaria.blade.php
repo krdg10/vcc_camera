@@ -9,7 +9,6 @@
             </div>
             <div class="fadeIn first">
                 <form method="POST" action="{{ route('tipoAvaria.store') }}" enctype="multipart/form-data">
-                    @csrf
                     <input type="text" id="tipoAvaria" name="tipoAvaria" placeholder="Tipo">
                     <div id="formFooter">
                         <div class="d-flex justify-content-center">
