@@ -61,7 +61,7 @@ class Avaria{
     	for (var i = 0; i < imagens.length; i++) {
     		divImg = divImg + 
     		`<div class="carousel-item `+ activeClass +`">` +
-                `<img class="d-block w-100" id="img`+ imagens[i].id +`" style="height: 300px" src="/storage/`+ imagens[i].path +`" alt="Primeiro Slide"`+
+                `<img class="d-block w-100" id="img`+ imagens[i].id +`" style="height: 300px" src="/storage/`+ imagens[i].path +`" alt="Imagem `+i+`"`+
                 `onClick="`+ this.nomeObj +`.modalImage('modalImag', 'img`+ imagens[i].id +`', 'img01', 'caption')">` +
             `</div> `;
             activeClass = '';
