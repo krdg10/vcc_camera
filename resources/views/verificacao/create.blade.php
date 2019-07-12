@@ -28,11 +28,26 @@
                 metodos.msgSuccess("{{ \Session::get('message') }}", 'divMsg');
             @endif
         }
+        $("#modalImg").click(function(){
+        $(".modal").addClass("visible");
+        });
+
+        $(".close").click(function(){
+        $(".modal").removeClass("visible");
+        });
+
+        $(document).click(function(event) {
+        //if you click on anything except the modal itself or the "open modal" link, close the modal
+        if (!$(event.target).closest(".modal,#modalImg").length) {
+            $("body").find(".modal").removeClass("visible");
+        }
+        });
+
     </script>
 
     <div class="wrapper fadeInDown">
         <div id="formContent">
-            <h3>Verificar entrada</h3>
+            <h3>Verificar entrada</h3> <hr>
 
             {{-- DIV PARA EXIBIR MENSAGENS --}}
             <div id="divMsg"></div>
@@ -41,15 +56,15 @@
             <div id="modalImg"></div>
 
             {{-- DIV QUE EXIBE OS DADOS DA ENTRADA --}}
-            <div class="form-control"  style="height: 120px">
+            <div class="container">
                 <h5>Motorista: {{$entradas->motorista->nome}}</h5>
                 <h5>Carro: {{$entradas->carro->nome}} - {{$entradas->carro->placa}}</h5>
             </div>
 
             {{-- DIV PARA EXIBIR AS IMAGENS --}}
-            <div id="divExibebeImagens" class="form-control"  style="height: 400px"></div>
+            <div id="divExibebeImagens" class="container"></div>
             
-            <div>
+            <div class="container" style="padding-left: 0px; padding-right:0px;">
                 {{-- INCLUDE DO CAMPO PARA INSERÇÃO DE DADOS --}}
                 @include('verificacao/novaVerificacao')
 

@@ -28,17 +28,23 @@
 	</script>
 
     <div id="formContent">	
-	    <h3>Verificar entrada</h3>
+	    <h3>Entrada</h3> <hr>
 
         {{-- DIV PARA EXIBIR MENSAGENS --}}
-        <div id="divMsg"></div>
+		<div id="divMsg"></div>
+
+		{{-- DIV QUE EXIBE OS DADOS DA ENTRADA --}}
+        <div class="container">
+            <h5>Motorista: {{$entradas->motorista->nome}}</h5>
+            <h5>Carro: {{$entradas->carro->nome}} - {{$entradas->carro->placa}}</h5>
+        </div>
         
        	{{-- DIV PARA EXIBIR AS IMAGENS --}}
-		<div class="form-control" id="divExibebeImagens" style="height: 400px"></div>
+		<div class="container" id="divExibebeImagens"></div>
 
         {{-- MODAL DA IMAGEM --}}
         <div id="modalImg"></div>
-		
+		<div class="container" style="padding-left: 0px; padding-right:0px;">
 		<div class="accordion" id="accordionExample">
 			@forelse ($verificacao->descAvaria as $avaria)
 				<div class="card">
@@ -79,6 +85,7 @@
 			@empty
 				<h3>Nenhuma Avaria Cadastrada</h3>
 			@endforelse
+		</div>
 		</div>
 	</div>
 </div>

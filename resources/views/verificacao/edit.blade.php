@@ -3,7 +3,7 @@
 	<script>
 	    var avarias = [];
 	    var cont = 0;
-	    var metodos, avaria;
+		var metodos, avaria;
 	    window.onload = function(){
 	        @php
 	            echo "
@@ -11,8 +11,19 @@
 	                avaria = new Avaria('avaria', '". $local_avarias ."', '" . $tipo_avarias . "'); 
 	        		avaria.carousel('divExibebeImagens', 'modalImg', '". $entradas->fotos ."');
 	            ";
-	        @endphp
-
+			@endphp
+			
+			$('.modal').on('click', function(e) {
+				//if(e.target == '.modal')){
+				if($(event.target).attr('class')=='close'){
+					document.getElementById("modalImag").style.display = "none";
+					return;
+				}
+				else if (e.target !== this){
+					return;
+				}
+				document.getElementById("modalImag").style.display = "none";
+			});
 	        // SETA DINAMICAMENTE OS CAMPOS DA SELECT
 	        @foreach ($verificacao->descAvaria as $a)
         		avaria.setSelect('localAvaria{{$a->id}}', 'local', {{$a->local_avaria_id}}, false);
@@ -37,7 +48,7 @@
 
 	<div class="wrapper fadeInDown">
 	    <div id="formContent">
-		    <h3>Verificar entrada</h3>
+		    <h3>Verificar entrada</h3> <hr>
 
 		    {{-- DIV PARA EXIBIR MENSAGENS --}}
 		    <div id="divMsg"></div>
@@ -46,15 +57,16 @@
             <div id="modalImg"></div>
 
 	        {{-- EXIBE OS DADOS DO MOTORISTA --}}
-	        <div class="form-control"  style="height: 120px">
+	        <div class="container">
 	            <h5>Motorista: {{$entradas->motorista->nome}}</h5>
 	            <h5>Carro: {{$entradas->carro->nome}} - {{$entradas->carro->placa}}</h5>
 	        </div>
 	       
        		{{-- DIV PARA EXIBIR AS IMAGENS --}}
-			<div class="form-control" id="divExibebeImagens" style="height: 400px"></div>
+			<div class="container" id="divExibebeImagens" ></div>
 
 			{{-- VISUALIZAR OS CAMPO PARA EDITAR E ATUALIZAR --}}
+			<div class="container" style="padding-left: 0px; padding-right:0px;">
 			<div class="accordion" id="accordionExample">
 				<div class="card">
 					{{-- BOTÃO PARA EXIBIR OS DADOS CADASTRADOS --}}
@@ -146,6 +158,7 @@
 					</div>
 				</div>
 			</div>
+			</div>	
 		</div>
 	</div>
 @endsection
