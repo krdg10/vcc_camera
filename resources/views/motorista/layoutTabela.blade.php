@@ -31,6 +31,9 @@
             return false;
         }
     }
+    function excluirElement(id){
+        $('#'+id).remove();
+    }
 </script>
 <div class="wrapper fadeInDown">
     <div id="formContent">

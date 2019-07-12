@@ -15,7 +15,7 @@ class CarroController extends Controller
     public function store(Request $request){
         $carro = new Carro;
         if(!$request->nome){
-            $error[] = 'Coloque algum nome para seu carro!';
+            $error[] = 'Coloque algum nome para seu veículo!';
         }
         if(!$request->placa){
             $error[] = 'Insira alguma placa!';
@@ -80,7 +80,7 @@ class CarroController extends Controller
     public function update(Request $request, $id)
     {
         if(!$request->nome){
-            $error[] = 'Coloque algum nome para seu carro!';
+            $error[] = 'Coloque algum nome para seu veículo!';
         }
         if(!$request->placa){
             $error[] = 'Insira alguma placa!';
@@ -101,7 +101,7 @@ class CarroController extends Controller
         $Carro->placa    = $request->placa;
         $Carro->ano       = $request->ano;
         $Carro->save();
-        return redirect()->route('carro.edit', compact('Carro'))->with('message', 'Carro Atualizado com Sucesso!');
+        return redirect()->route('carro.edit', compact('Carro'))->with('message', 'Veículo Atualizado com Sucesso!');
     }
 
     public function delete($id)
@@ -112,7 +112,7 @@ class CarroController extends Controller
     public function destroy($id){
         $Carro = Carro::findOrFail($id);
         $Carro->delete();
-        return redirect()->route('carro.show');
+        return redirect()->route('carro.show')->with('message', 'Veículo Deletado Com Sucesso!');
     }
 
 }

@@ -117,6 +117,6 @@ class MotoristaController extends Controller
     public function destroy($id){
         $Motorista = Motorista::findOrFail($id);
         $Motorista->delete();
-        return redirect()->route('motorista.show');
+        return redirect()->route('motorista.show')->with('message', 'Motorista Deletado Com Sucesso!');
     }
 }

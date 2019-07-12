@@ -152,15 +152,15 @@ h2 {
   justify-content: center;
   width: 100%;
   min-height: 100%;
-  padding: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 #formContent {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
   background: #fff;
-  padding: 30px;
-  width: 90%;
+  width: 98%;
   max-width: 450px;
   position: relative;
   padding: 0px;
@@ -336,7 +336,7 @@ input[type=text]:placeholder, input[type="email"]:placeholder, input[type=passwo
 .close {
   position: absolute;
   top: 15px;
-  right: 35px;
+  right: 15px;
   color: #f1f1f1;
   font-size: 40px;
   font-weight: bold;
@@ -1933,11 +1933,22 @@ pre code {
     margin-left: 91.666667%;
   }
 }
+.ellipsis { /*coloca ... na frente das palavras */
+  max-width: 40px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+table td { 
+  word-wrap: break-word; 
+}
+
 
 .table {
   width: 100%;
   margin-bottom: 1rem;
   color: #212529;
+  table-layout:fixed;
 }
 
 #modalImag span{
@@ -6115,7 +6126,7 @@ a.badge-dark:focus, a.badge-dark.focus {
 
 .close {
   float: right;
-  font-size: 1.5rem;
+  
   font-weight: 700;
   line-height: 1;
   color: #000;

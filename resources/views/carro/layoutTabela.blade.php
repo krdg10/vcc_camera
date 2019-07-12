@@ -34,6 +34,9 @@
         var insereTraco = placaCaps.replace(/^(\w{3})(\w{4})$/, "$1-$2");
         document.getElementsByName('placa')[0].value=insereTraco;
     }
+    function excluirElement(id){
+        $('#'+id).remove();
+    }
 </script>
 <div class="wrapper fadeInDown">
     <div id="formContent">
@@ -48,7 +51,7 @@
                         <th>Placa</th>
                         <th>Modelo</th>
                         <th>Ano</th>
-                        <th>Apagar/Editar</th>
+                        <th>Apagar/ Editar</th>
                     </tr>
                 </thead>
                 <tbody>
