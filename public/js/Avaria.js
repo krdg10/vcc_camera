@@ -1,15 +1,15 @@
 class Avaria{
     xhttp;
-    nomeObj;
 	avarias;
-    csrfToken;
+    nomeObj;
 	registroAvarias;
 
-	constructor(nomeObj, local='{}', tipo='{}', csrfToken){
+	constructor(nomeObj, local='{}', tipo='{}', xhttp=false){
 		this.registroAvarias = new Array();
         this.nomeObj = nomeObj;
 		this.avarias = {local:JSON.parse(local), tipo:JSON.parse(tipo)};
-        this.xhttp = new Xhttp(csrfToken);
+
+        if (xhttp) this.xhttp = xhttp;
 	}
 
     storeAVaria(select, chave, pos, url){
@@ -61,7 +61,7 @@ class Avaria{
     	for (var i = 0; i < imagens.length; i++) {
     		divImg = divImg + 
     		`<div class="carousel-item `+ activeClass +`">` +
-                `<img class="d-block w-100" id="img`+ imagens[i].id +`" style="height: 300px" src="/storage/`+ imagens[i].path +`" alt="Imagens`+i+`"`+
+                `<img class="d-block w-100" id="img`+ imagens[i].id +`" style="height: 300px" src="/storage/`+ imagens[i].path +`" alt="Primeiro Slide"`+
                 `onClick="`+ this.nomeObj +`.modalImage('modalImag', 'img`+ imagens[i].id +`', 'img01', 'caption')">` +
             `</div> `;
             activeClass = '';
@@ -86,13 +86,29 @@ class Avaria{
     // INJETA O CÓDIGO DO MODAL NA DIV
     setarModal(idDivMOdal){
         document.getElementById(idDivMOdal).innerHTML = `` +
-            `<div id="modalImag" class="modal">`+
-                `<span class="close" onclick="`+ this.nomeObj +`.fecharModal('modalImag')">&times;</span>`+
+            `<div id="modalImag" class="modal" onclick="`+ this.nomeObj +`.fecharNoVazio(event, this)">`+
+                `<span class="close">&times;</span>`+
 
                 `<img class="modal-content" id="img01">`+
 
                 `<div id="caption"></div>`+
             `</div>`;
+    }
+    fecharNoVazio(e, element) {
+        // e é o event. Manda o valor do elemento que foi clicado. 
+        //element é o this. manda o valor do elemento que chamou. Acho que precisa de ambos. 
+        //e = e || window.event;
+        //var target = e.target || e.srcElement;
+        //console.log(e.target.classList);//.attr é jquery
+        console.log(element.classList);
+        if(e.target.classList=='close'){
+            document.getElementById("modalImag").style.display = "none";
+            return;
+        }
+        else if (e.target.classList != element.classList){
+            return;
+        }
+        document.getElementById("modalImag").style.display = "none";
     }
 
     // EXIBE O MODAL QUANDO A IMAGEM É SELECIONADA
@@ -156,30 +172,19 @@ class Avaria{
         }
 	}
 
-    // SETA OS CAMPO PARA EDIÇÃO DA AVARIA
-    setEdit(chave, pos){
+    edit(chave, pos, event=false){
         var obj = this;
-        var posCampo = document.getElementById('posUpdateAVaria');
         var idCampo = document.getElementById('idUpdateAVaria');
         var chaveCampo = document.getElementById('chaveUpdateAVaria');
         var descricaoCampo = document.getElementById('descricaoUpdateAVaria');
 
-        posCampo.value = pos;
-        chaveCampo.value = chave;
         idCampo.value = this.avarias[chave][pos].id;
+        chaveCampo.value = chave;
         descricaoCampo.value = this.avarias[chave][pos][chave];
-        descricaoCampo.name = chave;
     }
 
-    // ENVIA O FORMULARIO PARA O METODO UPDATE
-    updateAVaria(idFormUpdateAvaria, event){
+    updateAVaria(event){
+        var formUpdateAvaria = document.getElementById('formUpdateAvaria');
         event.preventDefault();
-        var formUpdateAvaria = document.getElementById(idFormUpdateAvaria);
-
-        var id = formUpdateAvaria['idUpdateAVaria'].value;
-        var chave = formUpdateAvaria['chaveUpdateAVaria'].value;
-        this.xhttp.xmlHttpPost('/'+ chave +'Avaria/' + id, new FormData(formUpdateAvaria), function(e){
-            console.log(e);
-        });
     }
 }
