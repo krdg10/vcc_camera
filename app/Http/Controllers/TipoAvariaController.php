@@ -25,8 +25,8 @@ class TipoAvariaController extends Controller{
             $tipo_avarias = new Tipo_avarias;
             $tipo_avarias->tipo = $request->tipoAvaria;
             $tipo_avarias->save();
-            //return Metodos::retorno(1, 'Sucesso ao adicinar "' . $request->tipo . '".', $tipo_avarias);
-            return redirect()->back()->with('message', 'Sucesso ao cadastrar novo tipo de avaria!');
+            return Metodos::retorno(1, 'Sucesso ao adicinar "' . $request->tipo . '".', $tipo_avarias);
+            // return redirect()->back()->with('message', 'Sucesso ao cadastrar novo tipo de avaria!');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Falha ao cadastrar novo tipo de avaria!');
         }
@@ -42,7 +42,18 @@ class TipoAvariaController extends Controller{
 
     public function edit($id){}
 
-    public function update(Request $request, $id){}
+    public function update(Request $request, $id){
+        try {
+            $u = Tipo_avarias::find($id);
+            $u->tipo = $request->tipo;
+
+            $u->update();
+
+            return Metodos::retorno(1, 'Sucesso ao atualizar!', $u);
+        } catch (Exception $e) {
+            return Metodos::retorno(1, 'Erro ao atualizar!', $e);
+        }
+    }
 
     public function destroy($id){
         try {

@@ -1,15 +1,15 @@
 class Avaria{
     xhttp;
-	avarias;
     nomeObj;
+	avarias;
+    csrfToken;
 	registroAvarias;
 
-	constructor(nomeObj, local='{}', tipo='{}', xhttp=false){
+	constructor(nomeObj, local='{}', tipo='{}', csrfToken){
 		this.registroAvarias = new Array();
         this.nomeObj = nomeObj;
 		this.avarias = {local:JSON.parse(local), tipo:JSON.parse(tipo)};
-
-        if (xhttp) this.xhttp = xhttp;
+        this.xhttp = new Xhttp(csrfToken);
 	}
 
     storeAVaria(select, chave, pos, url){
@@ -61,7 +61,7 @@ class Avaria{
     	for (var i = 0; i < imagens.length; i++) {
     		divImg = divImg + 
     		`<div class="carousel-item `+ activeClass +`">` +
-                `<img class="d-block w-100" id="img`+ imagens[i].id +`" style="height: 300px" src="/storage/`+ imagens[i].path +`" alt="Primeiro Slide"`+
+                `<img class="d-block w-100" id="img`+ imagens[i].id +`" style="height: 300px" src="/storage/`+ imagens[i].path +`" alt="Imagens`+i+`"`+
                 `onClick="`+ this.nomeObj +`.modalImage('modalImag', 'img`+ imagens[i].id +`', 'img01', 'caption')">` +
             `</div> `;
             activeClass = '';
@@ -156,19 +156,30 @@ class Avaria{
         }
 	}
 
-    edit(chave, pos, event=false){
+    // SETA OS CAMPO PARA EDIÇÃO DA AVARIA
+    setEdit(chave, pos){
         var obj = this;
+        var posCampo = document.getElementById('posUpdateAVaria');
         var idCampo = document.getElementById('idUpdateAVaria');
         var chaveCampo = document.getElementById('chaveUpdateAVaria');
         var descricaoCampo = document.getElementById('descricaoUpdateAVaria');
 
-        idCampo.value = this.avarias[chave][pos].id;
+        posCampo.value = pos;
         chaveCampo.value = chave;
+        idCampo.value = this.avarias[chave][pos].id;
         descricaoCampo.value = this.avarias[chave][pos][chave];
+        descricaoCampo.name = chave;
     }
 
-    updateAVaria(event){
-        var formUpdateAvaria = document.getElementById('formUpdateAvaria');
+    // ENVIA O FORMULARIO PARA O METODO UPDATE
+    updateAVaria(idFormUpdateAvaria, event){
         event.preventDefault();
+        var formUpdateAvaria = document.getElementById(idFormUpdateAvaria);
+
+        var id = formUpdateAvaria['idUpdateAVaria'].value;
+        var chave = formUpdateAvaria['chaveUpdateAVaria'].value;
+        this.xhttp.xmlHttpPost('/'+ chave +'Avaria/' + id, new FormData(formUpdateAvaria), function(e){
+            console.log(e);
+        });
     }
 }
