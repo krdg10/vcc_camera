@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\Motorista;
 
@@ -33,12 +34,40 @@ class MotoristaController extends Controller
         if(isset($error)){
             return redirect()->back()->with('error', $error);
         }
+        $validator = Validator::make($request->all(), [
+            'cpf' => 'unique:motoristas,cpf',
+            'codigo_empresa' => 'unique:motoristas,codigo_empresa',
+            'codigo_transdata' => 'unique:motoristas,codigo_transdata'
+        ]);
+
+        if ($validator->fails()) {
+            $failedRules = $validator->failed();
+            if(isset($failedRules['cpf']['Unique'])){
+                $error[]='CPF já cadastrado! Insira outro número.';
+            }
+            if(isset($failedRules['codigo_empresa']['Unique'])){
+                $error[]='Código VCC já cadastrado! Insira outro número.';
+            } 
+            if(isset($failedRules['codigo_transdata']['Unique'])){
+                $error[]='Código Transdata já cadastrado! Insira outro número.';
+            } 
+           
+            return redirect()->back()->with('error', $error);
+        }
+
+      
+        
+    
+    
+        
         $motorista->nome = $request->nome;
         $motorista->cpf = $request->cpf;
         $motorista->data_nascimento = $request->data_nascimento;
         $motorista->codigo_empresa = $request->codigo_empresa;
         $motorista->codigo_transdata = $request->codigo_transdata;
+       
         $motorista->save();
+        
         
         return redirect('/motorista/listar')->with('message', 'Sucesso ao cadastrar motorista!');
     }

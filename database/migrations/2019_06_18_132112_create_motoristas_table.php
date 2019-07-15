@@ -9,10 +9,10 @@ class CreateMotoristasTable extends Migration{
         Schema::create('motoristas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('cpf', 45);
+            $table->string('cpf', 45)->unique();
             $table->date('data_nascimento');
-            $table->string('codigo_empresa', 4);
-            $table->string('codigo_transdata', 5);
+            $table->string('codigo_empresa', 4)->unique();
+            $table->string('codigo_transdata', 5)->unique();
             $table->boolean('ativo')->default(1);
             $table->timestamps();
         });
