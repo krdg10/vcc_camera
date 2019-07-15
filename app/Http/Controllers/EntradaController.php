@@ -140,7 +140,8 @@ class EntradaController extends Controller{
     }
 
     public function create(){
-        $motorista = Motorista::all();
+        $Motorista = Motorista::all();
+        $motorista = $Motorista->where('ativo', 1);
         $carro = Carro::all();
         return view('entrada.create', compact('motorista', 'carro'));
     }

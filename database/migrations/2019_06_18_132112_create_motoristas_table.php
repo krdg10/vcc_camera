@@ -13,6 +13,7 @@ class CreateMotoristasTable extends Migration{
             $table->date('data_nascimento');
             $table->string('codigo_empresa', 4);
             $table->string('codigo_transdata', 5);
+            $table->boolean('ativo')->default(1);
             $table->timestamps();
         });
     }
