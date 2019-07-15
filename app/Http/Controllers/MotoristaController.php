@@ -57,7 +57,6 @@ class MotoristaController extends Controller
         $codigo_empresa = $request->codigo_empresa;
         $codigo_transdata = $request->codigo_transdata;
         $ativo = $request->ativo;
-        error_log($ativo);
         $motoristas = DB::table('motoristas')->when($request->cpf,function($query, $cpf){
                             $query->where('cpf', $cpf);
                         })
@@ -80,7 +79,7 @@ class MotoristaController extends Controller
                         ->paginate(5);
                     //pensar numa estrategia (se precisa) de buscar ambos ativos e inativos.
         return view('motorista.busca', ['motoristas' => $motoristas, 'nome' => $request->nome, 
-        'cpf' => $request->cpf, 'codigo_empresa' => $request->codigo_empresa, 'codigo_transdata' => $request->codigo_transdata]);
+        'cpf' => $request->cpf, 'codigo_empresa' => $request->codigo_empresa, 'codigo_transdata' => $request->codigo_transdata, 'ativo' => $request->ativo]);
     }
     public function edit($id)
     {
