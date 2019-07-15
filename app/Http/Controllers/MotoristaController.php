@@ -39,6 +39,12 @@ class MotoristaController extends Controller
             'codigo_empresa' => 'unique:motoristas,codigo_empresa',
             'codigo_transdata' => 'unique:motoristas,codigo_transdata'
         ]);
+        //https://stackoverflow.com/questions/47750807/laravel-rule-validation-unique-for-id
+        //https://laravel.com/docs/5.8/facades
+        //https://laravel.com/docs/5.8/validation#customizing-the-validation-attributes
+        //https://stackoverflow.com/questions/24328850/laravel-validate-error
+        //https://stackoverflow.com/questions/25573617/laravel-validation-check-why-validator-failed
+        
 
         if ($validator->fails()) {
             $failedRules = $validator->failed();

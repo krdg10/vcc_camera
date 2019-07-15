@@ -9,7 +9,7 @@ class CreateCarrosTable extends Migration{
         Schema::create('carros', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('placa');
+            $table->string('placa')->unique();
             $table->string('modelo');
             $table->year('ano');
             $table->boolean('ativo')->default(1);

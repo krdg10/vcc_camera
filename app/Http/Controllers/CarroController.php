@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Carro;
+use Illuminate\Support\Facades\Validator;
+
 
 class CarroController extends Controller
 {
@@ -27,6 +29,18 @@ class CarroController extends Controller
             $error[] = 'Coloque o ano do veículo!';
         }
         if(isset($error)){
+            return redirect()->back()->with('error', $error);
+        }
+        $validator = Validator::make($request->all(), [
+            'placa' => 'unique:carros,placa'
+        ]);
+        
+
+        if ($validator->fails()) {
+            $failedRules = $validator->failed();
+            if(isset($failedRules['placa']['Unique'])){
+                $error[]='Placa já cadastrada! Insira outro valor.';
+            }
             return redirect()->back()->with('error', $error);
         }
 
