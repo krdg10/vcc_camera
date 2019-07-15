@@ -22,7 +22,7 @@ class EntradaController extends Controller{
     }
     
     public function busca(Request $request){
-        if($request->nome == null && $request->carro == null && $request->horario == null){
+        if($request->nome == null && $request->carro == null && $request->horario == null && $request->verificado == null){
             $entradas = Entrada::orderBy('horario', 'desc')->paginate(5);
             return view('entrada.index', compact('entradas'));
         }

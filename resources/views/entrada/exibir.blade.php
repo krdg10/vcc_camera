@@ -5,10 +5,15 @@
         var horario = document.getElementsByName('horario')[0].value;
         var nome = document.getElementsByName('nome')[0].value;
         var carro = document.getElementsByName('carro')[0].value;
-
+        if(document.getElementById('verificado').checked == true){
+            var verificado = document.getElementsByName('verificado')[0].value;
+        }
+        else{
+            var verificado = null;
+        }
         var temCaracterAlfanumerico = /\w$/; //problema tava no ^ que representa inicio do texto
-        if(horario == '' && temCaracterAlfanumerico.test(nome) == false  && temCaracterAlfanumerico.test(carro) == false){
-            alert("Digite caracteres alfanuméricos em algum campo de pesquisa!");
+        if(horario == '' && temCaracterAlfanumerico.test(nome) == false  && temCaracterAlfanumerico.test(carro) == false && verificado == null){
+            alert("Digite caracteres alfanuméricos ou selecione algum campo de pesquisa!");
             return false;
         }
         else{
