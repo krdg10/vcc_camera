@@ -39,13 +39,13 @@ class CarroController extends Controller
         return redirect('/carro/listar')->with('message', 'Sucesso ao cadastrar veículo!');
     }
     public function show(){
-        $carros = DB::table('carros')->orderBy('nome')->paginate(5);
+        $carros = DB::table('carros')->where('ativo', 1)->orderBy('nome')->paginate(5);
         return view('carro.show', compact('carros'));
     }
     
     public function busca(Request $request){
-        if($request->nome == null && $request->modelo == null && $request->placa == null && $request->ano == null){
-            $carros = DB::table('carros')->orderBy('nome')->paginate(5);
+        if($request->nome == null && $request->modelo == null && $request->placa == null && $request->ano == null && $request->ativo == null){
+            $carros = DB::table('carros')->where('ativo', 1)->orderBy('nome')->paginate(5);
             return view('carro.show', compact('carros'));
         }
         
@@ -53,6 +53,7 @@ class CarroController extends Controller
         $nome = $request->nome;
         $modelo = $request->modelo;
         $ano = $request->ano;
+        $ativo = $request->ativo;
         $carros = DB::table('carros')->when($request->placa,function($query, $placa){
                             $query->where('placa', $placa);
                         })
@@ -65,11 +66,17 @@ class CarroController extends Controller
                         ->when($request->ano, function($query, $ano){
                             $query->where('ano', $ano);
                         })
+                        ->when($request->ativo=='0', function($query, $ativo){
+                            $query->where('ativo', 0);
+                        })
+                        ->when($request->ativo==null, function($query){
+                            $query->where('ativo', 1);
+                        })
                         ->orderBy('nome')
                         ->paginate(5);
         
         return view('carro.busca', ['carros' => $carros, 'nome' => $request->nome, 
-        'placa' => $request->placa, 'modelo' => $request->modelo, 'ano' => $request->ano]);
+        'placa' => $request->placa, 'modelo' => $request->modelo, 'ano' => $request->ano, 'ativo' => $request->ativo]);
     }
     public function edit($id)
     {
@@ -110,8 +117,9 @@ class CarroController extends Controller
         return view('carro.delete',compact('Carro'));
     }
     public function destroy($id){
-        $Carro = Carro::findOrFail($id);
-        $Carro->delete();
+        $carro = Carro::findOrFail($id);
+        $carro->ativo = 0;
+        $carro->save();
         return redirect()->route('carro.show')->with('message', 'Veículo Deletado Com Sucesso!');
     }
 

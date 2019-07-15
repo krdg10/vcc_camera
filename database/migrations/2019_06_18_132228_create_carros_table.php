@@ -12,6 +12,7 @@ class CreateCarrosTable extends Migration{
             $table->string('placa');
             $table->string('modelo');
             $table->year('ano');
+            $table->boolean('ativo')->default(1);
 
             $table->timestamps();
         });

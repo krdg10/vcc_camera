@@ -28,7 +28,7 @@
 <div id="formFooter">
     <div class="d-flex justify-content-center">
     {{ $carros->appends(['nome' => $nome, 
-        'placa' => $placa, 'modelo' => $modelo, 'ano' => $ano])->links() }}
+        'placa' => $placa, 'modelo' => $modelo, 'ano' => $ano, 'ativo' => $ativo])->links() }}
     </div>
 </div>
 @endsection 
