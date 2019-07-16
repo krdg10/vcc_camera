@@ -1,6 +1,6 @@
 @extends('entrada.exibir')
 @section('search')
-@if($nome!=NULL || $carro!=NULL || $horario!=NULL)
+@if($nome!=NULL || $carro!=NULL || $horario!=NULL || $n_verificado!=NULL || $verificado!=NULL)
     <h5>Termos Buscados</h5>
     @if($nome!=NULL)
         <span id="nomeBusca" class="badge badge-primary badge-pill">
@@ -17,6 +17,16 @@
             {{$horario}} 
         </span>
     @endif
+    @if($n_verificado!=NULL)
+        <span id="n_verificadoBusca" class="badge badge-primary badge-pill">
+            Não Verificados
+        </span>
+    @endif
+    @if($verificado!=NULL)
+        <span id="verificadoBusca" class="badge badge-primary badge-pill">
+            Verificados
+        </span>
+    @endif
 @endif
 @endsection
 
@@ -24,7 +34,7 @@
 <div id="formFooter">
     <div class="d-flex justify-content-center">
         {{ $entradas->appends(['nome' => $nome, 'horario' => $horario, 
-        'carro' => $carro, 'verificado' => $verificado])->links() }}
+        'carro' => $carro, 'verificado' => $verificado, 'n_verificado' => $n_verificado])->links() }}
     </div>
 </div>
 @endsection
