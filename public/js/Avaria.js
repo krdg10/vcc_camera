@@ -12,7 +12,7 @@ class Avaria{
         this.metodos = new Metodos(csrfToken);
 	}
 
-    storeAVaria(select, chave, pos, url){
+    save(select, chave){
     	var obj = this;
         // VERIFICA SE O VALOR NOVO FOI SELECIONADO
         if (select.value != 'novo') return false;
@@ -26,7 +26,8 @@ class Avaria{
         }
 
         var json = JSON.parse('[{"'+ chave +'":"'+ valor +'"}]');
-        metodos.post(json, url, function(r){
+        console.log(json);
+        metodos.post(json, '/'+ chave +'Avaria', function(r){
             if (r.tipo == 1){
                 obj.avarias[chave].push(r.dados);
                 obj.setSelect(select.id, chave); 
@@ -101,7 +102,6 @@ class Avaria{
         //e = e || window.event;
         //var target = e.target || e.srcElement;
         //console.log(e.target.classList);//.attr é jquery
-        console.log(element.classList);
         if(e.target.classList=='close'){
             document.getElementById("modalImag").style.display = "none";
             return;
