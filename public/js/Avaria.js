@@ -1,15 +1,15 @@
 class Avaria{
-    xhttp;
+    metodos;
 	avarias;
     nomeObj;
 	registroAvarias;
 
-	constructor(nomeObj, local='{}', tipo='{}', xhttp=false){
+	constructor(nomeObj, csrfToken, local='{}', tipo='{}'){
 		this.registroAvarias = new Array();
         this.nomeObj = nomeObj;
 		this.avarias = {local:JSON.parse(local), tipo:JSON.parse(tipo)};
 
-        if (xhttp) this.xhttp = xhttp;
+        this.metodos = new Metodos(csrfToken);
 	}
 
     storeAVaria(select, chave, pos, url){
@@ -94,6 +94,7 @@ class Avaria{
                 `<div id="caption"></div>`+
             `</div>`;
     }
+
     fecharNoVazio(e, element) {
         // e é o event. Manda o valor do elemento que foi clicado. 
         //element é o this. manda o valor do elemento que chamou. Acho que precisa de ambos. 
@@ -172,19 +173,26 @@ class Avaria{
         }
 	}
 
-    edit(chave, pos, event=false){
+    setEdit(chave, pos, event=false){
         var obj = this;
         var idCampo = document.getElementById('idUpdateAVaria');
         var chaveCampo = document.getElementById('chaveUpdateAVaria');
         var descricaoCampo = document.getElementById('descricaoUpdateAVaria');
 
         idCampo.value = this.avarias[chave][pos].id;
-        chaveCampo.value = chave;
+        chaveCampo.value =  chave;
         descricaoCampo.value = this.avarias[chave][pos][chave];
     }
 
-    updateAVaria(event){
-        var formUpdateAvaria = document.getElementById('formUpdateAvaria');
+    updateAVaria(idFormUpdateAvaria, event){
         event.preventDefault();
+        var formUpdateAvaria = document.getElementById(idFormUpdateAvaria);
+
+        var id = formUpdateAvaria['id'].value;
+        var chave = formUpdateAvaria['chaveUpdate'].value;
+
+        this.metodos.xhttp.xmlHttpPut('/'+ chave +'Avaria/' +id, new FormData(formUpdateAvaria), function(r){
+            console.log(r);
+        });
     }
 }

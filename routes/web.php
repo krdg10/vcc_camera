@@ -66,12 +66,12 @@
         Route::get('/tipoAvaria','TipoAvariaController@index')->name('tipoAvaria'); //INDEX
         Route::post('/tipoAvaria','TipoAvariaController@store')->name('tipoAvaria.store'); //STORE
         Route::put('/tipoAvaria/{id}','TipoAvariaController@update')->name('tipoAvaria.update'); //UPDATE
-        Route::delete('/tipoAvaria/{id}','TipoAvariaController@destroy')->name('tipoAvaria.update'); // DELETE
+        Route::delete('/tipoAvaria/{id}','TipoAvariaController@destroy')->name('tipoAvaria.delete()'); // DELETE
 
         // LOCAL DE AVARIA
         Route::get('/localAvaria','LocalAVariasController@index')->name('localAvaria'); //INDEX
         Route::post('/localAvaria','LocalAVariasController@store')->name('localAvaria.store'); //STORE
-        Route::delete('/tipoAvaria/{id}','LocalAvariaController@destroy')->name('localAvaria.destroy'); //DELETE
+        Route::delete('/localAvaria/{id}','LocalAvariasController@destroy')->name('localAvaria.destroy'); //DELETE
 
         
         Route::get('image/upload','ImageUploadController@fileCreate');

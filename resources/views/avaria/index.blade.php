@@ -8,7 +8,7 @@
 	        @php
 	            echo "
 	                metodos = new Metodos('". csrf_token() ."');
-	                avaria = new Avaria('avaria', '{}', '". $tipo_avarias ."', '". csrf_token() ."');
+	                avaria = new Avaria('avaria', '". csrf_token() ."', '". $avarias ."', '". $avarias ."');
 	            ";
 	        @endphp
 
@@ -43,17 +43,18 @@
 	                </thead>
 
 	                <tbody>
-		        		@foreach ($tipo_avarias as $tipo_avaria)
+		        		@foreach ($avarias as $avaria)
 	                        <tr>
-	                            <td>{{$tipo_avaria->id}}</td>
-	                            <td>{{$tipo_avaria->tipo}}</td>
+	                            <td>{{$avaria->id}}</td>
+	                            <td>{{$avaria[$chave]}}</td>
 	                            <td>
-									<div class="p-2 iconesLista"><a data-toggle="modal" href="#editAvaria" data-target="#editAvaria" onclick="avaria.setEdit('tipo', {{$loop->iteration }} - 1)" >
+									<div class="p-2 iconesLista"><a data-toggle="modal" href="#editAvaria" data-target="#editAvaria" onclick="avaria.setEdit('{{$chave}}', {{$loop->iteration }} - 1)" >
 											<i class="fas fa-edit"></i>
 										</a>
 									
 
-	                            		<a href="/tipoAvaria" ><i class="fas fa-trash" onclick="metodos.xhttp.xmlHttpDelete('/tipoAvaria/{{$tipo_avaria->id}}')"></i></a>
+	                            		<a href="" ><i class="fas fa-trash" onclick="metodos.xhttp.xmlHttpDelete('/{{$chave}}Avaria/{{$avaria->id}}')"></i>
+	                            		</a>
 									</div>
 								</td>
 	                        </tr>
@@ -70,6 +71,6 @@
 		</div>
 	</div>
 
-	@include('avaria.edit_avaria')
+	@include('avaria.edit')
 
 @endsection 
