@@ -15,7 +15,7 @@
         var temCaracterAlfanumerico = /\w$/;
         var valida = /^\d+$/;
         if(temCaracterAlfanumerico.test(cpf) == false  && temCaracterAlfanumerico.test(codigo_empresa) == false && temCaracterAlfanumerico.test(codigo_transdata) == false && temCaracterAlfanumerico.test(nome) == false && ativo==null){
-            alert("Digite caracteres alfanuméricos ou selecione algum campo de pesquisa!");
+            alert("Digite caracteres alfanuméricos ou selecione algum filtro de pesquisa!");
             return false;
         }
         if ((cpf == '' || (cpf != '' && valida.test(cpf)==true)) && (codigo_empresa == '' || (codigo_empresa != '' && valida.test(codigo_empresa)==true)) && (codigo_transdata == '' || (codigo_transdata != '' && valida.test(codigo_transdata)==true )) || ativo == '0') {
@@ -93,7 +93,11 @@
                     <input type="text" name="cpf" id="cpf" placeholder="CPF" class="form-control" maxlength="11" minlength="11">
                     <input type="text" name="codigo_empresa" id="codigo_empresa" placeholder="Código VCC" class="form-control" maxlength="4" minlength="4">
                     <input type="text" name="codigo_transdata" id="codigo_transdata" placeholder="Código Transdata" class="form-control" maxlength="5" minlength="5">
-                    <label>Buscar Inativos: </label><input type="checkbox" name="ativo" id="ativo" placeholder="Ativo" class="form-control" value="0">
+                    <ul class="ks-cboxtags">
+                        <li>
+                            <input type="checkbox" name="ativo" id="ativo" placeholder="Ativo" value="0"><label for="ativo">Buscar Inativos</label>
+                        </li>
+                    </ul>
                     <div id="formFooter">
                         <button type="submit" id="submit" class="btn btn-primary">Buscar</button>
                     </div>
