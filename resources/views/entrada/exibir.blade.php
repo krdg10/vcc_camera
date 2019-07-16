@@ -23,7 +23,7 @@
         }
         var temCaracterAlfanumerico = /\w$/; //problema tava no ^ que representa inicio do texto
         if(horario == '' && temCaracterAlfanumerico.test(nome) == false  && temCaracterAlfanumerico.test(carro) == false && verificado == null  && n_verificado == null){
-            alert("Digite caracteres alfanuméricos ou selecione algum campo de pesquisa!");
+            alert("Digite caracteres alfanuméricos ou selecione algum filtro de pesquisa!");
             return false;
         }
         else{
@@ -33,7 +33,18 @@
 
     function ckChange(botao){
         var local = document.getElementsByName(botao.id)[0].id;
-        if (local == "verificado"){
+        if (local == "todos"){
+            if (document.getElementsByName('n_verificado')[0].checked == true){
+                document.getElementsByName('n_verificado')[0].checked = false;
+            }
+            if (document.getElementsByName('verificado')[0].checked == true){
+                document.getElementsByName('verificado')[0].checked = false;
+            }
+        }
+        else if (local == "verificado"){
+            if (document.getElementsByName('todos')[0].checked == true){
+                document.getElementsByName('todos')[0].checked = false;            
+            }
             if (document.getElementsByName('n_verificado')[0].checked == true){
                 document.getElementsByName('n_verificado')[0].checked = false;
             }
@@ -41,6 +52,9 @@
         else if (local == "n_verificado") {
             if (document.getElementsByName('verificado')[0].checked == true){
                 document.getElementsByName('verificado')[0].checked = false;
+            }
+            if (document.getElementsByName('todos')[0].checked == true){
+                document.getElementsByName('todos')[0].checked = false;
             }
         }    
     }
@@ -105,8 +119,20 @@
                     <input type="text" name="nome" id="nome" placeholder="Nome do Motorista" class="form-control">
                     <input type="text" name="carro" id="carro" placeholder="Nome do Carro" class="form-control">
                     <input type="datetime-local" name="horario" id="horario" placeholder="Horário" class="form-control">
-                    <label>Buscar Apenas Já Verificados: </label><input type="checkbox" name="verificado" id="verificado" placeholder="Verificado" class="form-control" value="1" onClick="ckChange(this)">
-                    <label>Buscar Apenas Não Verificados: </label><input type="checkbox" name="n_verificado" id="n_verificado" placeholder="Não Verificado" class="form-control" value="1" onClick="ckChange(this)">
+                    
+                    <ul class="ks-cboxtags">
+                        <li onClick="ckChange(document.getElementsByName('todos')[0]);">
+                            <input type="checkbox" name="todos" id="todos" placeholder="Todos" checked><label for="todos">Buscar Todos</label>
+                        </li>
+                        <li onClick="ckChange(document.getElementsByName('verificado')[0]);">
+                            <input type="checkbox" name="verificado" id="verificado" placeholder="Verificado" value="1" ><label for="verificado">Buscar Verificados</label>
+                            
+                        </li>
+                        <li onClick="ckChange(document.getElementsByName('n_verificado')[0]);">
+                            <input type="checkbox" name="n_verificado" id="n_verificado" placeholder="Não Verificado" value="1" ><label for="n_verificado">Buscar Não Verificados</label> <!-- tava ruim com o label for errado -->
+                        </li>
+                    </ul>
+                    
                     
                     <div id="formFooter">
                         <button type="submit" id="submit" class="btn btn-primary">Buscar</button>
