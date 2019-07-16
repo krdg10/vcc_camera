@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\Motorista;
 
@@ -33,22 +34,56 @@ class MotoristaController extends Controller
         if(isset($error)){
             return redirect()->back()->with('error', $error);
         }
+        $validator = Validator::make($request->all(), [
+            'cpf' => 'unique:motoristas,cpf',
+            'codigo_empresa' => 'unique:motoristas,codigo_empresa',
+            'codigo_transdata' => 'unique:motoristas,codigo_transdata'
+        ]);
+        //https://stackoverflow.com/questions/47750807/laravel-rule-validation-unique-for-id
+        //https://laravel.com/docs/5.8/facades
+        //https://laravel.com/docs/5.8/validation#customizing-the-validation-attributes
+        //https://stackoverflow.com/questions/24328850/laravel-validate-error
+        //https://stackoverflow.com/questions/25573617/laravel-validation-check-why-validator-failed
+        
+
+        if ($validator->fails()) {
+            $failedRules = $validator->failed();
+            if(isset($failedRules['cpf']['Unique'])){
+                $error[]='CPF já cadastrado! Insira outro número.';
+            }
+            if(isset($failedRules['codigo_empresa']['Unique'])){
+                $error[]='Código VCC já cadastrado! Insira outro número.';
+            } 
+            if(isset($failedRules['codigo_transdata']['Unique'])){
+                $error[]='Código Transdata já cadastrado! Insira outro número.';
+            } 
+           
+            return redirect()->back()->with('error', $error);
+        }
+
+      
+        
+    
+    
+        
         $motorista->nome = $request->nome;
         $motorista->cpf = $request->cpf;
         $motorista->data_nascimento = $request->data_nascimento;
         $motorista->codigo_empresa = $request->codigo_empresa;
         $motorista->codigo_transdata = $request->codigo_transdata;
+       
         $motorista->save();
+        
         
         return redirect('/motorista/listar')->with('message', 'Sucesso ao cadastrar motorista!');
     }
     public function show(){
-        $motoristas = DB::table('motoristas')->orderBy('nome')->paginate(5);
+        $motoristas = DB::table('motoristas')->where('ativo', 1)->orderBy('nome')->paginate(5);
         return view('motorista.show', compact('motoristas'));
     }
     public function busca(Request $request){
-        if($request->nome == null && $request->cpf == null && $request->codigo_empresa == null && $request->codigo_transdata == null){
-            $motoristas = DB::table('motoristas')->orderBy('nome')->paginate(5);
+        if($request->nome == null && $request->cpf == null && $request->codigo_empresa == null && $request->codigo_transdata == null && $request->ativo == null){
+            $motoristas = DB::table('motoristas')->where('ativo', 1)->orderBy('nome')->paginate(5);
             return view('motorista.show', compact('motoristas'));
         }
       
@@ -56,6 +91,7 @@ class MotoristaController extends Controller
         $nome = $request->nome;
         $codigo_empresa = $request->codigo_empresa;
         $codigo_transdata = $request->codigo_transdata;
+        $ativo = $request->ativo;
         $motoristas = DB::table('motoristas')->when($request->cpf,function($query, $cpf){
                             $query->where('cpf', $cpf);
                         })
@@ -68,11 +104,17 @@ class MotoristaController extends Controller
                         ->when($request->codigo_transdata, function($query, $codigo_transdata){
                             $query->where('codigo_transdata', $codigo_transdata);
                         })
+                        ->when($request->ativo=='0', function($query, $ativo){
+                            $query->where('ativo', 0);
+                        })
+                        ->when($request->ativo==null, function($query){
+                            $query->where('ativo', 1);
+                        })
                         ->orderBy('nome')
                         ->paginate(5);
-                    
+                    //pensar numa estrategia (se precisa) de buscar ambos ativos e inativos.
         return view('motorista.busca', ['motoristas' => $motoristas, 'nome' => $request->nome, 
-        'cpf' => $request->cpf, 'codigo_empresa' => $request->codigo_empresa, 'codigo_transdata' => $request->codigo_transdata]);
+        'cpf' => $request->cpf, 'codigo_empresa' => $request->codigo_empresa, 'codigo_transdata' => $request->codigo_transdata, 'ativo' => $request->ativo]);
     }
     public function edit($id)
     {
@@ -116,7 +158,8 @@ class MotoristaController extends Controller
     }
     public function destroy($id){
         $Motorista = Motorista::findOrFail($id);
-        $Motorista->delete();
+        $Motorista->ativo = 0;
+        $Motorista->save();
         return redirect()->route('motorista.show')->with('message', 'Motorista Deletado Com Sucesso!');
     }
 }

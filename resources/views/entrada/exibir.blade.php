@@ -5,15 +5,58 @@
         var horario = document.getElementsByName('horario')[0].value;
         var nome = document.getElementsByName('nome')[0].value;
         var carro = document.getElementsByName('carro')[0].value;
-
+        if(document.getElementById('verificado').checked == true){
+            var verificado = document.getElementsByName('verificado')[0].value;
+        }
+        else{
+            var verificado = null;
+        }
+        if(document.getElementById('n_verificado').checked == true){
+            var n_verificado = document.getElementsByName('n_verificado')[0].value;
+        }
+        else{
+            var n_verificado = null;
+        }
+        if (document.getElementById('verificado').checked == true && document.getElementById('n_verificado').checked == true){
+            alert("Selecione Para Buscar Apenas Verificados ou Apenas Não Verificados!");
+            return false;
+        }
         var temCaracterAlfanumerico = /\w$/; //problema tava no ^ que representa inicio do texto
-        if(horario == '' && temCaracterAlfanumerico.test(nome) == false  && temCaracterAlfanumerico.test(carro) == false){
-            alert("Digite caracteres alfanuméricos em algum campo de pesquisa!");
+        if(horario == '' && temCaracterAlfanumerico.test(nome) == false  && temCaracterAlfanumerico.test(carro) == false && verificado == null  && n_verificado == null){
+            alert("Digite caracteres alfanuméricos ou selecione algum filtro de pesquisa!");
             return false;
         }
         else{
             return true;
         }
+    }
+
+    function ckChange(botao){
+        var local = document.getElementsByName(botao.id)[0].id;
+        if (local == "todos"){
+            if (document.getElementsByName('n_verificado')[0].checked == true){
+                document.getElementsByName('n_verificado')[0].checked = false;
+            }
+            if (document.getElementsByName('verificado')[0].checked == true){
+                document.getElementsByName('verificado')[0].checked = false;
+            }
+        }
+        else if (local == "verificado"){
+            if (document.getElementsByName('todos')[0].checked == true){
+                document.getElementsByName('todos')[0].checked = false;            
+            }
+            if (document.getElementsByName('n_verificado')[0].checked == true){
+                document.getElementsByName('n_verificado')[0].checked = false;
+            }
+        }
+        else if (local == "n_verificado") {
+            if (document.getElementsByName('verificado')[0].checked == true){
+                document.getElementsByName('verificado')[0].checked = false;
+            }
+            if (document.getElementsByName('todos')[0].checked == true){
+                document.getElementsByName('todos')[0].checked = false;
+            }
+        }    
     }
 </script>
 <div class="wrapper fadeInDown">
@@ -76,7 +119,19 @@
                     <input type="text" name="nome" id="nome" placeholder="Nome do Motorista" class="form-control">
                     <input type="text" name="carro" id="carro" placeholder="Nome do Carro" class="form-control">
                     <input type="datetime-local" name="horario" id="horario" placeholder="Horário" class="form-control">
-                    <label>Buscar Apenas Já Verificados: </label><input type="checkbox" name="verificado" id="verificado" placeholder="Verificado" class="form-control" value="1">
+                    
+                    <ul class="ks-cboxtags">
+                        <li onClick="ckChange(document.getElementsByName('todos')[0]);">
+                            <input type="checkbox" name="todos" id="todos" placeholder="Todos" checked><label for="todos">Buscar em Todos</label>
+                        </li>
+                        <li onClick="ckChange(document.getElementsByName('verificado')[0]);">
+                            <input type="checkbox" name="verificado" id="verificado" placeholder="Verificado" value="1"><label for="verificado">Buscar em Verificados</label>
+                        </li>
+                        <li onClick="ckChange(document.getElementsByName('n_verificado')[0]);">
+                            <input type="checkbox" name="n_verificado" id="n_verificado" placeholder="Não Verificado" value="1"><label for="n_verificado">Buscar em Não Verificados</label><!-- tava ruim com o label for errado -->
+                        </li>
+                    </ul>
+                    
                     
                     <div id="formFooter">
                         <button type="submit" id="submit" class="btn btn-primary">Buscar</button>

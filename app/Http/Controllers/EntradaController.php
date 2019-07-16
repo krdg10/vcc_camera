@@ -22,7 +22,7 @@ class EntradaController extends Controller{
     }
     
     public function busca(Request $request){
-        if($request->nome == null && $request->carro == null && $request->horario == null){
+        if($request->nome == null && $request->carro == null && $request->horario == null && $request->verificado == null && $request->n_verificado == null){
             $entradas = Entrada::orderBy('horario', 'desc')->paginate(5);
             return view('entrada.index', compact('entradas'));
         }
@@ -37,6 +37,9 @@ class EntradaController extends Controller{
                 ->when($request->verificado=='1', function($consulta){
                     $consulta->join('verificacoes', 'verificacoes.entrada_id', '=', 'entradas.id');
                 })
+                ->when($request->n_verificado=='1', function($consulta){
+                    $consulta->whereNotIn('entradas.id', DB::table('verificacoes')->select('entrada_id'));
+                })
                 ->when($request->nome,function($consulta, $nome){
                     $consulta->where('motoristas.nome', 'like', '%' . $nome . '%');
                 })
@@ -50,7 +53,7 @@ class EntradaController extends Controller{
                 ->get('entradas.id');
        
 
-       
+       //$consulta->whereNotIn('entradas.id', DB::table('verificacoes')->select('entrada_id'));
     
       
         $temp = null;
@@ -140,8 +143,10 @@ class EntradaController extends Controller{
     }
 
     public function create(){
-        $motorista = Motorista::all();
-        $carro = Carro::all();
+        $Motorista = Motorista::all();
+        $motorista = $Motorista->where('ativo', 1);
+        $Carro = Carro::all();
+        $carro = $Carro->where('ativo', 1);
         return view('entrada.create', compact('motorista', 'carro'));
     }
 

@@ -6,14 +6,20 @@
         var placa = document.getElementsByName('placa')[0].value;
         var modelo = document.getElementsByName('modelo')[0].value;
         var nome = document.getElementsByName('nome')[0].value;
+        if(document.getElementById('ativo').checked == true){
+            var ativo = document.getElementsByName('ativo')[0].value;
+        }
+        else{
+            var ativo = null;
+        }
         var validaAno = /^\d+$/;
         var validaPlaca = /^[A-Z]{3}\-\d{4}$/;
         var temCaracterAlfanumerico = /\w$/;
-        if(temCaracterAlfanumerico.test(ano) == false  && temCaracterAlfanumerico.test(placa) == false && temCaracterAlfanumerico.test(modelo) == false && temCaracterAlfanumerico.test(nome) == false){
-            alert("Digite caracteres alfanuméricos em algum campo de pesquisa!");
+        if(temCaracterAlfanumerico.test(ano) == false  && temCaracterAlfanumerico.test(placa) == false && temCaracterAlfanumerico.test(modelo) == false && temCaracterAlfanumerico.test(nome) == false && ativo==null){
+            alert("Digite caracteres alfanuméricos ou selecione algum filtro de pesquisa!");
             return false;
         }
-        if ((ano == '' || (ano != '' && validaAno.test(ano)==true)) && (placa == '' || (placa != '' && validaPlaca.test(placa)==true))) {
+        if ((ano == '' || (ano != '' && validaAno.test(ano)==true)) && (placa == '' || (placa != '' && validaPlaca.test(placa)==true)) || ativo == '0') {
             return true;
         } 
         else if (validaPlaca.test(placa)==false) {
@@ -89,6 +95,11 @@
                     <input type="text" name="placa" id="placa" placeholder="Placa" class="form-control" maxlength="7" minlength="7" onblur="caps();">
                     <input type="text" name="modelo" id="modelo" placeholder="Modelo" class="form-control">
                     <input type="text" name="ano" id="ano" placeholder="Ano" class="form-control" maxlength="4" minlength="4">
+                    <ul class="ks-cboxtags">
+                        <li>
+                            <input type="checkbox" name="ativo" id="ativo" placeholder="Ativo" value="0"><label for="ativo">Buscar Inativos</label>
+                        </li>
+                    </ul>
                     <div id="formFooter">
                         <button type="submit" id="submit" class="btn btn-primary">Buscar</button>
                     </div>
