@@ -7,19 +7,19 @@ use App\Models\Tipo_avarias;
 
 class TipoAvariaController extends Controller{
     public function index(){
-        $tipo_avarias = Tipo_avarias::all();
-        // return dd($tipo_avarias);
-        return view('avaria.index_tipoAvaria', compact('tipo_avarias'));
+        $avarias = Tipo_avarias::all();
+        $chave = 'tipo';
+
+        return view('avaria.index', compact('avarias', 'chave'));
     }
 
     public function create(){}
 
     public function store(Request $request){
+            return Metodos::retorno(1, $request->tipoAvaria );
         // VERIFICA SE EXISTE ALGO CADASTRADO COM ESSE NOME
-        if(Tipo_avarias::where('tipo', $request->tipoAvaria)->count() > 0){
-            $error[] = "Tipo de Avaria $request->tipoAvaria já existe!";
-            return redirect()->back()->with('error', $error);
-        }
+        if(Tipo_avarias::where('tipo', $request->tipoAvaria)->count() > 0)
+            return Metodos::retorno(1, "Tipo de Avaria $request->tipoAvaria já existe!", $tipo_avarias);
 
         try {
             $tipo_avarias = new Tipo_avarias;
@@ -43,9 +43,12 @@ class TipoAvariaController extends Controller{
     public function edit($id){}
 
     public function update(Request $request, $id){
+        // error_log($request->ga);
+        // return $request->chave;
+            return Metodos::retorno(1, $request->chaveUpdate, $request->chaveUpdate);
         try {
             $u = Tipo_avarias::find($id);
-            $u->tipo = $request->tipo;
+            // $u->tipo = $request->tipo;
 
             $u->update();
 
@@ -57,9 +60,9 @@ class TipoAvariaController extends Controller{
 
     public function destroy($id){
         try {
-            $d = Tipo_avarias::find($id);
+            $d = $backup = Tipo_avarias::find($id);
             $d->delete();
-            return Metodos::retorno(1, 'Sucesso ao eliminar');
+            return Metodos::retorno(1, 'Sucesso ao eliminar', $backup);
         } catch (Exception $e) {
             return Metodos::retorno(0, 'Erro ao eliminar');     
         }

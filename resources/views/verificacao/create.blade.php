@@ -8,7 +8,7 @@
             @php
                 echo "
                     metodos = new Metodos('". csrf_token() ."');
-                    avaria = new Avaria('avaria', '". $localAvarias ."', '" . $tipoAvarias . "'); 
+                    avaria = new Avaria('avaria',  '". csrf_token() ."', '". $localAvarias ."', '" . $tipoAvarias . "'); 
                     fotos = '". $entradas->fotos ."';
                 ";
             @endphp

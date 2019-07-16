@@ -58,8 +58,7 @@ class Metodos {
 
 		var form = document.createElement('form');
 	    form.innerHTML = campos;
-	    var objForm = new FormData(form);
 
-	    this.xhttp.xmlHttpPost(url, objForm, callback, callbackError, callbackSend);
+	    this.xhttp.xmlHttpPost(url, new FormData(form), callback, callbackError, callbackSend);
 	}
 }
