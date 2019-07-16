@@ -122,14 +122,13 @@
                     
                     <ul class="ks-cboxtags">
                         <li onClick="ckChange(document.getElementsByName('todos')[0]);">
-                            <input type="checkbox" name="todos" id="todos" placeholder="Todos" checked><label for="todos">Buscar Todos</label>
+                            <input type="checkbox" name="todos" id="todos" placeholder="Todos" checked><label for="todos">Buscar em Todos</label>
                         </li>
                         <li onClick="ckChange(document.getElementsByName('verificado')[0]);">
-                            <input type="checkbox" name="verificado" id="verificado" placeholder="Verificado" value="1" ><label for="verificado">Buscar Verificados</label>
-                            
+                            <input type="checkbox" name="verificado" id="verificado" placeholder="Verificado" value="1"><label for="verificado">Buscar em Verificados</label>
                         </li>
                         <li onClick="ckChange(document.getElementsByName('n_verificado')[0]);">
-                            <input type="checkbox" name="n_verificado" id="n_verificado" placeholder="Não Verificado" value="1" ><label for="n_verificado">Buscar Não Verificados</label> <!-- tava ruim com o label for errado -->
+                            <input type="checkbox" name="n_verificado" id="n_verificado" placeholder="Não Verificado" value="1"><label for="n_verificado">Buscar em Não Verificados</label><!-- tava ruim com o label for errado -->
                         </li>
                     </ul>
                     
