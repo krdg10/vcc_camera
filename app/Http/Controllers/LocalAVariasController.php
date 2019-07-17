@@ -56,6 +56,12 @@ class LocalAVariasController extends Controller{
     }
 
     public function destroy($id){
-        //
+        try {
+            $d = $backup = Local_avaria::find($id);
+            $d->delete();
+            return Metodos::retorno(1, 'Sucesso ao eliminar', $backup);
+        } catch (Exception $e) {
+            return Metodos::retorno(0, 'Erro ao eliminar');     
+        }
     }
 }

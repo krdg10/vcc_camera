@@ -42,7 +42,7 @@
 	                    </tr>
 	                </thead>
 
-	                <tbody>
+	                <tbody id="tbodyIndex">
 		        		@foreach ($avarias as $avaria)
 	                        <tr>
 	                            <td>{{$avaria->id}}</td>
@@ -51,9 +51,9 @@
 									<div class="p-2 iconesLista"><a data-toggle="modal" href="#editAvaria" data-target="#editAvaria" onclick="avaria.edit('{{$chave}}', {{$loop->iteration }} - 1)" >
 											<i class="fas fa-edit"></i>
 										</a>
-									
 
-	                            		<a href="" ><i class="fas fa-trash" onclick="metodos.xhttp.xmlHttpDelete('/{{$chave}}Avaria/{{$avaria->id}}')"></i>
+	                            		<a href="" >
+	                            			<i class="fas fa-trash" onclick="metodos.xhttp.xmlHttpDelete('/{{$chave}}Avaria/{{$avaria->id}}')"></i>
 	                            		</a>
 									</div>
 								</td>
@@ -62,6 +62,8 @@
 	                </tbody>
 	            </table>
 			</div>
+
+			{{-- BOTÃO PARA INSERIR NOVA AVÁRIA --}}
 			<div id="formFooter">
                 <div class="d-flex justify-content-center">
                     <button data-toggle="modal" href="#modalCreateAvaria" data-target="#modalCreateAvaria" class="fadeIn fourth btn btn-primary">Adicionar Novo</button>

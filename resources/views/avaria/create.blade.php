@@ -8,12 +8,15 @@
                 </button>
             </div>
             <div class="fadeIn first">
+                <div id="divMsgCreate"></div>
                 <form id="formCreateAvaria">
-                    <input type="text" id="tipoAvariaCreate" name="{{$chave}}" placeholder="Novo valor">
+                    @csrf
+
+                    <input type="text" id="avariaCreate" name="{{$chave}}" placeholder="Novo valor">
 
                     <div id="formFooter">
                         <div class="d-flex justify-content-center">
-                            <button type="submit" id="submit" class="fadeIn fourth btn btn-primary" onclick="avaria.create('formCreateAvaria', {{$chave}}, event)" required>Adicionar</button>
+                            <button type="submit" id="submit" class="fadeIn fourth btn btn-primary" onclick="avaria.create('tbodyIndex', 'formCreateAvaria', {{$chave}}, 'divMsgCreate', event)" required>Adicionar</button>
                         </div>
                     </div>
 

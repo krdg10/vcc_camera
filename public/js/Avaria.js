@@ -37,16 +37,22 @@ class Avaria{
         });
     }
 
-    create(idFormCreate, chave, event){
-        event.preventDefault();
-        // console.log(chave.name);
-        return 0;
+    create(idTable, idFormCreate, chave, idDivMsg, event){
+        var obj = this;
         var formCreate = document.getElementById(idFormCreate);
 
         this.metodos.xhttp.xmlHttpPost('/'+ chave.name +'Avaria/', new FormData(formCreate), function(r){
-        console.log(r);
-            // if(r.tipo == 1)
-            //     document.getElementById(chave + id).innerHTML = obj.avarias[chave][pos][chave] = r.dados[chave];
+            if(r.tipo == 1){
+                metodos.msgSuccess(r.msg, idDivMsg);
+                document.getElementById('avariaCreate').value = '';
+
+                return true;
+            }
+
+            if(r.tipo == 2){
+                event.preventDefault();
+                obj.metodos.msgError(r.msg, idDivMsg);    
+            }
 
             // if(idDivMsg)
             //     obj.metodos.msgSuccess(r.msg, idDivMsg);
