@@ -7,9 +7,10 @@ use App\Models\Local_avaria;
 
 class LocalAVariasController extends Controller{
     public function index(){
-        $local_avarias = Local_avaria::all();
-        // return dd($tipo_avarias);
-        return view('avaria.index_localAvaria', compact('local_avarias'));
+        $avarias = Local_avaria::all();
+        $chave = 'local';
+
+        return view('avaria.index', compact('avarias', 'chave'));
     }
 
     public function create(){
@@ -35,11 +36,23 @@ class LocalAVariasController extends Controller{
     }
 
     public function edit($id){
-        //
     }
 
     public function update(Request $request, $id){
-        //
+        $u = Local_avaria::find($id);
+
+        if ($u->count() == 0)
+            return Metodos::retorno(0, 'Não foi encontrado o valor, que coisa!');
+
+        try {
+            $u->local = $request->local;
+
+            $u->update();
+
+            return Metodos::retorno(1, 'Sucesso ao atualizar!', $u);
+        } catch (Exception $e) {
+            return Metodos::retorno(1, 'Erro ao atualizar!', $e);
+        }
     }
 
     public function destroy($id){

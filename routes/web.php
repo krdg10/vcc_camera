@@ -71,6 +71,7 @@
         // LOCAL DE AVARIA
         Route::get('/localAvaria','LocalAVariasController@index')->name('localAvaria'); //INDEX
         Route::post('/localAvaria','LocalAVariasController@store')->name('localAvaria.store'); //STORE
+        Route::put('/localAvaria/{id}','LocalAVariasController@update')->name('localAvaria.update'); //UPDATE
         Route::delete('/localAvaria/{id}','LocalAvariasController@destroy')->name('localAvaria.destroy'); //DELETE
 
         

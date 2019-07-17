@@ -2,19 +2,21 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" id="formConten">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Adicionar Tipo Avaria</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar {{$chave}} avaria</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="fadeIn first">
-                <form method="POST" action="{{ route('tipoAvaria.store') }}" enctype="multipart/form-data">
-                    <input type="text" id="tipoAvaria" name="tipoAvaria" placeholder="Tipo">
+                <form id="formCreateAvaria">
+                    <input type="text" id="tipoAvariaCreate" name="{{$chave}}" placeholder="Novo valor">
+
                     <div id="formFooter">
                         <div class="d-flex justify-content-center">
-                            <button type="submit" id="submit" class="fadeIn fourth btn btn-primary" required>Adicionar</button>
+                            <button type="submit" id="submit" class="fadeIn fourth btn btn-primary" onclick="avaria.create('formCreateAvaria', {{$chave}}, event)" required>Adicionar</button>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>

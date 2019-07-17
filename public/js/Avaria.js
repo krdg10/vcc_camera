@@ -37,6 +37,23 @@ class Avaria{
         });
     }
 
+    create(idFormCreate, chave, event){
+        event.preventDefault();
+        // console.log(chave.name);
+        return 0;
+        var formCreate = document.getElementById(idFormCreate);
+
+        this.metodos.xhttp.xmlHttpPost('/'+ chave.name +'Avaria/', new FormData(formCreate), function(r){
+        console.log(r);
+            // if(r.tipo == 1)
+            //     document.getElementById(chave + id).innerHTML = obj.avarias[chave][pos][chave] = r.dados[chave];
+
+            // if(idDivMsg)
+            //     obj.metodos.msgSuccess(r.msg, idDivMsg);
+        });
+
+    }
+
     // FUNÇÃO PARA CRIAR AS OPTION SETAR NA SELECT
     setSelect(id, chave, value_padrao=false, novo=true){
     	// CRIA AS OPTION
@@ -173,11 +190,14 @@ class Avaria{
         }
 	}
 
+    // SETA OS VALORES NO CAMPO DE EDIÇÃO
     edit(chave, pos, event=false){
         var obj = this;
         var idCampo = document.getElementById('idUpdateAVaria');
         var posCampo = document.getElementById('posUpdateAVaria');
         var descricaoCampo = document.getElementById('descricaoUpdateAVaria');
+
+        console.log(obj.avarias);
 
         posCampo.value = pos;
         idCampo.value = this.avarias[chave][pos].id;
@@ -185,18 +205,19 @@ class Avaria{
         descricaoCampo.value = this.avarias[chave][pos][chave];
     }
 
+    // ENVIA OS VALORES ATUALIZADOS PARA A CONTROLLER
     update(idFormUpdateAvaria, event, idDivMsg = false){
         var obj = this;
         event.preventDefault();
         var formUpdateAvaria = document.getElementById(idFormUpdateAvaria);
 
         var id = formUpdateAvaria['id'].value;
+        var pos = formUpdateAvaria['pos'].value;
         var chave = document.getElementById('descricaoUpdateAVaria').name;
 
         this.metodos.xhttp.xmlHttpPost('/'+ chave +'Avaria/' +id, new FormData(formUpdateAvaria), function(r){
-            console.log(r);
             if(r.tipo == 1)
-                document.getElementById(chave + id).innerHTML = r.dados[chave];
+                document.getElementById(chave + id).innerHTML = obj.avarias[chave][pos][chave] = r.dados[chave];
 
             if(idDivMsg)
                 obj.metodos.msgSuccess(r.msg, idDivMsg);

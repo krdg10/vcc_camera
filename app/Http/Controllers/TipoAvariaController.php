@@ -26,7 +26,7 @@ class TipoAvariaController extends Controller{
             $tipo_avarias->save();
             return Metodos::retorno(1, 'Sucesso ao adicinar "' . $request->tipo . '".', $tipo_avarias);
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Falha ao cadastrar novo tipo de avaria!');
+            return Metodos::retorno(0, 'Falha ao cadastrar novo tipo de avaria!  "', $e);
         }
     }
 
@@ -61,6 +61,5 @@ class TipoAvariaController extends Controller{
         } catch (Exception $e) {
             return Metodos::retorno(0, 'Erro ao eliminar');     
         }
-
     }
 }

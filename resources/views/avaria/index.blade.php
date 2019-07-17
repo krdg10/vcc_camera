@@ -27,7 +27,7 @@
 
 	<div class="wrapper fadeInDown">
 	    <div id="formContent">
-			<h3>Lista de Tipos de Avaria</h3>
+			<h3>Lista {{$chave}} avaria</h3>
 
             {{-- DIV PARA EXIBIR MENSAGENS --}}
             <div id="divMsg"></div>
@@ -37,7 +37,7 @@
 	                <thead>
 	                    <tr>
 	                        <th>ID</th>
-	                        <th>Tipo</th>
+	                        <th>{{$chave}}</th>
 	                        <th>Ação</th>
 	                    </tr>
 	                </thead>
@@ -72,5 +72,6 @@
 	</div>
 
 	@include('avaria.edit')
+	@include('avaria.create')
 
 @endsection 
