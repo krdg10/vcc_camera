@@ -46,9 +46,9 @@
 		        		@foreach ($avarias as $avaria)
 	                        <tr>
 	                            <td>{{$avaria->id}}</td>
-	                            <td>{{$avaria[$chave]}}</td>
+	                            <td id="{{$chave . $avaria->id}}">{{$avaria[$chave]}}</td>
 	                            <td>
-									<div class="p-2 iconesLista"><a data-toggle="modal" href="#editAvaria" data-target="#editAvaria" onclick="avaria.setEdit('{{$chave}}', {{$loop->iteration }} - 1)" >
+									<div class="p-2 iconesLista"><a data-toggle="modal" href="#editAvaria" data-target="#editAvaria" onclick="avaria.edit('{{$chave}}', {{$loop->iteration }} - 1)" >
 											<i class="fas fa-edit"></i>
 										</a>
 									

@@ -9,24 +9,20 @@
       </div>
 
       <div class="fadeIn first">
+        <div id="divMsgEdit"></div>
         <form id="formUpdateAvaria" action="/tipoAvaria/14" method="post" enctype="multipart/form-data">
           @csrf
           @method('put')
 
-
-          {{-- <input type="text" id="idUpdateAVaria" name="id" disabled> --}}
+          <input type="text" id="idUpdateAVaria" name="id" disabled>
           <input type="text" id="posUpdateAVaria" name="pos" hidden>
-          <input type="text" id="chaveUpdateAvarias" value="tipo" name="chaveUpdate">
-          <input type="text" id="idUpdateAVaria" name="id">
+          {{-- <input type="text" id="chaveUpdateAvaria" value= name="chaveUpdate"> --}}
           <input type="text" id="descricaoUpdateAVaria">
 
           <div id="formFooter">
             <div class="d-flex justify-content-center">
-              <button onclick="avaria.updateAVaria('formUpdateAvaria', event)" type="submit" id="submit" class="fadeIn fourth btn btn-primary">
-                salvar 2
-              </button>
-              <button type="submit" id="submit" class="fadeIn fourth btn btn-primary">
-                SALVAR
+              <button onclick="avaria.update('formUpdateAvaria', event, 'divMsgEdit')" type="submit" id="submit" class="fadeIn fourth btn btn-primary">
+                salvar
               </button>
             </div>
           </div>

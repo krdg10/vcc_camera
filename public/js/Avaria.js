@@ -173,26 +173,33 @@ class Avaria{
         }
 	}
 
-    setEdit(chave, pos, event=false){
+    edit(chave, pos, event=false){
         var obj = this;
         var idCampo = document.getElementById('idUpdateAVaria');
-        var chaveCampo = document.getElementById('chaveUpdateAVaria');
+        var posCampo = document.getElementById('posUpdateAVaria');
         var descricaoCampo = document.getElementById('descricaoUpdateAVaria');
 
+        posCampo.value = pos;
         idCampo.value = this.avarias[chave][pos].id;
-        chaveCampo.value =  chave;
+        descricaoCampo.name = chave;
         descricaoCampo.value = this.avarias[chave][pos][chave];
     }
 
-    updateAVaria(idFormUpdateAvaria, event){
+    update(idFormUpdateAvaria, event, idDivMsg = false){
+        var obj = this;
         event.preventDefault();
         var formUpdateAvaria = document.getElementById(idFormUpdateAvaria);
 
         var id = formUpdateAvaria['id'].value;
-        var chave = formUpdateAvaria['chaveUpdate'].value;
+        var chave = document.getElementById('descricaoUpdateAVaria').name;
 
-        this.metodos.xhttp.xmlHttpPut('/'+ chave +'Avaria/' +id, new FormData(formUpdateAvaria), function(r){
+        this.metodos.xhttp.xmlHttpPost('/'+ chave +'Avaria/' +id, new FormData(formUpdateAvaria), function(r){
             console.log(r);
+            if(r.tipo == 1)
+                document.getElementById(chave + id).innerHTML = r.dados[chave];
+
+            if(idDivMsg)
+                obj.metodos.msgSuccess(r.msg, idDivMsg);
         });
     }
 }
