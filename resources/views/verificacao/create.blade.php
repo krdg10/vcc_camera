@@ -70,6 +70,7 @@
 
                 <form method="POST" action="{{ route('verificacao.store', $entradas->id) }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
+                    
                     {{-- DIV PARA LISTAR O REGISTRO DE AVARIAS --}}
                     <div id="divRegistroAvarias"></div>
 

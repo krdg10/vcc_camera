@@ -2,9 +2,7 @@
 @section('content')
 <div class="wrapper fadeInDown">
 	<script type="text/javascript">
-	    var avaria, fotos;    
-	    var cont = 0;
-	    var metodos;
+	    var avaria, fotos, metodos;    
 
 	    window.onload = function(){
 	        @php
