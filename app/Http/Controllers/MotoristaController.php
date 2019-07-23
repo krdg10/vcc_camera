@@ -8,32 +8,40 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Models\Motorista;
 
-class MotoristaController extends Controller
-{
-    public function index()
-    {
+class MotoristaController extends Controller{
+    public function index(){
         return view('motorista.index');
     }
+
+    // ['valor' => 'valor', 'msg_error' => 'mensagem de erro']
+    public function validacaoCampo($campos){
+        $error = [];
+
+        foreach ($campos as $campo)
+            if ($campo['valor'] == '' || $campo['valor'] == null)
+                $error[] = $campo['msg_error'];
+                
+        return $error;
+    }    
+
+
     public function store(Request $request){
         $motorista = new Motorista;
-        if(!$request->nome){
-            $error[] = 'Coloque algum nome para seu motorista!';
-        }
-        if(!$request->cpf){
-            $error[] = 'Coloque o CPF do motorista!';
-        }
-        if(!$request->data_nascimento){
-            $error[] = 'Insira a data de nascimento!';
-        }
-        if(!$request->codigo_empresa){
-            $error[] = 'Insira o Código da Empresa!';
-        }
-        if(!$request->codigo_transdata){
-            $error[] = 'Insira o Código Transdata!';
-        }
-        if(isset($error)){
+
+        $campos = [
+            ['valor' => $request->nome, 'msg_error' => 'Coloque algum nome para seu motorista!'],
+            ['valor' => $request->cpf, 'msg_error' => 'Coloque o CPF do motorista!'],
+            ['valor' => $request->data_nascimento, 'msg_error' => 'Insira a data de nascimento!'],
+            ['valor' => $request->codigo_empresa, 'msg_error' => 'Insira o Código da Empresa!'],
+            ['valor' => $request->codigo_transdata, 'msg_error' => 'Insira o Código Transdata!']
+        ];
+
+        $error = $this->validacaoCampo($campos);
+
+        // if(isset($error)){
+        if(count($error) > 0)
             return redirect()->back()->with('error', $error);
-        }
+
         $validator = Validator::make($request->all(), [
             'cpf' => 'unique:motoristas,cpf',
             'codigo_empresa' => 'unique:motoristas,codigo_empresa',
@@ -61,19 +69,13 @@ class MotoristaController extends Controller
             return redirect()->back()->with('error', $error);
         }
 
-      
-        
-    
-    
-        
         $motorista->nome = $request->nome;
         $motorista->cpf = $request->cpf;
         $motorista->data_nascimento = $request->data_nascimento;
         $motorista->codigo_empresa = $request->codigo_empresa;
         $motorista->codigo_transdata = $request->codigo_transdata;
        
-        $motorista->save();
-        
+        // $motorista->save();
         
         return redirect('/motorista/listar')->with('message', 'Sucesso ao cadastrar motorista!');
     }
@@ -81,6 +83,7 @@ class MotoristaController extends Controller
         $motoristas = DB::table('motoristas')->where('ativo', 1)->orderBy('nome')->paginate(5);
         return view('motorista.show', compact('motoristas'));
     }
+
     public function busca(Request $request){
         if($request->nome == null && $request->cpf == null && $request->codigo_empresa == null && $request->codigo_transdata == null && $request->ativo == null){
             $motoristas = DB::table('motoristas')->where('ativo', 1)->orderBy('nome')->paginate(5);
@@ -116,46 +119,42 @@ class MotoristaController extends Controller
         return view('motorista.busca', ['motoristas' => $motoristas, 'nome' => $request->nome, 
         'cpf' => $request->cpf, 'codigo_empresa' => $request->codigo_empresa, 'codigo_transdata' => $request->codigo_transdata, 'ativo' => $request->ativo]);
     }
-    public function edit($id)
-    {
+
+    public function edit($id){
         $Motorista = Motorista::findOrFail($id);
         return view('motorista.edit',compact('Motorista'));
     }
   
-    public function update(Request $request, $id)
-    {
-        if(!$request->nome){
-            $error[] = 'Coloque algum nome para seu motorista!';
-        }
-        if(!$request->cpf){
-            $error[] = 'Coloque o CPF do motorista!';
-        }
-        if(!$request->data_nascimento){
-            $error[] = 'Insira a data de nascimento!';
-        }
-        if(!$request->codigo_empresa){
-            $error[] = 'Insira o Código da Empresa!';
-        }
-        if(!$request->codigo_transdata){
-            $error[] = 'Insira o Código Transdata!';
-        }
-        if(isset($error)){
+    public function update(Request $request, $id){
+        $campos = [
+            ['valor' => $request->nome, 'msg_error' => 'Coloque algum nome para seu motorista!'],
+            ['valor' => $request->cpf, 'msg_error' => 'Coloque o CPF do motorista!'],
+            ['valor' => $request->data_nascimento, 'msg_error' => 'Insira a data de nascimento!'],
+            ['valor' => $request->codigo_empresa, 'msg_error' => 'Insira o Código da Empresa!'],
+            ['valor' => $request->codigo_transdata, 'msg_error' => 'Insira o Código Transdata!']
+        ];
+
+        $error = $this->validacaoCampo($campos);
+
+        if(count($error) > 0)
             return redirect()->back()->with('error', $error);
-        }
+
         $Motorista = Motorista::findOrFail($id);
-        $Motorista->nome        = $request->nome;
-        $Motorista->cpf = $request->cpf;
+        $Motorista->nome               = $request->nome;
+        $Motorista->cpf                = $request->cpf;
         $Motorista->data_nascimento    = $request->data_nascimento;
-        $Motorista->codigo_empresa       = $request->codigo_empresa;
-        $Motorista->codigo_transdata       = $request->codigo_transdata;
+        $Motorista->codigo_empresa     = $request->codigo_empresa;
+        $Motorista->codigo_transdata   = $request->codigo_transdata;
         $Motorista->save();
+
         return redirect()->route('motorista.edit', compact('Motorista'))->with('message', 'Motorista Atualizado com Sucesso!');
     }
-    public function delete($id)
-    {
+
+    public function delete($id){
         $Motorista = Motorista::findOrFail($id);
         return view('motorista.delete',compact('Motorista'));
     }
+
     public function destroy($id){
         $Motorista = Motorista::findOrFail($id);
         $Motorista->ativo = 0;
