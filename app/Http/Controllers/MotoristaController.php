@@ -38,7 +38,6 @@ class MotoristaController extends Controller{
 
         $error = $this->validacaoCampo($campos);
 
-        // if(isset($error)){
         if(count($error) > 0)
             return redirect()->back()->with('error', $error);
 
@@ -75,10 +74,11 @@ class MotoristaController extends Controller{
         $motorista->codigo_empresa = $request->codigo_empresa;
         $motorista->codigo_transdata = $request->codigo_transdata;
        
-        // $motorista->save();
+        $motorista->save();
         
         return redirect('/motorista/listar')->with('message', 'Sucesso ao cadastrar motorista!');
     }
+    
     public function show(){
         $motoristas = DB::table('motoristas')->where('ativo', 1)->orderBy('nome')->paginate(5);
         return view('motorista.show', compact('motoristas'));
@@ -158,7 +158,7 @@ class MotoristaController extends Controller{
     public function destroy($id){
         $Motorista = Motorista::findOrFail($id);
         $Motorista->ativo = 0;
-        $Motorista->save();
+        $Motorista->update();
         return redirect()->route('motorista.show')->with('message', 'Motorista Deletado Com Sucesso!');
     }
 }

@@ -12,6 +12,7 @@
 	        		avaria.carousel('divExibebeImagens', 'modalImg', '". $entradas->fotos ."');
 	            ";
 			@endphp
+			
 	        // SETA DINAMICAMENTE OS CAMPOS DA SELECT
 	        @foreach ($verificacao->descAvaria as $a)
         		avaria.setSelect('localAvaria{{$a->id}}', 'local', {{$a->local_avaria_id}}, false);
