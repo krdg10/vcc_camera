@@ -1,8 +1,11 @@
 class Metodos {
 	xhttp;
+	nomeObj;
 	csrfToken;
-	constructor(csrfToken){
+
+	constructor(nomeObj, csrfToken){
 		this.csrfToken = csrfToken;
+		this.nomeObj = nomeObj;
 		this.xhttp = new Xhttp(this.csrfToken);
 	}
 
@@ -11,7 +14,7 @@ class Metodos {
 		var rand = Math.floor(Math.random() * (10000 - 1));
 		campo.innerHTML = `<span id="success`+ rand +`" class="badge badge-success badge-pill">`+
 	        msg+
-	        `<a id="excluir" onClick="metodos.excluirElement('success`+ rand +`')"><i class="fa fa-times" aria-hidden="true"></i></a>`+
+	        `<a id="excluir" onClick="`+ nomeObj +`.excluirElement('success`+ rand +`')"><i class="fa fa-times" aria-hidden="true"></i></a>`+
 	    `</span>`;
 		if(seg)setTimeout(function(){campo.innerHTML='';}, seg * 1000); 
 	}
@@ -21,7 +24,7 @@ class Metodos {
 		var rand = Math.floor(Math.random() * (10000 - 1));
 		campo.innerHTML = `<span id="error`+ rand +`" class="badge badge-danger badge-pill">`+
 	        msg+
-	        `<a id="excluir" onClick="metodos.excluirElement('error`+ rand +`')"><i class="fa fa-times" aria-hidden="true"></i></a>`+
+	        `<a id="excluir" onClick="`+ nomeObj +`.excluirElement('error`+ rand +`')"><i class="fa fa-times" aria-hidden="true"></i></a>`+
 	    `</span>`;
 		if(seg)setTimeout(function(){campo.innerHTML='';}, seg * 1000); 
 	}

@@ -1,6 +1,20 @@
 @extends('layouts.app')
 @section('content')
 <script>
+    var metodos;
+    window.onload = function(){
+            metodos = new Metodos('metodos', '{{csrf_token()}}');
+
+        @if( \Session::has('error') )
+            @foreach(session()->get('error') as $key => $ms)
+                metodos.msgError('{{ $ms }}', 'divMsg')
+            @endforeach
+        @endif
+        @if( Session::has('message') )
+            metodos.msgSuccess('{{ \Session::get('message') }}', 'divMsg');
+        @endif
+    }
+
     function valida() {
         var cpf = document.getElementsByName('cpf')[0].value;
         var codigo_empresa = document.getElementsByName('codigo_empresa')[0].value;
@@ -27,9 +41,6 @@
             return false;
         }
     }
-    function excluirElement(id){
-        $('#'+id).remove();
-    }
 </script>
 <!-- script valida verifica se há apenas números positivos em cpf, codigo da empresa e codigo vcc. Alerta de tamanho não precisa script pois minlenght já faz isso -->
 
@@ -37,20 +48,8 @@
     <div id="formContent">
         <h3>Cadastrar Motorista</h3> 
         {{-- Exibe mensagem de sucesso ou de erro caso haja. --}}
-        @if( \Session::has('error') )
-            @foreach(session()->get('error') as $key => $ms)
-                <span id="{{ $key }}error" class="badge badge-danger badge-pill">
-                    {{ $ms }}
-                    <a id="excluir" onClick="excluirElement('{{ $key }}error')"><i class="fa fa-times" aria-hidden="true"></i></a>
-                </span>
-            @endforeach
-        @endif
-        @if( \Session::has('message') )
-            <span id="success" class="badge badge-success badge-pill">
-                {{ \Session::get('message') }}
-                    <a id="excluir" onClick="excluirElement('success')"><i class="fa fa-times" aria-hidden="true"></i></a>
-            </span>
-        @endif
+        <div id="divMsg"></div>
+
         <hr>
         <form method="POST" action="{{ route('motorista.store') }}" enctype="multipart/form-data" onsubmit="return valida();">
         {{ csrf_field() }}
