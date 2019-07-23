@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Motorista;
 
 class MotoristaController extends Controller{
-    public function index(){
-        return view('motorista.index');
-    }
 
     // ['valor' => 'valor', 'msg_error' => 'mensagem de erro']
     public function validacaoCampo($campos){
@@ -23,7 +20,10 @@ class MotoristaController extends Controller{
                 
         return $error;
     }    
-
+ 
+    public function create(){
+        return view('motorista.create');
+    }
 
     public function store(Request $request){
         $motorista = new Motorista;
@@ -46,12 +46,12 @@ class MotoristaController extends Controller{
             'codigo_empresa' => 'unique:motoristas,codigo_empresa',
             'codigo_transdata' => 'unique:motoristas,codigo_transdata'
         ]);
+        
         //https://stackoverflow.com/questions/47750807/laravel-rule-validation-unique-for-id
         //https://laravel.com/docs/5.8/facades
         //https://laravel.com/docs/5.8/validation#customizing-the-validation-attributes
         //https://stackoverflow.com/questions/24328850/laravel-validate-error
         //https://stackoverflow.com/questions/25573617/laravel-validation-check-why-validator-failed
-        
 
         if ($validator->fails()) {
             $failedRules = $validator->failed();

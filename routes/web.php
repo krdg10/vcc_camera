@@ -12,7 +12,7 @@
 */
 
     Route::get('/', function () {
-        return view('home');
+        return view('home.home');
     });
 
     Auth::routes();
@@ -21,7 +21,7 @@
 	Route::group(['middleware' => ['auth']], function () {  
 
         // MOTORISTA
-        Route::get('/motorista','MotoristaController@index')->name('motorista');
+        Route::get('/motorista/create','MotoristaController@create')->name('motorista.create'); // CREATE
         Route::post('/motorista','MotoristaController@store')->name('motorista.store');
         Route::get('/motorista/listar','MotoristaController@show')->name('motorista.show');
         Route::get('/motorista/listar/{id}','MotoristaController@edit')->name('motorista.edit');
@@ -52,10 +52,10 @@
 
 
         // VERIFICAÇÃO
-        Route::get('/verificacao/{id}','VerificacaoController@show')->name('verificacao.show'); //SHOW
-        Route::post('/verificacao/{id}','VerificacaoController@store')->name('verificacao.store'); //STORE
-        Route::get('/verificacao/edit/{id}','VerificacaoController@edit')->name('verificacao.edit'); //edit
-        Route::put('/verificacao/edit/{id}','VerificacaoController@update')->name('verificacao.update'); //edit
+        Route::get('/verificacao/{id}','VerificacaoController@show')->name('verificacao.show'); // SHOW
+        Route::post('/verificacao/{id}','VerificacaoController@store')->name('verificacao.store'); // STORE
+        Route::get('/verificacao/edit/{id}','VerificacaoController@edit')->name('verificacao.edit'); // edit
+        Route::put('/verificacao/edit/{id}','VerificacaoController@update')->name('verificacao.update'); // edit
         Route::delete('/verificacao/edit/excluir/{id}','DescAvariasController@destroy')->name('descavarias.destroy');
         Route::post('/verificacao/edit/adicionar/{id}','DescAvariasController@store')->name('descavarias.store');
         Route::get('/verificacao/edit/adicionar/{id}','VerificacaoController@edit')->name('verificacao.edit');
@@ -63,16 +63,16 @@
   
 
         // TIPO DE AVARIA
-        Route::get('/tipoAvaria','TipoAvariaController@index')->name('tipoAvaria'); //INDEX
-        Route::post('/tipoAvaria','TipoAvariaController@store')->name('tipoAvaria.store'); //STORE
-        Route::put('/tipoAvaria/{id}','TipoAvariaController@update')->name('tipoAvaria.update'); //UPDATE
+        Route::get('/tipoAvaria','TipoAvariaController@index')->name('tipoAvaria'); // INDEX
+        Route::post('/tipoAvaria','TipoAvariaController@store')->name('tipoAvaria.store'); // STORE
+        Route::put('/tipoAvaria/{id}','TipoAvariaController@update')->name('tipoAvaria.update'); // UPDATE
         Route::delete('/tipoAvaria/{id}','TipoAvariaController@destroy')->name('tipoAvaria.delete()'); // DELETE
 
         // LOCAL DE AVARIA
-        Route::get('/localAvaria','LocalAVariasController@index')->name('localAvaria'); //INDEX
-        Route::post('/localAvaria','LocalAVariasController@store')->name('localAvaria.store'); //STORE
-        Route::put('/localAvaria/{id}','LocalAVariasController@update')->name('localAvaria.update'); //UPDATE
-        Route::delete('/localAvaria/{id}','LocalAvariasController@destroy')->name('localAvaria.destroy'); //DELETE
+        Route::get('/localAvaria','LocalAVariasController@index')->name('localAvaria'); // INDEX
+        Route::post('/localAvaria','LocalAVariasController@store')->name('localAvaria.store'); // STORE
+        Route::put('/localAvaria/{id}','LocalAVariasController@update')->name('localAvaria.update'); // UPDATE
+        Route::delete('/localAvaria/{id}','LocalAvariasController@destroy')->name('localAvaria.destroy'); // DELETE
 
         
         Route::get('image/upload','ImageUploadController@fileCreate');
