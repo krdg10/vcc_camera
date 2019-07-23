@@ -5,9 +5,10 @@
 	    var metodos, xhttp;
 
 	    window.onload = function(){
+            metodos = new Metodos('metodos', '{{ csrf_token() }}');
+
 	        @php
 	            echo "
-	                metodos = new Metodos('". csrf_token() ."');
 	                avaria = new Avaria('avaria', '". csrf_token() ."', '". $avarias ."', '". $avarias ."');
 	            ";
 	        @endphp

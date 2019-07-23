@@ -7,7 +7,7 @@
 	    window.onload = function(){
 	        @php
 	            echo "
-	                metodos = new Metodos('". csrf_token() ."');
+	                metodos = new Metodos('metodos', '". csrf_token() ."');
 	                avaria = new Avaria('avaria', '". csrf_token() ."', '". $local_avarias ."', '" . $tipo_avarias . "');
 	        		avaria.carousel('divExibebeImagens', 'modalImg', '". $fotos ."'); 
 	            ";
@@ -42,6 +42,7 @@
 
         {{-- MODAL DA IMAGEM --}}
         <div id="modalImg"></div>
+        
 		<div class="container" style="padding-left: 0px; padding-right:0px;">
 		<div class="accordion" id="accordionExample">
 			@forelse ($verificacao->descAvaria as $avaria)
