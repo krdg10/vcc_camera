@@ -49,8 +49,8 @@
             
             {{-- DIV PARA EXIBIR MENSAGENS --}}
             <div id="divMsg"></div>
-
             <hr>
+
             <form method="POST" action="{{ route('motorista.store') }}" enctype="multipart/form-data" onsubmit="return valida();">
                 {{ csrf_field() }}
                 <input type="text" placeholder="Nome" name="nome" class="form-control">

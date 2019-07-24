@@ -22,7 +22,6 @@
 
         // MOTORISTA
         Route::get('/motorista/create','MotoristaController@create')->name('motorista.create'); // CREATE
-        Route::post('/motorista','MotoristaController@store')->name('motorista.store');
         Route::get('/motorista/listar','MotoristaController@show')->name('motorista.show');
         Route::get('/motorista/listar/{id}','MotoristaController@edit')->name('motorista.edit');
         Route::put('/motorista/listar/{id}','MotoristaController@update')->name('motorista.update');
@@ -30,6 +29,7 @@
         Route::delete('/motorista/listar/excluir/{id}','MotoristaController@destroy')->name('motorista.destroy');
         Route::post('/motorista/buscar', 'MotoristaController@busca')->name('motorista.busca');
         Route::get('/motorista/buscar', 'MotoristaController@busca');
+        Route::post('/motorista','MotoristaController@store')->name('motorista.store');
         
 
         // CARRO
@@ -44,6 +44,7 @@
         Route::get('/carro/buscar', 'CarroController@busca');
 
 
+        // ENTRADA
         Route::get('/entrada','EntradaController@index')->name('entrada');
         Route::get('/entrada/create','EntradaController@create')->name('entrada.create');
         Route::post('/entrada','EntradaController@store')->name('entrada.store');
