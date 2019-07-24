@@ -16,21 +16,20 @@ class CarroController extends Controller
     }
     public function store(Request $request){
         $carro = new Carro;
-        if(!$request->nome){
-            $error[] = 'Coloque algum nome para seu veículo!';
-        }
-        if(!$request->placa){
-            $error[] = 'Insira alguma placa!';
-        }
-        if(!$request->modelo){
-            $error[] = 'Insira o modelo!';
-        }
-        if(!$request->ano){
-            $error[] = 'Coloque o ano do veículo!';
-        }
-        if(isset($error)){
+
+        $campos = [
+            ['valor' => $request->nome, 'msg_error' => 'Coloque algum nome para seu veículo!'],
+            ['valor' => $request->placa, 'msg_error' => 'Insira alguma placa!'],
+            ['valor' => $request->modelo, 'msg_error' => 'Insira o modelo!'],
+            ['valor' => $request->ano, 'msg_error' => 'Coloque o ano do veículo!'],
+            ['valor' => $request->codigo_transdata, 'msg_error' => 'Insira o Código Transdata!']
+        ];
+
+        $error = Metodos::validacaoCampo($campos);
+        if(count($error) > 0)
             return redirect()->back()->with('error', $error);
-        }
+
+
         $validator = Validator::make($request->all(), [
             'placa' => 'unique:carros,placa'
         ]);
@@ -52,6 +51,7 @@ class CarroController extends Controller
         
         return redirect('/carro/listar')->with('message', 'Sucesso ao cadastrar veículo!');
     }
+    
     public function show(){
         $carros = DB::table('carros')->where('ativo', 1)->orderBy('nome')->paginate(5);
         return view('carro.show', compact('carros'));

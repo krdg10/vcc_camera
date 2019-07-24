@@ -8,18 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Models\Motorista;
 
-class MotoristaController extends Controller{
-
-    // ['valor' => 'valor', 'msg_error' => 'mensagem de erro']
-    public function validacaoCampo($campos){
-        $error = [];
-
-        foreach ($campos as $campo)
-            if ($campo['valor'] == '' || $campo['valor'] == null)
-                $error[] = $campo['msg_error'];
-                
-        return $error;
-    }    
+class MotoristaController extends Controller{ 
  
     public function create(){
         return view('motorista.create');
@@ -36,7 +25,7 @@ class MotoristaController extends Controller{
             ['valor' => $request->codigo_transdata, 'msg_error' => 'Insira o Código Transdata!']
         ];
 
-        $error = $this->validacaoCampo($campos);
+        $error = Metodos::validacaoCampo($campos);
 
         if(count($error) > 0)
             return redirect()->back()->with('error', $error);
@@ -134,7 +123,7 @@ class MotoristaController extends Controller{
             ['valor' => $request->codigo_transdata, 'msg_error' => 'Insira o Código Transdata!']
         ];
 
-        $error = $this->validacaoCampo($campos);
+        $error = Metodos::validacaoCampo($campos);
 
         if(count($error) > 0)
             return redirect()->back()->with('error', $error);

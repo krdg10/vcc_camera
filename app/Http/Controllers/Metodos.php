@@ -14,4 +14,15 @@ class Metodos extends Controller{
         ];
         return json_encode($retorno);
     }
+
+    // ['valor' => 'valor', 'msg_error' => 'mensagem de erro']
+    public static function validacaoCampo($campos){
+        $error = [];
+
+        foreach ($campos as $campo)
+            if ($campo['valor'] == '' || $campo['valor'] == null)
+                $error[] = $campo['msg_error'];
+                
+        return $error;
+    }
 }
