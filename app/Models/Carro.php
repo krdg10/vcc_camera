@@ -4,9 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Carro extends Model
-{
-    protected $table = 'carros';
-
-    //
+class Carro extends Model{
+    // protected $table = 'carros';
 }

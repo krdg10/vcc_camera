@@ -8,10 +8,9 @@ class CreateEntradasTable extends Migration{
     public function up(){
         Schema::create('entradas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('motorista_id')->unsigned();
+            $table->integer('motorista_id')->unsigned()->nullable();;
             $table->integer('carro_id')->unsigned();
             $table->dateTime('horario');
-
             $table->timestamps();
 
             $table->foreign('motorista_id')->references('id')->on('motoristas')->onDelete('cascade');
