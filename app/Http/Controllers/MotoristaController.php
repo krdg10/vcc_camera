@@ -9,14 +9,11 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Motorista;
 
 class MotoristaController extends Controller{ 
- 
     public function create(){
         return view('motorista.create');
     }
 
     public function store(Request $request){
-        $motorista = new Motorista;
-
         $campos = [
             ['valor' => $request->nome, 'msg_error' => 'Coloque algum nome para seu motorista!'],
             ['valor' => $request->cpf, 'msg_error' => 'Coloque o CPF do motorista!'],
@@ -57,15 +54,20 @@ class MotoristaController extends Controller{
             return redirect()->back()->with('error', $error);
         }
 
-        $motorista->nome = $request->nome;
-        $motorista->cpf = $request->cpf;
-        $motorista->data_nascimento = $request->data_nascimento;
-        $motorista->codigo_empresa = $request->codigo_empresa;
-        $motorista->codigo_transdata = $request->codigo_transdata;
-       
-        $motorista->save();
-        
-        return redirect('/motorista/listar')->with('message', 'Sucesso ao cadastrar motorista!');
+        try {
+            $motorista = new Motorista;
+            $motorista->nome = $request->nome;
+            $motorista->cpf = $request->cpf;
+            $motorista->data_nascimento = $request->data_nascimento;
+            $motorista->codigo_empresa = $request->codigo_empresa;
+            $motorista->codigo_transdata = $request->codigo_transdata;
+           
+            $motorista->save();
+            
+            return redirect('/motorista/listar')->with('message', 'Sucesso ao cadastrar motorista!');
+        } catch (Exception $e) {
+            return redirect('/motorista/listar')->with('message', 'Ocorreu um erro ao cadastar o motorista.');
+        }
     }
     
     public function show(){

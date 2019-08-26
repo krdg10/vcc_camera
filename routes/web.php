@@ -11,9 +11,7 @@
 |
 */
 
-    Route::get('/', function () {
-        return view('home.home');
-    });
+    Route::get('/','HomeController@index')->name('/'); // INDEX
 
     Auth::routes();
 

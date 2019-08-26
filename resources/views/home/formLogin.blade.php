@@ -1,4 +1,4 @@
-<!-- Login Form -->
+<!-- LOGIN FORM -->
 <form method="POST" action="{{ route('login') }}">
     @csrf
     <input placeholder="Login" id="email" type="text" class="fadeIn second @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -16,6 +16,7 @@
              <strong>{{ $message }}</strong>
         </span>
     @enderror
+
     <div class="form-group row">
         <div class="col-md-6">
            {{-- <div class="form-check">
@@ -28,11 +29,11 @@
         </div>
     </div>
    
-        <button type="submit" class="fadeIn fourth btn btn-primary">
-            {{ __('Login') }}
-        </button>
+    <button type="submit" class="fadeIn fourth btn btn-primary">
+        {{ __('Login') }}
+    </button>
 </form>
 
-<!-- Remind Passowrd -->
+<!-- REMIND PASSOWRD -->
 <div id="formFooter">
 </div>
