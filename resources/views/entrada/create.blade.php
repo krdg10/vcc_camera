@@ -4,6 +4,8 @@
     function excluirElement(id){
         $('#'+id).remove();
     }
+
+    document.getElementoById('')
 </script>
 <div class="wrapper fadeInDown">
     <div id="formContent">
@@ -44,7 +46,7 @@
             </select>
 
             <input type="datetime-local" placeholder="Horário" name="horario" class="form-control">
-            <input type="file" aria-label="foto" id="foto" value="http://192.168.254.193:94/snapshot.cgi?user=lan&pwd=lan&t=" name="fotos[]" class="form-control" multiple />
+            <input type="file" aria-label="foto" id="foto" name="fotos[]" class="form-control" multiple />
             
             <div id="formFooter">
               <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Salvar </button>
