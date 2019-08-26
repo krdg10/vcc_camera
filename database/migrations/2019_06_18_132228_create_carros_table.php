@@ -8,6 +8,7 @@ class CreateCarrosTable extends Migration{
     public function up(){
         Schema::create('carros', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('rfid');
             $table->string('nome');
             $table->string('placa')->unique();
             $table->string('modelo');
