@@ -10,11 +10,9 @@ class CreateFotosTable extends Migration{
             $table->increments('id');
             $table->string('path', 200);
             $table->integer('entrada_id')->unsigned();
-
-            $table->foreign('entrada_id')->references('id')->on('entradas')->onDelete('cascade');
-
             $table->timestamps();
 
+            $table->foreign('entrada_id')->references('id')->on('entradas')->onDelete('cascade');
         });
     }
 
