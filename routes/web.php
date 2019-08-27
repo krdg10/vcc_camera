@@ -28,7 +28,6 @@
         Route::post('/motorista/buscar', 'MotoristaController@busca')->name('motorista.busca');
         Route::get('/motorista/buscar', 'MotoristaController@busca');
         Route::post('/motorista','MotoristaController@store')->name('motorista.store');
-        
 
         // CARRO
         Route::get('/carro','CarroController@index')->name('carro');
@@ -41,14 +40,13 @@
         Route::post('/carro/buscar', 'CarroController@busca')->name('carro.busca');
         Route::get('/carro/buscar', 'CarroController@busca');
 
-
         // ENTRADA
         Route::get('/entrada','EntradaController@index')->name('entrada');
         Route::get('/entrada/create','EntradaController@create')->name('entrada.create');
         Route::post('/entrada','EntradaController@store')->name('entrada.store');
         Route::post('/entrada/buscar', 'EntradaController@busca')->name('entrada.busca');
         Route::get('/entrada/buscar', 'EntradaController@busca');
-
+        Route::get('/entrada/rbt/{rfid}','EntradaController@storeRbt')->name('entrada.storeRbt'); // STORE ROBOT
 
         // VERIFICAÇÃO
         Route::get('/verificacao/{id}','VerificacaoController@show')->name('verificacao.show'); // SHOW
@@ -60,7 +58,6 @@
         Route::get('/verificacao/edit/adicionar/{id}','VerificacaoController@edit')->name('verificacao.edit');
         Route::get('/verificacao/exibir/{id}','VerificacaoController@exibir')->name('verificacao.exibir');
   
-
         // TIPO DE AVARIA
         Route::get('/tipoAvaria','TipoAvariaController@index')->name('tipoAvaria'); // INDEX
         Route::post('/tipoAvaria','TipoAvariaController@store')->name('tipoAvaria.store'); // STORE
@@ -73,7 +70,6 @@
         Route::put('/localAvaria/{id}','LocalAVariasController@update')->name('localAvaria.update'); // UPDATE
         Route::delete('/localAvaria/{id}','LocalAvariasController@destroy')->name('localAvaria.destroy'); // DELETE
 
-        
         Route::get('image/upload','ImageUploadController@fileCreate');
         Route::post('image/upload/store','ImageUploadController@fileStore');
         Route::post('image/delete','ImageUploadController@fileDestroy');

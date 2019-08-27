@@ -114,6 +114,22 @@ class EntradaController extends Controller{
         return redirect()->back()->with('message', 'Sucesso ao cadastrar entrada!');
     }
 
+    public function storeRbt($rfid){
+        $entrada = new Entrada;
+
+        // $entrada->motorista_id = 0;
+        $veiculos = Carro::where('rfid', '=', $rfid)->get();
+        // return dd($veiculo);
+
+        if($veiculos->count() == 0)
+            return Metodos::retorno(0, 'Não foi encontrado o veiculo associado ao rfid: '. $rfid);
+
+        $entrada->carro_id = $veiculos[0]->id;
+
+        $entrada->horario = date('Y-m-d H:i:s');
+        $entrada->save();
+    }
+
     public function create(){
         $Motorista = Motorista::all();
         $motorista = $Motorista->where('ativo', 1);
