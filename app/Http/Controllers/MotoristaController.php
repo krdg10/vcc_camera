@@ -71,7 +71,7 @@ class MotoristaController extends Controller{
     }
     
     public function show(){
-        $motoristas = DB::table('motoristas')->where('ativo', 1)->orderBy('nome')->paginate(5);
+        $motoristas = Motorista::where('ativo', 1)->orderBy('nome')->paginate(5);
         return view('motorista.show', compact('motoristas'));
     }
 
