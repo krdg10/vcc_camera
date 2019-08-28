@@ -8,8 +8,8 @@ class CreateFotosTable extends Migration{
     public function up(){
         Schema::create('fotos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('path', 200);
             $table->integer('entrada_id')->unsigned();
+            $table->string('path', 200);
             $table->timestamps();
 
             $table->foreign('entrada_id')->references('id')->on('entradas')->onDelete('cascade');
