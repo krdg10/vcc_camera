@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
 //quando procurei isDate achei uma coisa assim mas n sabia como usar.
 
-
-
 class EntradaController extends Controller{
     public function index(){
         $entradas = Entrada::orderBy('horario', 'desc')->paginate(5);
@@ -116,7 +114,7 @@ class EntradaController extends Controller{
             $veiculos = Carro::where('rfid', '=', $rfid)->get();
 
             if($veiculos->count() == 0)
-                return Metodos::retorno(0, 'Não foi encontrado o veiculo associado ao rfid: '. $rfid);
+                return Metodos::retornoJson(0, 'Não foi encontrado o veiculo associado ao rfid: '. $rfid);
 
             $entrada->carro_id = $veiculos[0]->id;
 
@@ -127,7 +125,7 @@ class EntradaController extends Controller{
             copy('http://192.168.254.193:94/snapshot.cgi?user=lan&pwd=lan&t=','C:\laragon\www\vcc_camera\storage\app\public\fotos\1_store_rbt_'. $entrada->id .'.jpg');
 
             copy('http://192.168.254.193:94/snapshot.cgi?user=lan&pwd=lan&t=','C:\laragon\www\vcc_camera\storage\app\public\fotos\2_store_rbt_'. $entrada->id .'.jpg');
-
+            
             // $filename = $file->store('fotos');
             Foto::create([
                 'entrada_id' => $entrada->id,
@@ -144,7 +142,7 @@ class EntradaController extends Controller{
             return Metodos::retornoJson(0, 'Ocorreu um erro ao salvar a imagem.', $e);
         }
     }
-
+    
     public function create(){
         $Motorista = Motorista::all();
         $motorista = $Motorista->where('ativo', 1);
