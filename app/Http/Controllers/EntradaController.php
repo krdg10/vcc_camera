@@ -131,12 +131,12 @@ class EntradaController extends Controller{
             // $filename = $file->store('fotos');
             Foto::create([
                 'entrada_id' => $entrada->id,
-                'path' => 'fotos/1_store_rbt_'. $entrada->id .'.jpeg'
+                'path' => 'fotos/1_store_rbt_'. $entrada->id .'.jpg'
             ]);
 
             Foto::create([
                 'entrada_id' => $entrada->id,
-                'path' => 'fotos/2_store_rbt_'. $entrada->id .'.jpeg'
+                'path' => 'fotos/2_store_rbt_'. $entrada->id .'.jpg'
             ]);
             
             return Metodos::retornoJson(1, 'Entrada salva com sucesso.');
