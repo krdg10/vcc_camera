@@ -96,38 +96,53 @@ class EntradaController extends Controller{
                 $filename = $file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension();
                 $check=in_array($extension,$allowedfileExtension);
-                //dd($check);
+
                 if($check){
                     $filename = $file->store('fotos');
                     Foto::create([
                         'entrada_id' => $entrada->id,
                         'path' => $filename
                     ]);
-                    
-                    //echo "Upload Successfully";
                 }
-                /*else{
-                    echo '<div class="alert alert-warning"><strong>Warning!</strong> Sorry Only Upload png , jpg , doc</div>';
-                }*/
             }
         }
         return redirect()->back()->with('message', 'Sucesso ao cadastrar entrada!');
     }
 
     public function storeRbt($rfid){
-        $entrada = new Entrada;
+        try {
+            $entrada = new Entrada;
 
-        // $entrada->motorista_id = 0;
-        $veiculos = Carro::where('rfid', '=', $rfid)->get();
-        // return dd($veiculo);
+            $veiculos = Carro::where('rfid', '=', $rfid)->get();
 
-        if($veiculos->count() == 0)
-            return Metodos::retorno(0, 'Não foi encontrado o veiculo associado ao rfid: '. $rfid);
+            if($veiculos->count() == 0)
+                return Metodos::retorno(0, 'Não foi encontrado o veiculo associado ao rfid: '. $rfid);
 
-        $entrada->carro_id = $veiculos[0]->id;
+            $entrada->carro_id = $veiculos[0]->id;
 
-        $entrada->horario = date('Y-m-d H:i:s');
-        $entrada->save();
+            $entrada->horario = date('Y-m-d H:i:s');
+
+            $entrada->save();
+
+            copy('http://192.168.254.193:94/snapshot.cgi?user=lan&pwd=lan&t=','C:\laragon\www\vcc_camera\storage\app\public\fotos\1_store_rbt_'. $entrada->id .'.jpg');
+
+            copy('http://192.168.254.193:94/snapshot.cgi?user=lan&pwd=lan&t=','C:\laragon\www\vcc_camera\storage\app\public\fotos\2_store_rbt_'. $entrada->id .'.jpg');
+
+            // $filename = $file->store('fotos');
+            Foto::create([
+                'entrada_id' => $entrada->id,
+                'path' => 'fotos/1_store_rbt_'. $entrada->id .'.jpeg'
+            ]);
+
+            Foto::create([
+                'entrada_id' => $entrada->id,
+                'path' => 'fotos/2_store_rbt_'. $entrada->id .'.jpeg'
+            ]);
+            
+            return Metodos::retornoJson(1, 'Entrada salva com sucesso.');
+        } catch (Exception $e) {
+            return Metodos::retornoJson(0, 'Ocorreu um erro ao salvar a imagem.', $e);
+        }
     }
 
     public function create(){
