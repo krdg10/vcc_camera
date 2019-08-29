@@ -57,7 +57,7 @@
 
             {{-- DIV QUE EXIBE OS DADOS DA ENTRADA --}}
             <div class="container">
-                <h5>Motorista: @empty($entrada->motorista->nome)-@endempty @isset($entrada->motorista->nome){{$entrada->motorista->nome}}@endisset</h5>
+                <h5>Motorista: @empty($entradas->motorista->nome)<a href="/entrada/addMotorista/{{$entradas->id}}" class="iconesLista"><i class="fas fa-plus-circle"></i></a>@endempty @isset($entradas->motorista->nome){{$entradas->motorista->nome}}@endisset</h5>
                 <h5>Carro: {{$entradas->carro->nome}} - {{$entradas->carro->placa}}</h5>
             </div>
 
