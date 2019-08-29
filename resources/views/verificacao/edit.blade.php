@@ -47,7 +47,7 @@
 
 	        {{-- EXIBE OS DADOS DO MOTORISTA --}}
 	        <div class="container">
-	            <h5>Motorista: {{$entradas->motorista->nome}}</h5>
+	            <h5>Motorista: @empty($entrada->motorista->nome)-@endempty @isset($entrada->motorista->nome){{$entrada->motorista->nome}}@endisset</h5>
 	            <h5>Carro: {{$entradas->carro->nome}} - {{$entradas->carro->placa}}</h5>
 	        </div>
 	       
