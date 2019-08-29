@@ -178,7 +178,7 @@ class EntradaController extends Controller{
     }
 
     public function adicionaMotorista(Request $request, $id){
-        if($request->motorista){
+        if($request->motorista=='false'){//era só por o false como string vsfff
             $error[] = 'Nenhum motorista foi adicionado!'; //tava dando BO pq error tem que ser array. message n precisa. Redirect back volta pra msm page.
             return redirect('/entrada')->with('error', $error);
         }
@@ -187,7 +187,7 @@ class EntradaController extends Controller{
         
         $entrada->save();
         
-        return redirect()->back()->with('message', 'Sucesso ao adicionar a Motorista!');
+        return redirect('/entrada')->with('message', 'Sucesso ao adicionar a Motorista!');//tava dando errado pq era redirect back. ai voltava pra pagina exibe com motorista adicionado. Ai direcionada pra lista com msg de ja existente
     }
 }
 /* https://www.cloudways.com/blog/laravel-multiple-files-images-upload/ base do upload. antes tava adicionando o nome via script, mas pegava o fakepath e não fazia upload de fato. depois fazia upload mas só de um arquivo. */
