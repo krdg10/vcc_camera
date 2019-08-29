@@ -8,6 +8,7 @@
                 @php
                     echo "
                         metodos = new Metodos('metodos', '". csrf_token() ."');
+                        avaria = new Avaria('avaria', '". csrf_token() ."');
                         avaria.carousel('divExibebeImagens', 'modalImg', '". $fotos ."'); 
                     ";
                 @endphp
@@ -29,6 +30,12 @@
 
             {{-- DIV PARA EXIBIR MENSAGENS --}}
             <div id="divMsg"></div>
+
+            {{-- DIV PARA EXIBIR AS IMAGENS --}}
+            <div class="container" id="divExibebeImagens"></div>
+
+            {{-- MODAL DA IMAGEM --}}
+            <div id="modalImg"></div>
 
             {{-- DIV QUE EXIBE OS DADOS DA ENTRADA --}}
             <div class="container">
