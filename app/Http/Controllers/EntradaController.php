@@ -165,7 +165,6 @@ class EntradaController extends Controller{
          //funcionando, mas entra aqui de qualquer jeito. dai manda a msg errada.
         if ($entrada->motorista){
             $error[] = 'Motorista já cadastrado!';
-            dd($entrada->motorista);
             return redirect('/entrada')->with('error', $error);
         }
         $entradaController = new EntradaController;
@@ -179,6 +178,10 @@ class EntradaController extends Controller{
     }
 
     public function adicionaMotorista(Request $request, $id){
+        if($request->motorista){
+            $error[] = 'Nenhum motorista foi adicionado!'; //tava dando BO pq error tem que ser array. message n precisa. Redirect back volta pra msm page.
+            return redirect('/entrada')->with('error', $error);
+        }
         $entrada = Entrada::findOrFail($id);;
         $entrada->motorista_id = $request->motorista;
         
