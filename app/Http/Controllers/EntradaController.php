@@ -81,7 +81,10 @@ class EntradaController extends Controller{
         if(isset($error)){
             return redirect()->back()->with('error', $error);
         }
-        $entrada->motorista_id = $request->motorista;
+        if(!$request->motorista){
+            $entrada->motorista_id = $request->motorista;
+        }
+        
         $entrada->carro_id = $request->carro;
         $entrada->horario = $request->horario;
         $entrada->save();
@@ -153,6 +156,35 @@ class EntradaController extends Controller{
 
     public function show($id){
         return Entrada::find($id);
+    }
+
+    public function exibe($id){
+        $entrada = Entrada::find($id);
+
+         // VERIFICA SE JÁ HÁ MOTORISTA
+         //funcionando, mas entra aqui de qualquer jeito. dai manda a msg errada.
+        if ($entrada->motorista){
+            $error[] = 'Motorista já cadastrado!';
+            dd($entrada->motorista);
+            return redirect('/entrada')->with('error', $error);
+        }
+        $entradaController = new EntradaController;
+
+       
+        $fotos = $entradaController->show($entrada->id)->fotos;//tinha apagado o show e isso dava ruim
+
+        $Motorista = Motorista::all();
+        $motorista = $Motorista->where('ativo', 1);
+        return view('entrada.addMotorista', compact('motorista', 'entrada', 'fotos'));
+    }
+
+    public function adicionaMotorista(Request $request, $id){
+        $entrada = Entrada::findOrFail($id);;
+        $entrada->motorista_id = $request->motorista;
+        
+        $entrada->save();
+        
+        return redirect()->back()->with('message', 'Sucesso ao adicionar a Motorista!');
     }
 }
 /* https://www.cloudways.com/blog/laravel-multiple-files-images-upload/ base do upload. antes tava adicionando o nome via script, mas pegava o fakepath e não fazia upload de fato. depois fazia upload mas só de um arquivo. */
