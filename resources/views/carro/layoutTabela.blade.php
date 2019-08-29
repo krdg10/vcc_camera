@@ -6,6 +6,7 @@
         var placa = document.getElementsByName('placa')[0].value;
         var modelo = document.getElementsByName('modelo')[0].value;
         var nome = document.getElementsByName('nome')[0].value;
+        var rfid = document.getElementsByName('rfid')[0].value;
         if(document.getElementById('ativo').checked == true){
             var ativo = document.getElementsByName('ativo')[0].value;
         }
@@ -15,7 +16,7 @@
         var validaAno = /^\d+$/;
         var validaPlaca = /^[A-Z]{3}\-\d{4}$/;
         var temCaracterAlfanumerico = /\w$/;
-        if(temCaracterAlfanumerico.test(ano) == false  && temCaracterAlfanumerico.test(placa) == false && temCaracterAlfanumerico.test(modelo) == false && temCaracterAlfanumerico.test(nome) == false && ativo==null){
+        if(temCaracterAlfanumerico.test(ano) == false  && temCaracterAlfanumerico.test(rfid) == false && temCaracterAlfanumerico.test(placa) == false && temCaracterAlfanumerico.test(modelo) == false && temCaracterAlfanumerico.test(nome) == false && ativo==null){
             alert("Digite caracteres alfanuméricos ou selecione algum filtro de pesquisa!");
             return false;
         }
@@ -57,6 +58,7 @@
                         <th>Placa</th>
                         <th>Modelo</th>
                         <th>Ano</th>
+                        <th>RFID</th>
                         <th>Apagar/ Editar</th>
                     </tr>
                 </thead>
@@ -70,6 +72,7 @@
                             <td>{{$carro->placa}}</td>
                             <td>{{$carro->modelo}}</td>
                             <td>{{$carro->ano}}</td>
+                            <td>{{$carro->rfid}}</td>
                             <td><div class="p-2 iconesLista"><a href="{{ url('/carro/listar/excluir/'.$carro->id) }}"> <i class="fas fa-trash"></i> </a> <a href="{{ url('/carro/listar/'.$carro->id) }}"> <i class="fas fa-edit"></i></a></div></td>
                         </tr>
                     @endforeach
@@ -95,6 +98,7 @@
                     <input type="text" name="placa" id="placa" placeholder="Placa" class="form-control" maxlength="7" minlength="7" onblur="caps();">
                     <input type="text" name="modelo" id="modelo" placeholder="Modelo" class="form-control">
                     <input type="text" name="ano" id="ano" placeholder="Ano" class="form-control" maxlength="4" minlength="4">
+                    <input type="text" name="rfid" id="rfid" placeholder="RFID" class="form-control">
                     <ul class="ks-cboxtags">
                         <li>
                             <input type="checkbox" name="ativo" id="ativo" placeholder="Ativo" value="0"><label for="ativo">Buscar Inativos</label>

@@ -59,6 +59,7 @@
             <input type="text" placeholder="Placa" name="placa" class="form-control" maxlength="8" minlength="8" onblur="caps();">
             <input type="text" placeholder="Modelo" name="modelo" class="form-control">
             <input type="text" placeholder="Ano" name="ano" class="form-control" maxlength="4" minlength="4">
+            <input type="text" placeholder="RFID" name="rfid" class="form-control">
             <div id="formFooter">
                 <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Salvar </button>
             </div>

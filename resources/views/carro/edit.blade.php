@@ -57,6 +57,7 @@
             <input type="text" placeholder="Placa" name="placa" class="form-control" maxlength="7" minlength="7" value="{{ $Carro->placa }}">
             <input type="text" placeholder="Modelo" name="modelo" class="form-control" value="{{ $Carro->modelo }}">
             <input type="text" placeholder="Ano" name="ano" class="form-control" maxlength="4" minlength="4" value="{{ $Carro->ano }}">
+            <input type="text" placeholder="RFID" name="rfid" class="form-control" value="{{ $Carro->rfid }}">
             <div id="formFooter">
                 <button type="submit" id="submit" class="fadeIn fourth btn btn-primary" value="put"> Atualizar </button>
                 @method('put')

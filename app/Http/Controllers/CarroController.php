@@ -22,7 +22,7 @@ class CarroController extends Controller
             ['valor' => $request->placa, 'msg_error' => 'Insira alguma placa!'],
             ['valor' => $request->modelo, 'msg_error' => 'Insira o modelo!'],
             ['valor' => $request->ano, 'msg_error' => 'Coloque o ano do veículo!'],
-            ['valor' => $request->codigo_transdata, 'msg_error' => 'Insira o Código Transdata!']
+            ['valor' => $request->rfid, 'msg_error' => 'Insira o rfid do veículo!']
         ];
 
         $error = Metodos::validacaoCampo($campos);
@@ -47,6 +47,7 @@ class CarroController extends Controller
         $carro->placa = $request->placa;
         $carro->modelo = $request->modelo;
         $carro->ano = $request->ano;
+        $carro->rfid = $request->rfid;
         $carro->save();
         
         return redirect('/carro/listar')->with('message', 'Sucesso ao cadastrar veículo!');
@@ -58,7 +59,7 @@ class CarroController extends Controller
     }
     
     public function busca(Request $request){
-        if($request->nome == null && $request->modelo == null && $request->placa == null && $request->ano == null && $request->ativo == null){
+        if($request->nome == null && $request->modelo == null && $request->placa == null && $request->ano == null && $request->ativo == null && $request->rfid == null){
             $carros = DB::table('carros')->where('ativo', 1)->orderBy('nome')->paginate(5);
             return view('carro.show', compact('carros'));
         }
@@ -68,6 +69,7 @@ class CarroController extends Controller
         $modelo = $request->modelo;
         $ano = $request->ano;
         $ativo = $request->ativo;
+        $rfid = $request->rfid;
         $carros = DB::table('carros')->when($request->placa,function($query, $placa){
                             $query->where('placa', $placa);
                         })
@@ -80,6 +82,9 @@ class CarroController extends Controller
                         ->when($request->ano, function($query, $ano){
                             $query->where('ano', $ano);
                         })
+                        ->when($request->rfid, function($query, $rfid){
+                            $query->where('rfid', $rfid);
+                        })
                         ->when($request->ativo=='0', function($query, $ativo){
                             $query->where('ativo', 0);
                         })
@@ -90,7 +95,7 @@ class CarroController extends Controller
                         ->paginate(5);
         
         return view('carro.busca', ['carros' => $carros, 'nome' => $request->nome, 
-        'placa' => $request->placa, 'modelo' => $request->modelo, 'ano' => $request->ano, 'ativo' => $request->ativo]);
+        'placa' => $request->placa, 'modelo' => $request->modelo, 'ano' => $request->ano, 'ativo' => $request->ativo, 'rfid' => $request->rfid]);
     }
     public function edit($id)
     {
@@ -112,6 +117,9 @@ class CarroController extends Controller
         if(!$request->ano){
             $error[] = 'Coloque o ano do veículo!';
         }
+        if(!$request->rfid){
+            $error[] = 'Coloque o RFID do veículo!';
+        }
         if(isset($error)){
             return redirect()->back()->with('error', $error);
         }
@@ -121,6 +129,7 @@ class CarroController extends Controller
         $Carro->modelo = $request->modelo;
         $Carro->placa    = $request->placa;
         $Carro->ano       = $request->ano;
+        $Carro->rfid       = $request->rfid;
         $Carro->save();
         return redirect()->route('carro.edit', compact('Carro'))->with('message', 'Veículo Atualizado com Sucesso!');
     }
