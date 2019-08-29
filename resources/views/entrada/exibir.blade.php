@@ -82,7 +82,7 @@
                     @foreach ($entradas as $entrada)
                         <tr>
                             <td>{{$entrada->id}}</td>
-                            <td>{{$entrada->motorista->nome}}</td>
+                            <td>@empty($entrada->motorista->nome)<a href="/entrada/addMotorista/{{$entrada->id}}" class="iconesLista"><i class="fas fa-plus-circle"></i></a>@endempty @isset($entrada->motorista->nome){{$entrada->motorista->nome}}@endisset</td>
                             <td>{{$entrada->carro->nome}}</td>
                             <td>{{$entrada->horario}}</td>
                             <td>

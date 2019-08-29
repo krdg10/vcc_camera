@@ -47,6 +47,8 @@
         Route::post('/entrada/buscar', 'EntradaController@busca')->name('entrada.busca');
         Route::get('/entrada/buscar', 'EntradaController@busca');
         Route::get('/entrada/rbt/{rfid}','EntradaController@storeRbt')->name('entrada.storeRbt'); // STORE ROBOT
+        Route::put('/entrada/addMotorista/{id}','EntradaController@adicionaMotorista')->name('entrada.adicionaMotorista'); // edit
+        Route::get('/entrada/addMotorista/{id}','EntradaController@exibe')->name('entrada.addMotorista');
 
         // VERIFICAÇÃO
         Route::get('/verificacao/{id}','VerificacaoController@show')->name('verificacao.show'); // SHOW
