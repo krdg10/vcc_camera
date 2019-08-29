@@ -55,10 +55,7 @@ class EntradaController extends Controller{
     public function store(Request $request){
         $entrada = new Entrada;
         $allowedfileExtension=['jpg','png','gif'];
-        if(!$request->motorista){
-            $error[] = 'Selecione um motorista';
-        }
-        if(!$request->carro){
+        if($request->carro=='false'){
             $error[] = 'Selecione um carro!';
         }
         if(!$request->horario){
