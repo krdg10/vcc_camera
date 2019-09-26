@@ -122,9 +122,9 @@ class EntradaController extends Controller{
 
             $entrada->save();
 
-            copy('http://192.168.254.193:94/snapshot.cgi?user=lan&pwd=lan&t=','C:\laragon\www\vcc_camera\storage\app\public\fotos\1_store_rbt_'. $entrada->id .'.jpg');
+            copy('http://admin:vcc123456@192.168.1.64:64/Streaming/channels/1/picture','C:\Users\Administrativo\vcc_cam\storage\app\public\fotos\1_store_rbt_'. $entrada->id .'.jpg');
 
-            copy('http://192.168.254.193:94/snapshot.cgi?user=lan&pwd=lan&t=','C:\laragon\www\vcc_camera\storage\app\public\fotos\2_store_rbt_'. $entrada->id .'.jpg');
+            //copy('http://192.168.254.193:94/snapshot.cgi?user=lan&pwd=lan&t=','C:\Users\Administrativo\vcc_cam\storage\app\public\fotos\2_store_rbt_'. $entrada->id .'.jpg');
             
             // $filename = $file->store('fotos');
             Foto::create([
@@ -132,10 +132,10 @@ class EntradaController extends Controller{
                 'path' => 'fotos/1_store_rbt_'. $entrada->id .'.jpg'
             ]);
 
-            Foto::create([
+            /*Foto::create([
                 'entrada_id' => $entrada->id,
                 'path' => 'fotos/2_store_rbt_'. $entrada->id .'.jpg'
-            ]);
+            ]);*/
             
             return Metodos::retornoJson(1, 'Entrada salva com sucesso.');
         } catch (Exception $e) {
