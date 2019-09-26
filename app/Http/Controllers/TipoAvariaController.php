@@ -13,8 +13,6 @@ class TipoAvariaController extends Controller{
         return view('avaria.index', compact('avarias', 'chave'));
     }
 
-    public function create(){}
-
     public function store(Request $request){
         // VERIFICA SE EXISTE ALGO CADASTRADO COM ESSE NOME
         if(Tipo_avarias::where('tipo','=' , $request->tipo)->count() > 0)
@@ -35,10 +33,7 @@ class TipoAvariaController extends Controller{
             return Tipo_avarias::where('id', '=', $id);
         else
             return Tipo_avarias::all();
-
     }
-
-    public function edit($id){}
 
     public function update(Request $request, $id){
         try {
@@ -59,7 +54,7 @@ class TipoAvariaController extends Controller{
             $d->delete();
             return Metodos::retorno(1, 'Sucesso ao eliminar', $backup);
         } catch (Exception $e) {
-            return Metodos::retorno(0, 'Erro ao eliminar');     
+            return Metodos::retorno(0, 'Erro ao eliminar', $e);     
         }
     }
 }

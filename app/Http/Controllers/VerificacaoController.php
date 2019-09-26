@@ -16,11 +16,6 @@ use Illuminate\Support\Facades\DB;
 
 
 class VerificacaoController extends Controller{
-
-    public function index(){}
-
-    public function create($id){}
-
     public function store(Request $request, $id){
         // VERIFICA SE A ENTRADA JÁ FOI VERIFICADA
         if (DB::table('verificacoes')->where('entrada_id', '=', $id)->exists()){
@@ -100,6 +95,4 @@ class VerificacaoController extends Controller{
         
         return redirect()->back()->with('message', 'Sucesso ao atualizar a avaria!');
     }
-
-    public function destroy($id){}
 }
