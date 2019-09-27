@@ -113,7 +113,7 @@ class Avaria{
             `<div id="modalImag" class="modal" onclick="`+ this.nomeObj +`.fecharNoVazio(event, this)">`+
                 `<span class="close">&times;</span>`+
 
-                `<img class="modal-content" id="img01">`+
+                `<img class="modal-content xzoom" xoriginal="" id="img01">`+
 
                 `<div id="caption"></div>`+
             `</div>`;
@@ -138,10 +138,16 @@ class Avaria{
     // EXIBE O MODAL QUANDO A IMAGEM É SELECIONADA
     modalImage(idModal, idImg, idModalImg, idCapion){
         var img = document.getElementById(idImg);
+        var obj = this;
 
         document.getElementById(idModal).style.display = "block";
         document.getElementById(idModalImg).src = img.src;
+
         document.getElementById(idCapion).innerHTML = img.alt;
+
+        setTimeout(function() {
+            document.getElementById(idModalImg).setAttribute("xoriginal", img.src);
+        }, 1000 * 2); 
     }
 
     // FECHA O MODAL

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+
+    <script src="{{ asset('js/jquery.min.js') }}" ></script>
+    <script src="{{ asset('js/xzoom.min.js') }}" ></script>
     <script type="text/javascript">
         var avaria, fotos, metodos;
 
@@ -27,13 +30,20 @@
             @if( \Session::has('message') )
                 metodos.msgSuccess("{{ \Session::get('message') }}", 'divMsg');
             @endif
+
+            jQuery(function($) {
+              $(".xzoom").xzoom({
+                  position: 'right',
+                  Xoffset: 15
+              });
+            });
         }
         $("#modalImg").click(function(){
-        $(".modal").addClass("visible");
+            $(".modal").addClass("visible");
         });
 
         $(".close").click(function(){
-        $(".modal").removeClass("visible");
+            $(".modal").removeClass("visible");
         });
 
         $(document).click(function(event) {
