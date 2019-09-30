@@ -29,7 +29,7 @@
 <div id="formFooter">
     <div class="d-flex justify-content-center">
         {{ $motoristas->appends(['nome' => $nome, 
-        'cpf' => $cpf, 'codigo_empresa' => $codigo_empresa, 'codigo_transdata' => $codigo_transdata, 'ativo' => $ativo])->links() }}
+        'cpf' => $cpf, 'codigo_empresa' => $codigo_empresa, 'codigo_transdata' => $codigo_transdata, 'ativo' => $ativo])->onEachSide(1)->links() }}
     </div>
 </div>
 @endsection 

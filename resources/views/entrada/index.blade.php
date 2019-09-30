@@ -27,7 +27,7 @@
 @section('footer')
 	<div id="formFooter">
 	    <div class="d-flex justify-content-center">
-	        {{ $entradas->links() }}
+	        {{ $entradas->onEachSide(1)->links() }}
 	    </div>
 	</div>
 @endsection 

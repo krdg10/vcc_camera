@@ -34,7 +34,7 @@
 <div id="formFooter">
     <div class="d-flex justify-content-center">
         {{ $entradas->appends(['nome' => $nome, 'horario' => $horario, 
-        'carro' => $carro, 'verificado' => $verificado, 'n_verificado' => $n_verificado])->links() }}
+        'carro' => $carro, 'verificado' => $verificado, 'n_verificado' => $n_verificado])->onEachSide(1)->links() }}
     </div>
 </div>
 @endsection

@@ -19,7 +19,7 @@
 @section('footerCarro')
 <div id="formFooter">
     <div class="d-flex justify-content-center">
-        {{ $carros->links() }}
+        {{ $carros->onEachSide(1)->links() }}
     </div>
 </div>
 @endsection 

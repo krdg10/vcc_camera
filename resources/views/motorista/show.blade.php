@@ -24,7 +24,7 @@
 @section('footerMotorista')
     <div id="formFooter">
         <div class="d-flex justify-content-center">
-            {{ $motoristas->links() }}
+            {{ $motoristas->onEachSide(1)->links() }}
         </div>
     </div>
 @endsection 

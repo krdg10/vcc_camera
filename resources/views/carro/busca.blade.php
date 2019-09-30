@@ -33,7 +33,7 @@
 <div id="formFooter">
     <div class="d-flex justify-content-center">
     {{ $carros->appends(['nome' => $nome, 
-        'placa' => $placa, 'modelo' => $modelo, 'ano' => $ano, 'ativo' => $ativo, 'rfid' => $rfid])->links() }}
+        'placa' => $placa, 'modelo' => $modelo, 'ano' => $ano, 'ativo' => $ativo, 'rfid' => $rfid])->onEachSide(1)->links() }}
     </div>
 </div>
 @endsection 
