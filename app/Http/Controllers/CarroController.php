@@ -16,31 +16,11 @@ class CarroController extends Controller
     }
     public function store(Request $request){
         $carro = new Carro;
-
-        $campos = [
-            ['valor' => $request->nome, 'msg_error' => 'Coloque algum nome para seu veículo!'],
-            ['valor' => $request->placa, 'msg_error' => 'Insira alguma placa!'],
-            ['valor' => $request->modelo, 'msg_error' => 'Insira o modelo!'],
-            ['valor' => $request->ano, 'msg_error' => 'Coloque o ano do veículo!'],
-            ['valor' => $request->rfid, 'msg_error' => 'Insira o rfid do veículo!']
-        ];
-
-        $error = Metodos::validacaoCampo($campos);
-        if(count($error) > 0)
-            return redirect()->back()->with('error', $error);
-
-
-        $validator = Validator::make($request->all(), [
-            'placa' => 'unique:carros,placa'
-        ]);
         
+        $validator = Validator::make($request->all(), CarroController::rulesCarro(NULL));
 
         if ($validator->fails()) {
-            $failedRules = $validator->failed();
-            if(isset($failedRules['placa']['Unique'])){
-                $error[]='Placa já cadastrada! Insira outro valor.';
-            }
-            return redirect()->back()->with('error', $error);
+            return redirect()->back()->withErrors($validator);
         }
 
         $carro->nome = $request->nome;
@@ -54,15 +34,12 @@ class CarroController extends Controller
     }
     
     public function show(){
-        $carros = DB::table('carros')->where('ativo', 1)->orderBy('nome')->paginate(5);
+        $carros = CarroController::getAllCarsOrdernedByName();
         return view('carro.show', compact('carros'));
     }
     
     public function busca(Request $request){
-        if($request->nome == null && $request->modelo == null && $request->placa == null && $request->ano == null && $request->ativo == null && $request->rfid == null){
-            $carros = DB::table('carros')->where('ativo', 1)->orderBy('nome')->paginate(5);
-            return view('carro.show', compact('carros'));
-        }
+        CarroController::verifyIfSearchIsEmpty($request);
         
         $placa = $request->placa;
         $nome = $request->nome;
@@ -70,29 +47,7 @@ class CarroController extends Controller
         $ano = $request->ano;
         $ativo = $request->ativo;
         $rfid = $request->rfid;
-        $carros = DB::table('carros')->when($request->placa,function($query, $placa){
-                            $query->where('placa', $placa);
-                        })
-                        ->when($request->nome,function($query, $nome){
-                            $query->where('nome', 'like', '%' . $nome . '%');
-                        })
-                        ->when($request->modelo, function($query, $modelo){
-                            $query->where('modelo', 'like', '%' . $modelo . '%');
-                        })
-                        ->when($request->ano, function($query, $ano){
-                            $query->where('ano', $ano);
-                        })
-                        ->when($request->rfid, function($query, $rfid){
-                            $query->where('rfid', $rfid);
-                        })
-                        ->when($request->ativo=='0', function($query, $ativo){
-                            $query->where('ativo', 0);
-                        })
-                        ->when($request->ativo==null, function($query){
-                            $query->where('ativo', 1);
-                        })
-                        ->orderBy('nome')
-                        ->paginate(5);
+        $carros = CarroController::getSearchResults($request);
         
         return view('carro.busca', ['carros' => $carros, 'nome' => $request->nome, 
         'placa' => $request->placa, 'modelo' => $request->modelo, 'ano' => $request->ano, 'ativo' => $request->ativo, 'rfid' => $request->rfid]);
@@ -105,23 +60,10 @@ class CarroController extends Controller
   
     public function update(Request $request, $id)
     {
-        if(!$request->nome){
-            $error[] = 'Coloque algum nome para seu veículo!';
-        }
-        if(!$request->placa){
-            $error[] = 'Insira alguma placa!';
-        }
-        if(!$request->modelo){
-            $error[] = 'Insira o modelo!';
-        }
-        if(!$request->ano){
-            $error[] = 'Coloque o ano do veículo!';
-        }
-        if(!$request->rfid){
-            $error[] = 'Coloque o RFID do veículo!';
-        }
-        if(isset($error)){
-            return redirect()->back()->with('error', $error);
+        $validator = Validator::make($request->all(), CarroController::rulesCarro($id));
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
         }
 
         $Carro = Carro::findOrFail($id);
@@ -144,6 +86,54 @@ class CarroController extends Controller
         $carro->ativo = 0;
         $carro->save();
         return redirect()->route('carro.show')->with('message', 'Veículo Deletado Com Sucesso!');
+    }
+
+    public function getAllCarsOrdernedByName(){
+        return DB::table('carros')->where('ativo', 1)->orderBy('nome')->paginate(5);
+    }
+
+    public function verifyIfSearchIsEmpty($request){
+        if($request->nome == null && $request->modelo == null && $request->placa == null && $request->ano == null && $request->ativo == null && $request->rfid == null){
+            $carros = CarroController::getAllCarsOrdernedByName();
+            return view('carro.show', compact('carros'));
+        }
+        return;
+    }
+
+    public function getSearchResults($request){
+        return DB::table('carros')->when($request->placa,function($query, $placa){
+                $query->where('placa', $placa);
+                })
+                ->when($request->nome,function($query, $nome){
+                    $query->where('nome', 'like', '%' . $nome . '%');
+                })
+                ->when($request->modelo, function($query, $modelo){
+                    $query->where('modelo', 'like', '%' . $modelo . '%');
+                })
+                ->when($request->ano, function($query, $ano){
+                    $query->where('ano', $ano);
+                })
+                ->when($request->rfid, function($query, $rfid){
+                    $query->where('rfid', $rfid);
+                })
+                ->when($request->ativo=='0', function($query, $ativo){
+                    $query->where('ativo', 0);
+                })
+                ->when($request->ativo==null, function($query){
+                    $query->where('ativo', 1);
+                })
+                ->orderBy('nome')
+                ->paginate(5);
+    }
+
+    public function rulesCarro($placa){
+        return [
+            'nome' => 'required|max:250',
+            'placa' => 'required|max:8|formato_placa_de_veiculo|unique:carros,placa,'.$placa,
+            'modelo' => 'required|max:250',
+            'ano' => 'required|date_format:Y|after:1900|before:2156',
+            'rfid' => 'required|max:250'
+        ];
     }
 
 }
