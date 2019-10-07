@@ -86,7 +86,7 @@
             <div class="fadeIn first">
                 <form method="POST" action="{{route('motorista.busca')}}" enctype="multipart/form-data" onsubmit="return valida();">
                     @csrf
-                    <input type="text" name="nome" id="nome" placeholder="Nome" class="form-control">
+                    <input type="text" name="nome" id="nome" placeholder="Nome" class="form-control" max="250">
                     <input type="text" name="cpf" id="cpf" placeholder="CPF" class="form-control" maxlength="11" minlength="11">
                     <input type="text" name="codigo_empresa" id="codigo_empresa" placeholder="Código VCC" class="form-control" maxlength="4" minlength="4">
                     <input type="text" name="codigo_transdata" id="codigo_transdata" placeholder="Código Transdata" class="form-control" maxlength="5" minlength="5">

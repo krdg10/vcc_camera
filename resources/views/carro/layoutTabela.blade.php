@@ -94,11 +94,11 @@
             <div class="fadeIn first">
                 <form method="POST" action="{{route('carro.busca')}}" enctype="multipart/form-data" onsubmit="return validaCampos();">
                     @csrf
-                    <input type="text" name="nome" id="nome" placeholder="Nome" class="form-control">
-                    <input type="text" name="placa" id="placa" placeholder="Placa" class="form-control" maxlength="7" minlength="7" onblur="caps();">
-                    <input type="text" name="modelo" id="modelo" placeholder="Modelo" class="form-control">
+                    <input type="text" name="nome" id="nome" placeholder="Nome" class="form-control" max="250">
+                    <input type="text" name="placa" id="placa" placeholder="Placa" class="form-control" maxlength="8" minlength="8" onblur="caps();">
+                    <input type="text" name="modelo" id="modelo" placeholder="Modelo" class="form-control" max="250">
                     <input type="text" name="ano" id="ano" placeholder="Ano" class="form-control" maxlength="4" minlength="4">
-                    <input type="text" name="rfid" id="rfid" placeholder="RFID" class="form-control">
+                    <input type="text" name="rfid" id="rfid" placeholder="RFID" class="form-control" max="250">
                     <ul class="ks-cboxtags">
                         <li>
                             <input type="checkbox" name="ativo" id="ativo" placeholder="Ativo" value="0"><label for="ativo">Buscar Inativos</label>
