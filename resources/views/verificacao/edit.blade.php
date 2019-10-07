@@ -23,14 +23,7 @@
 	        avaria.setSelect('tipoAvariaNovo', 'tipo');
 
 	        // EXIBE MENSAGEM DE SUCESSO E ERRO.
-	        @if( \Session::has('error') )
-	            @foreach(session()->get('error') as $key => $ms)
-	                metodos.msgError("{{ $ms }}", 'divMsg');
-	            @endforeach
-	        @endif
-	        @if( \Session::has('message') )
-	            metodos.msgSuccess("{{ \Session::get('message') }}", 'divMsg');
-	        @endif
+	        
 	    }
 	</script>
 
@@ -40,7 +33,7 @@
 		    <h3>Verificar entrada</h3> <hr>
 
 		    {{-- DIV PARA EXIBIR MENSAGENS --}}
-		    <div id="divMsg"></div>
+		    @include('layouts.messages')
 
             {{-- MODAL DA IMAGEM --}}
             <div id="modalImg"></div>

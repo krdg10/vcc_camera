@@ -14,14 +14,6 @@
 	        @endphp
 
 	        // EXIBE MENSAGEM DE SUCESSO E ERRO.
-	        @if( \Session::has('error') )
-	            @foreach(session()->get('error') as $key => $ms)
-	                metodos.msgError("{{ $ms }}", 'divMsg');
-	            @endforeach
-	        @endif
-	        @if( \Session::has('message') )
-	            metodos.msgSuccess("{{ \Session::get('message') }}", 'divMsg');
-	        @endif
 	    }
 	</script>
 
@@ -29,7 +21,7 @@
 	    <h3>Entrada</h3> <hr>
 
         {{-- DIV PARA EXIBIR MENSAGENS --}}
-		<div id="divMsg"></div>
+		@include('layouts.messages')
 
 		{{-- DIV QUE EXIBE OS DADOS DA ENTRADA --}}
         <div class="container">
