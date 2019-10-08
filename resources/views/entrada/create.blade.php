@@ -9,30 +9,29 @@
     <div id="formContent">
         <h3>Cadastrar Entrada</h3>
         {{-- Exibe mensagem de sucesso ou de erro caso haja. --}}
-        @if( \Session::has('error') )
-            @foreach(session()->get('error') as $key => $ms)
-                <span id="{{ $key }}error" class="badge badge-danger badge-pill">
-                    {{ $ms }}
-                    <a id="excluir" onClick="excluirElement('{{ $key }}error')"><i class="fa fa-times" aria-hidden="true"></i></a>
-                </span>
-            @endforeach
-        @endif
-        @if( \Session::has('message') )
-            <span id="success" class="badge badge-success badge-pill">
-                {{ \Session::get('message') }}
-                    <a id="excluir" onClick="excluirElement('success')"><i class="fa fa-times" aria-hidden="true"></i></a>
-            </span>
-        @endif 
+        @include('layouts.messages')
 
 
         
         <hr>
         <form method="POST" action="{{ route('entrada.store') }}" enctype="multipart/form-data">
-            @csrf
+            @csrf   
+           <!-- https://artisansweb.net/how-to-add-zoom-image-effect-on-your-website-images/-->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/xzoom/dist/xzoom.min.js"></script>
+<script>
+  jQuery(function($) {
+      $(".xzoom").xzoom({
+          position: 'right',
+          Xoffset: 15
+      });
+  });
+</script>
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" id="myImg" style="height: 300px" src="http://192.168.254.193:94/snapshot.cgi?user=lan&pwd=lan&t=" alt="Imagem da Câmera">
+                    <div class="carousel-item active" id="container">
+                        <!--                        <img class="d-block w-100" id="myImg" style="height: 300px" src="http://admin:vcc123456@192.168.1.65:64/Streaming/channels/2/picture" alt="Imagem da Câmera">-->
+                        <img class="d-block w-100 /" id="myImg" style="height: 300px" src="http://localhost:8000/storage/fotos/1_store_rbt_40.jpg"   alt="Imagem da Câmera">
                     </div>
                 </div>
             </div>
@@ -42,7 +41,7 @@
                 <span class="close">&times;</span>
 
                 <!-- Modal Content (The Image) -->
-                <img class="modal-content" id="img01">
+                <img class="modal-content xzoom" id="img01" xoriginal="http://localhost:8000/storage/fotos/1_store_rbt_40.jpg">
 
                 <!-- Modal Caption (Image Text) -->
                 <div id="caption"></div>
@@ -68,24 +67,33 @@
                 span.onclick = function() { 
                 modal.style.display = "none";
                 }
+
+                $(document).ready(function(){
+  $('img')
+    .wrap('<span style="display:inline-block"></span>')
+    .css('display', 'block')
+    .parent()
+    .zoom();
+});
             </script>
 
 
-            <select class="MineSelect" name="motorista">
+            <select class="MineSelect" name="motorista" required>
                 <option value="false"> Selecione um motorista</option>
                 @foreach($motorista as $Motorista) 
                     <option value="{{ $Motorista->id }}"> {{ $Motorista->nome }} </option>
                 @endforeach
             </select>
-            <select class="MineSelect" name="carro"> <!--tava form-control -->
+            <select class="MineSelect" name="carro" required> <!--tava form-control -->
                 <option value="false"> Selecione um carro</option>
                 @foreach($carro as $Carro)
                     <option value="{{ $Carro->id }}"> {{ $Carro->nome }} - {{ $Carro->placa }} </option>
                 @endforeach
             </select>
 
-            <input type="datetime-local" placeholder="Horário" name="horario" class="form-control">
-            <input type="file" aria-label="foto" id="foto" name="fotos[]" class="form-control" multiple />
+            <input type="date" placeholder="Data" name="data" class="form-control" required>
+            <input type="time" placeholder="Horário" name="horario" class="form-control" required>
+            <input type="file" aria-label="foto" id="foto" name="fotos[]" class="form-control" accept="image/x-png, image/gif, image/jpeg, image/jpg" multiple required />
             
             <div id="formFooter">
               <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Salvar </button>

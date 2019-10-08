@@ -31,7 +31,7 @@
                 <form method="POST" action="{{ route('entrada.adicionaMotorista', $entrada->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('put')
-                    <select class="MineSelect" name="motorista">
+                    <select class="MineSelect" name="motorista" required>
                         <option value="false"> Adicione um motorista</option>
                         @foreach($motorista as $Motorista) 
                             <option value="{{ $Motorista->id }}"> {{ $Motorista->nome }} </option>

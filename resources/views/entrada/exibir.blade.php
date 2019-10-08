@@ -116,8 +116,8 @@
             <div class="fadeIn first">
                 <form method="POST" action="{{route('entrada.busca')}}" enctype="multipart/form-data" onsubmit="return validaCampos();">
                     @csrf
-                    <input type="text" name="nome" id="nome" placeholder="Nome do Motorista" class="form-control">
-                    <input type="text" name="carro" id="carro" placeholder="Nome do Carro" class="form-control">
+                    <input type="text" name="nome" id="nome" placeholder="Nome do Motorista" class="form-control" maxlength="250">
+                    <input type="text" name="carro" id="carro" placeholder="Nome do Carro" class="form-control" maxlength="250">
                     <input type="datetime-local" name="horario" id="horario" placeholder="Horário" class="form-control">
                     
                     <ul class="ks-cboxtags">
