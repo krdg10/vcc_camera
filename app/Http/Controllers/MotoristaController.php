@@ -48,8 +48,11 @@ class MotoristaController extends Controller{
     }
 
     public function busca(Request $request){
-        MotoristaController::verifyIfSearchIsEmpty($request);
-      
+        $redirect = MotoristaController::verifyIfSearchIsEmpty($request);
+        if(isset($redirect)){
+            return $redirect;
+        }
+        
         $cpf = $request->cpf;
         $nome = $request->nome;
         $codigo_empresa = $request->codigo_empresa;
@@ -103,8 +106,7 @@ class MotoristaController extends Controller{
 
      public function verifyIfSearchIsEmpty($request){
         if($request->nome == null && $request->cpf == null && $request->codigo_empresa == null && $request->codigo_transdata == null && $request->ativo == null){
-            $motoristas = MotoristaController::getAllDriversOrdernedByName();
-            return view('motorista.show', compact('motoristas'));
+            return MotoristaController::show();
         }
         return;
     }

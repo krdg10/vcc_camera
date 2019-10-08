@@ -39,7 +39,10 @@ class CarroController extends Controller
     }
     
     public function busca(Request $request){
-        CarroController::verifyIfSearchIsEmpty($request);
+        $redirect = CarroController::verifyIfSearchIsEmpty($request);
+        if(isset($redirect)){
+            return $redirect;
+        }
         
         $placa = $request->placa;
         $nome = $request->nome;
@@ -89,13 +92,12 @@ class CarroController extends Controller
     }
 
     public function getAllCarsOrdernedByName(){
-        return DB::table('carros')->where('ativo', 1)->orderBy('nome')->paginate(5);
+        return Carro::where('ativo', 1)->orderBy('nome')->paginate(5);
     }
 
     public function verifyIfSearchIsEmpty($request){
         if($request->nome == null && $request->modelo == null && $request->placa == null && $request->ano == null && $request->ativo == null && $request->rfid == null){
-            $carros = CarroController::getAllCarsOrdernedByName();
-            return view('carro.show', compact('carros'));
+            return CarroController::show();
         }
         return;
     }
