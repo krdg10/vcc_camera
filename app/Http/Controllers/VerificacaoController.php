@@ -17,11 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class VerificacaoController extends Controller{
     public function store(Request $request, $id){
-        // VERIFICA SE A ENTRADA JÁ FOI VERIFICADA
-        if (DB::table('verificacoes')->where('entrada_id', '=', $id)->exists()){
-            $error[] = 'Essa entrada já foi verificada!';
-            return redirect('/entrada')->with('error', $error);
-        }
+        VerificacaoController::verifyIfInputHasVerified($id);
         
         $verificacao = new Verificacao;
         $verificacao->entrada_id = $id;
@@ -42,11 +38,7 @@ class VerificacaoController extends Controller{
     }
 
     public function show($id){
-        // VERIFICA SE A ENTRADA JÁ FOI VERIFICADA
-        if (DB::table('verificacoes')->where('entrada_id', '=', $id)->exists()){
-            $error[] = 'Essa entrada já foi verificada!';
-            return redirect('/entrada')->with('error', $error);
-        }
+        VerificacaoController::verifyIfInputHasVerified($id);
         
         $tipoAvariaController = new TipoAvariaController;
         $localAvariasController = new LocalAVariasController;
@@ -94,5 +86,12 @@ class VerificacaoController extends Controller{
         $avaria->save();
         
         return redirect()->back()->with('message', 'Sucesso ao atualizar a avaria!');
+    }
+
+    public function verifyIfInputHasVerified($id){
+        if (DB::table('verificacoes')->where('entrada_id', '=', $id)->exists()){
+            return redirect('/entrada')->with('error', 'Essa entrada já foi verificada!');
+        }
+        return;
     }
 }
