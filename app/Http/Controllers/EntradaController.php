@@ -97,10 +97,6 @@ class EntradaController extends Controller{
         return view('entrada.create', compact('motorista', 'carro'));
     }
 
-    public function show($id){
-        return Entrada::find($id);//talvez apagar isso depois.
-    }
-
     public function exibe($id){
         $entrada = Entrada::findOrFail($id);
         EntradaController::verifyIfDriverExists($entrada->motorista);

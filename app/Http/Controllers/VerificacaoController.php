@@ -12,12 +12,14 @@ use App\Models\Tipo_avarias;
 use App\User;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 
 class VerificacaoController extends Controller{
     public function store(Request $request, $id){
-        VerificacaoController::verifyIfInputHasVerified($id);
+        $redirect = VerificacaoController::verifyIfInputHasVerified($id);
+        if(isset($redirect)){
+            return $redirect;
+        }
         
         $verificacao = new Verificacao;
         $verificacao->entrada_id = $id;
@@ -38,48 +40,39 @@ class VerificacaoController extends Controller{
     }
 
     public function show($id){
-        VerificacaoController::verifyIfInputHasVerified($id);
-        
-        $tipoAvariaController = new TipoAvariaController;
-        $localAvariasController = new LocalAVariasController;
-        $entradaController = new EntradaController;
+        $redirect = VerificacaoController::verifyIfInputHasVerified($id);
+        if(isset($redirect)){
+            return $redirect;
+        }
 
-        $tipoAvarias = $tipoAvariaController->show();
-        $localAvarias = $localAvariasController->show();
-        $entradas = $entradaController->show($id);
+        $tipoAvarias = Tipo_avarias::all();
+        $localAvarias = Local_avaria::all();
+        $entradas = Entrada::findOrFail($id);
         
         return view('verificacao.create', compact('tipoAvarias', 'localAvarias', 'entradas'));
     }
 
     public function edit($id){
-        $entradaController = new EntradaController;
-        $tipo_avariaController = new TipoAvariaController;
-        $local_avariasController = new LocalAVariasController;
-        
-        $verificacao = Verificacao::find($id);
-        $entradas = $entradaController->show($verificacao->entrada_id);
-        $tipo_avarias = $tipo_avariaController->show();
-        $local_avarias = $local_avariasController->show();
+        $verificacao = Verificacao::findOrFail($id);
+        $entradas = Entrada::findOrFail($verificacao->entrada_id);
+        $tipo_avarias = Tipo_avarias::all();
+        $local_avarias = Local_avaria::all();
 
         return view('verificacao.edit', compact('verificacao', 'tipo_avarias', 'local_avarias', 'entradas'));
     }
 
     public function exibir($id){
-        $tipo_avariaController = new TipoAvariaController;
-        $local_avariasController = new LocalAVariasController;
-        $entradaController = new EntradaController;
-
-        $verificacao = Verificacao::find($id);
-        $entradas = $verificacao->entrada;
-        $tipo_avarias = $tipo_avariaController->show();
-        $local_avarias = $local_avariasController->show();
-        $fotos = $entradaController->show($verificacao->entrada_id)->fotos;
+        $verificacao = Verificacao::findOrFail($id);
+        $entradas = Entrada::findOrFail($verificacao->entrada_id);
+        $tipo_avarias = Tipo_avarias::all();
+        $local_avarias = Local_avaria::all();
+        $fotos = $entradas->fotos;
 
         return view('verificacao.exibir', compact('verificacao', 'entradas', 'tipo_avarias', 'local_avarias', 'fotos'));
     }
 
     public function update(Request $request, $id){
-        $avaria = Desc_avarias::findOrFail($id);;
+        $avaria = Desc_avarias::findOrFail($id);
         $avaria->local_avaria_id = $request->localAvaria;
         $avaria->tipo_avaria_id = $request->tipoAvaria;
         $avaria->obs = $request->obs;
@@ -89,8 +82,8 @@ class VerificacaoController extends Controller{
     }
 
     public function verifyIfInputHasVerified($id){
-        if (DB::table('verificacoes')->where('entrada_id', '=', $id)->exists()){
-            return redirect('/entrada')->with('error', 'Essa entrada já foi verificada!');
+        if (Verificacao::where('entrada_id', '=', $id)->exists()){
+            return redirect()->to('/entrada')->with('error', 'Essa entrada já foi verificada!');
         }
         return;
     }
