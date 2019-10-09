@@ -180,9 +180,12 @@ class Avaria{
         	localString = this.procura(z, 'local');
         	tipoString = this.procura(z, 'tipo');
 
-            text += `<span id="registroAvaria`+ z +`" class="badge badge-primary badge-pill">`+
-		            	localString +` - `+ tipoString +` - `+ this.registroAvarias[z].obs +
-		            	`<input type="text" value="`+ this.registroAvarias[z].local +`" name="local[]" class="d-none">`+
+            text += `<span id="registroAvaria`+ z +`" class="badge badge-primary badge-pill">`;
+            text += localString +` - `+ tipoString;
+		    if (this.registroAvarias[z].obs != ''){
+                text += ` - `+ this.registroAvarias[z].obs;
+            }        	
+            text +=`<input type="text" value="`+ this.registroAvarias[z].local +`" name="local[]" class="d-none">`+
 		            	`<input type="text" value="`+ this.registroAvarias[z].tipo +`" name="tipo[]" class="d-none">`+
 		            	`<input type="text" value="`+ this.registroAvarias[z].obs +`" name="obs[]" class="d-none">  `+
 		            	`<a onClick="`+ this.nomeObj +`.deleteRegistro(`+ z +`, '`+ idExibirRegistroAvarias +`')"><i class="fa fa-times" aria-hidden="true"></i></a>`+
