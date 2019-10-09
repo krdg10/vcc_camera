@@ -1,32 +1,59 @@
 @extends('layouts.app')
 @section('content')
-<script> 
+<script>
+
     function excluirElement(id){
         $('#'+id).remove();
     }
+
+    jQuery(function($) {
+        $(".xzoom").xzoom({
+            position: 'right',
+            Xoffset: 15
+        });
+    });
+
+    // Get the modal
+    var modal = document.getElementById("modalImag");
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById("myImg");
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    img.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() { 
+    modal.style.display = "none";
+    }
+
+    $(document).ready(function(){
+        $('img')
+            .wrap('<span style="display:inline-block"></span>')
+            .css('display', 'block')
+            .parent()
+            .zoom();
+    });
 </script>
+<script type="text/javascript" src="https://unpkg.com/xzoom/dist/xzoom.min.js"></script>
+
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <h3>Cadastrar Entrada</h3>
-        {{-- Exibe mensagem de sucesso ou de erro caso haja. --}}
         @include('layouts.messages')
-
-
-        
         <hr>
         <form method="POST" action="{{ route('entrada.store') }}" enctype="multipart/form-data">
             @csrf   
            <!-- https://artisansweb.net/how-to-add-zoom-image-effect-on-your-website-images/-->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://unpkg.com/xzoom/dist/xzoom.min.js"></script>
-<script>
-  jQuery(function($) {
-      $(".xzoom").xzoom({
-          position: 'right',
-          Xoffset: 15
-      });
-  });
-</script>
+
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active" id="container">
@@ -46,37 +73,6 @@
                 <!-- Modal Caption (Image Text) -->
                 <div id="caption"></div>
             </div>
-            <script>
-                // Get the modal
-                var modal = document.getElementById("modalImag");
-
-                // Get the image and insert it inside the modal - use its "alt" text as a caption
-                var img = document.getElementById("myImg");
-                var modalImg = document.getElementById("img01");
-                var captionText = document.getElementById("caption");
-                img.onclick = function(){
-                modal.style.display = "block";
-                modalImg.src = this.src;
-                captionText.innerHTML = this.alt;
-                }
-
-                // Get the <span> element that closes the modal
-                var span = document.getElementsByClassName("close")[0];
-
-                // When the user clicks on <span> (x), close the modal
-                span.onclick = function() { 
-                modal.style.display = "none";
-                }
-
-                $(document).ready(function(){
-  $('img')
-    .wrap('<span style="display:inline-block"></span>')
-    .css('display', 'block')
-    .parent()
-    .zoom();
-});
-            </script>
-
 
             <select class="MineSelect" name="motorista" required>
                 <option value="false"> Selecione um motorista</option>
