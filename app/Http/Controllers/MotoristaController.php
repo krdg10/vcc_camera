@@ -9,11 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Motorista;
 
 class MotoristaController extends Controller{ 
-    public function create(){
-        return view('motorista.create');
-    }
 
-    public function store(Request $request){
+    public function storeMotorista(Request $request){
         $validator = Validator::make($request->all(), MotoristaController::rulesMotorista(NULL));
 
         if ($validator->fails()) {
@@ -36,18 +33,18 @@ class MotoristaController extends Controller{
            
             $motorista->save();
             
-            return redirect('/motorista/listar')->with('message', 'Sucesso ao cadastrar motorista!');
+            return redirect()->route('motorista.lista')->with('message', 'Sucesso ao cadastrar motorista!');
         } catch (Exception $e) {
-            return redirect('/motorista/listar')->with('message', 'Ocorreu um erro ao cadastar o motorista.');
+            return redirect()->route('motorista.lista')->with('message', 'Ocorreu um erro ao cadastar o motorista.');
         }
     }
     
-    public function show(){
+    public function listaMotoristas(){
         $motoristas = MotoristaController::getAllDriversOrdernedByName();
-        return view('motorista.show', compact('motoristas'));
+        return view('motorista.listaMotoristas', compact('motoristas'));
     }
 
-    public function busca(Request $request){
+    public function buscaMotorista(Request $request){
         $redirect = MotoristaController::verifyIfSearchIsEmpty($request);
         if(isset($redirect)){
             return $redirect;
@@ -64,12 +61,12 @@ class MotoristaController extends Controller{
         'cpf' => $request->cpf, 'codigo_empresa' => $request->codigo_empresa, 'codigo_transdata' => $request->codigo_transdata, 'ativo' => $request->ativo]);
     }
 
-    public function edit($id){
+    public function editMotorista($id){
         $Motorista = Motorista::findOrFail($id);
         return view('motorista.edit',compact('Motorista'));
     }
   
-    public function update(Request $request, $id){
+    public function updateMotorista(Request $request, $id){
         $validator = Validator::make($request->all(), MotoristaController::rulesMotorista($id));
 
         if ($validator->fails()) {
@@ -88,16 +85,16 @@ class MotoristaController extends Controller{
         return redirect()->route('motorista.edit', compact('Motorista'))->with('message', 'Motorista Atualizado com Sucesso!');
     }
 
-    public function delete($id){
+    public function deleteMotorista($id){
         $Motorista = Motorista::findOrFail($id);
         return view('motorista.delete',compact('Motorista'));
     }
 
-    public function destroy($id){
+    public function destroyMotorista($id){
         $Motorista = Motorista::findOrFail($id);
         $Motorista->ativo = 0;
         $Motorista->update();
-        return redirect()->route('motorista.show')->with('message', 'Motorista Deletado Com Sucesso!');
+        return redirect()->route('motorista.lista')->with('message', 'Motorista Deletado Com Sucesso!');
     }
 
     public function getAllDriversOrdernedByName(){
@@ -106,7 +103,7 @@ class MotoristaController extends Controller{
 
      public function verifyIfSearchIsEmpty($request){
         if($request->nome == null && $request->cpf == null && $request->codigo_empresa == null && $request->codigo_transdata == null && $request->ativo == null){
-            return MotoristaController::show();
+            return MotoristaController::listaMotoristas();
         }
         return;
     }

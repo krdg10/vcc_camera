@@ -1,4 +1,4 @@
-@extends('entrada.exibir')
+@extends('entrada.modeloListagem')
 @section('search')
 @if($nome!=NULL || $carro!=NULL || $horario!=NULL || $n_verificado!=NULL || $verificado!=NULL)
     <h5>Termos Buscados</h5>

@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class EntradaController extends Controller{
-    public function index(){
+    public function listaEntradas(){
         $entradas = Entrada::orderBy('horario', 'desc')->paginate(5);
-        return view('entrada.index', compact('entradas'));
+        return view('entrada.listaEntradas', compact('entradas'));
     }
     
-    public function busca(Request $request){
+    public function buscaEntradas(Request $request){
         EntradaController::verifyIfSearchIsEmpty($request);
 
         $nome = $request->nome;
@@ -30,7 +30,7 @@ class EntradaController extends Controller{
         'horario' => $request->horario, 'carro' => $request->carro, 'verificado' => $request->verificado, 'n_verificado' => $request->n_verificado]);
     }
 
-    public function store(Request $request){
+    public function storeEntradas(Request $request){
         $validator = Validator::make($request->all(), EntradaController::rulesEntrada());
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
@@ -56,7 +56,7 @@ class EntradaController extends Controller{
         return redirect()->back()->with('message', 'Sucesso ao cadastrar entrada!');
     }
 
-    public function storeRbt($rfid){
+    public function storeEntradasByRFID($rfid){
         try {
             $entrada = new Entrada;
             $veiculos = Carro::where('rfid', '=', $rfid)->get();
@@ -90,14 +90,14 @@ class EntradaController extends Controller{
         }
     }
     
-    public function create(){
+    public function createEntrada(){
         $motorista = EntradaController::getAllActiveDrivers();
         $carro = Carro::where('ativo', 1)->get();
 
         return view('entrada.create', compact('motorista', 'carro'));
     }
 
-    public function exibe($id){
+    public function exibeEntrada($id){
         $entrada = Entrada::findOrFail($id);
         EntradaController::verifyIfDriverExists($entrada->motorista);
         
@@ -107,7 +107,7 @@ class EntradaController extends Controller{
         return view('entrada.addMotorista', compact('motorista', 'entrada', 'fotos'));
     }
 
-    public function adicionaMotorista(Request $request, $id){
+    public function adicionaMotoristaEntrada(Request $request, $id){
         EntradaController::verifyIfDriveHasAddicted($request->motorista);
         $entrada = Entrada::findOrFail($id);
         $entrada->motorista_id = $request->motorista;
@@ -142,7 +142,7 @@ class EntradaController extends Controller{
     public function verifyIfSearchIsEmpty($request){
         if($request->nome == null && $request->carro == null && $request->horario == null && $request->verificado == null && $request->n_verificado == null){
             $entradas = Entrada::orderBy('horario', 'desc')->paginate(5);
-            return view('entrada.index', compact('entradas'));
+            return view('entrada.listaEntradas', compact('entradas'));
         }
         return;
     }

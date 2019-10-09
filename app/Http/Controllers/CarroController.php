@@ -10,11 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CarroController extends Controller
 {
-    public function index()
-    {
-        return view('carro.index');
-    }
-    public function store(Request $request){
+    public function storeCarro(Request $request){
         $carro = new Carro;
         
         $validator = Validator::make($request->all(), CarroController::rulesCarro(NULL));
@@ -30,15 +26,15 @@ class CarroController extends Controller
         $carro->rfid = $request->rfid;
         $carro->save();
         
-        return redirect('/carro/listar')->with('message', 'Sucesso ao cadastrar veículo!');
+        return redirect()->route('carro.lista')->with('message', 'Sucesso ao cadastrar veículo!');
     }
     
-    public function show(){
+    public function listaCarros(){
         $carros = CarroController::getAllCarsOrdernedByName();
-        return view('carro.show', compact('carros'));
+        return view('carro.listaCarros', compact('carros'));
     }
     
-    public function busca(Request $request){
+    public function buscaCarros(Request $request){
         $redirect = CarroController::verifyIfSearchIsEmpty($request);
         if(isset($redirect)){
             return $redirect;
@@ -55,13 +51,13 @@ class CarroController extends Controller
         return view('carro.busca', ['carros' => $carros, 'nome' => $request->nome, 
         'placa' => $request->placa, 'modelo' => $request->modelo, 'ano' => $request->ano, 'ativo' => $request->ativo, 'rfid' => $request->rfid]);
     }
-    public function edit($id)
+    public function editCarro($id)
     {
         $Carro = Carro::findOrFail($id);
         return view('carro.edit',compact('Carro'));
     }
   
-    public function update(Request $request, $id)
+    public function updateCarro(Request $request, $id)
     {
         $validator = Validator::make($request->all(), CarroController::rulesCarro($id));
 
@@ -79,16 +75,16 @@ class CarroController extends Controller
         return redirect()->route('carro.edit', compact('Carro'))->with('message', 'Veículo Atualizado com Sucesso!');
     }
 
-    public function delete($id)
+    public function deleteCarro($id)
     {
         $Carro = Carro::findOrFail($id);
         return view('carro.delete',compact('Carro'));
     }
-    public function destroy($id){
+    public function destroyCarro($id){
         $carro = Carro::findOrFail($id);
         $carro->ativo = 0;
         $carro->save();
-        return redirect()->route('carro.show')->with('message', 'Veículo Deletado Com Sucesso!');
+        return redirect()->route('carro.lista')->with('message', 'Veículo Deletado Com Sucesso!');
     }
 
     public function getAllCarsOrdernedByName(){

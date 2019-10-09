@@ -73,7 +73,7 @@
                             <td>{{$carro->modelo}}</td>
                             <td>{{$carro->ano}}</td>
                             <td>{{$carro->rfid}}</td>
-                            <td><div class="p-2 iconesLista"><a href="{{ url('/carro/listar/excluir/'.$carro->id) }}"> <i class="fas fa-trash"></i> </a> <a href="{{ url('/carro/listar/'.$carro->id) }}"> <i class="fas fa-edit"></i></a></div></td>
+                            <td><div class="p-2 iconesLista"><a href="{{ url('/carro/excluir/'.$carro->id) }}"> <i class="fas fa-trash"></i> </a> <a href="{{ url('/carro/'.$carro->id) }}"> <i class="fas fa-edit"></i></a></div></td>
                         </tr>
                     @endforeach
                 </tbody>

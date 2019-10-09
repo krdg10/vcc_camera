@@ -11,44 +11,52 @@
 |
 */
 
-    Route::get('/','HomeController@index')->name('/'); // INDEX
+    Route::get('/', function () {
+        return view('home.home');
+    });
+    Route::get('/home', function () {
+        return view('home.home');
+    });
 
     Auth::routes();
 
-	Route::get('/home', 'HomeController@index')->name('home');
 	Route::group(['middleware' => ['auth']], function () {  
 
         // MOTORISTA
-        Route::get('/motorista/create','MotoristaController@create')->name('motorista.create'); // CREATE
-        Route::get('/motorista/listar','MotoristaController@show')->name('motorista.show');
-        Route::get('/motorista/listar/{id}','MotoristaController@edit')->name('motorista.edit');
-        Route::put('/motorista/listar/{id}','MotoristaController@update')->name('motorista.update');
-        Route::get('/motorista/listar/excluir/{id}','MotoristaController@delete')->name('motorista.delete');
-        Route::delete('/motorista/listar/excluir/{id}','MotoristaController@destroy')->name('motorista.destroy');
-        Route::post('/motorista/buscar', 'MotoristaController@busca')->name('motorista.busca');
-        Route::get('/motorista/buscar', 'MotoristaController@busca');
-        Route::post('/motorista','MotoristaController@store')->name('motorista.store');
+        Route::get('/motorista/create', function () {
+            return view('motorista.create');})
+            ->name('motorista.create');
+        Route::get('/motorista','MotoristaController@listaMotoristas')->name('motorista.lista');
+        Route::get('/motorista/{id}','MotoristaController@editMotorista')->name('motorista.edit');
+        Route::put('/motorista/{id}','MotoristaController@updateMotorista')->name('motorista.update');
+        Route::get('/motorista/excluir/{id}','MotoristaController@deleteMotorista')->name('motorista.delete');
+        Route::delete('/motorista/excluir/{id}','MotoristaController@destroyMotorista')->name('motorista.destroy');
+        Route::post('/motorista/buscar', 'MotoristaController@buscaMotorista')->name('motorista.busca');
+        Route::get('/motorista/buscar', 'MotoristaController@buscaMotorista');
+        Route::post('/motorista/create','MotoristaController@storeMotorista')->name('motorista.store');
 
         // CARRO
-        Route::get('/carro','CarroController@index')->name('carro');
-        Route::post('/carro','CarroController@store')->name('carro.store');
-        Route::get('/carro/listar','CarroController@show')->name('carro.show');
-        Route::get('/carro/listar/{id}','CarroController@edit')->name('carro.edit');
-        Route::put('/carro/listar/{id}','CarroController@update')->name('carro.update');
-        Route::get('/carro/listar/excluir/{id}','CarroController@delete')->name('carro.delete');
-        Route::delete('/carro/listar/excluir/{id}','CarroController@destroy')->name('carro.destroy');
-        Route::post('/carro/buscar', 'CarroController@busca')->name('carro.busca');
-        Route::get('/carro/buscar', 'CarroController@busca');
+        Route::get('/carro/create', function () {
+            return view('carro.create');})
+            ->name('carro.create');
+        Route::post('/carro/create','CarroController@storeCarro')->name('carro.store');
+        Route::get('/carro','CarroController@listaCarros')->name('carro.lista');
+        Route::get('/carro/{id}','CarroController@editCarro')->name('carro.edit');
+        Route::put('/carro/{id}','CarroController@updateCarro')->name('carro.update');
+        Route::get('/carro/excluir/{id}','CarroController@deleteCarro')->name('carro.delete');
+        Route::delete('/carro/excluir/{id}','CarroController@destroyCarro')->name('carro.destroy');
+        Route::post('/carro/buscar', 'CarroController@buscaCarros')->name('carro.busca');
+        Route::get('/carro/buscar', 'CarroController@buscaCarros');
 
         // ENTRADA
-        Route::get('/entrada','EntradaController@index')->name('entrada');
-        Route::get('/entrada/create','EntradaController@create')->name('entrada.create');
-        Route::post('/entrada','EntradaController@store')->name('entrada.store');
-        Route::post('/entrada/buscar', 'EntradaController@busca')->name('entrada.busca');
-        Route::get('/entrada/buscar', 'EntradaController@busca');
-        Route::get('/entrada/rbt/{rfid}','EntradaController@storeRbt')->name('entrada.storeRbt'); // STORE ROBOT
-        Route::put('/entrada/addMotorista/{id}','EntradaController@adicionaMotorista')->name('entrada.adicionaMotorista'); // edit
-        Route::get('/entrada/addMotorista/{id}','EntradaController@exibe')->name('entrada.addMotorista');
+        Route::get('/entrada','EntradaController@listaEntradas')->name('entrada.lista');
+        Route::get('/entrada/create','EntradaController@createEntrada')->name('entrada.create');
+        Route::post('/entrada','EntradaController@storeEntradas')->name('entrada.store');
+        Route::post('/entrada/buscar', 'EntradaController@buscaEntradas')->name('entrada.busca');
+        Route::get('/entrada/buscar', 'EntradaController@buscaEntradas');
+        Route::get('/entrada/rbt/{rfid}','EntradaController@storeEntradasByRFID')->name('entrada.storeRbt'); // STORE ROBOT
+        Route::put('/entrada/addMotorista/{id}','EntradaController@adicionaMotoristaEntrada')->name('entrada.adicionaMotorista'); // edit
+        Route::get('/entrada/addMotorista/{id}','EntradaController@exibeEntrada')->name('entrada.addMotorista');
 
         // VERIFICAÇÃO
         Route::get('/verificacao/{id}','VerificacaoController@show')->name('verificacao.show'); // SHOW

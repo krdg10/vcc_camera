@@ -65,7 +65,7 @@
                             <td>{{$motorista->cpf}}</td>
                             <td>{{$motorista->codigo_empresa}}</td>
                             <td>{{$motorista->codigo_transdata}}</td>
-                            <td><div class="p-2 iconesLista"><a href="{{ url('/motorista/listar/excluir/'.$motorista->id) }}">  <i class="fas fa-trash"></i> </a> <a href="{{ url('/motorista/listar/'.$motorista->id) }}"> <i class="fas fa-edit"></i></a></div></td>
+                            <td><div class="p-2 iconesLista"><a href="{{ url('/motorista/excluir/'.$motorista->id) }}">  <i class="fas fa-trash"></i> </a> <a href="{{ url('/motorista/'.$motorista->id) }}"> <i class="fas fa-edit"></i></a></div></td>
                         </tr>
                     @endforeach
                 </tbody>

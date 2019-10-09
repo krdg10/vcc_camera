@@ -7,9 +7,6 @@ use App\Models\Desc_avarias;
 use App\Models\Verificacao;
 
 class DescAvariasController extends Controller{
-    public function index(){}
-
-    public function create(){}
 
     public function store(Request $request, $id){
         if(isset($error)){
@@ -30,10 +27,6 @@ class DescAvariasController extends Controller{
     public function show($id=""){
         return Desc_avarias::all();
     }
-
-    public function edit($id){}
-
-    public function update(Request $request, $id){}
 
     public function destroy($id){
         $avarias = Desc_avarias::findOrFail($id);

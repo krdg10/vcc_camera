@@ -13,9 +13,6 @@ class LocalAVariasController extends Controller{
         return view('avaria.index', compact('avarias', 'chave'));
     }
 
-    public function create(){
-        //
-    }
 
     public function store(Request $request){
         if(Local_avaria::where('local', 'like', '%'. $request->local .'%')->count() > 0)
@@ -33,9 +30,6 @@ class LocalAVariasController extends Controller{
 
     public function show($id=""){
         return Local_avaria::all();
-    }
-
-    public function edit($id){
     }
 
     public function update(Request $request, $id){

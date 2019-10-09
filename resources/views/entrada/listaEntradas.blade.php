@@ -1,4 +1,4 @@
-@extends('entrada.exibir')
+@extends('entrada.modeloListagem')
 
 @section('search')
 	<script type="text/javascript">

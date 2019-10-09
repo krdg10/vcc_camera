@@ -7,8 +7,8 @@
             </button>
             <div class="dropdown-menu">
                 <div class="list-group">
-                <a class="list-group-item list-group-item-action" href="{{ url('/motorista/create') }}">Cadastrar Motoristas</a>
-                <a class="list-group-item list-group-item-action" href="{{ url('/motorista/listar') }}">Ver Motoristas</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('motorista.create') }}">Cadastrar Veículos</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('motorista.lista') }}">Ver Veículos</a>
                 </div>
             </div>
         </div>
@@ -21,8 +21,8 @@
             </button>
             <div class="dropdown-menu">
                 <div class="list-group">
-                <a class="list-group-item list-group-item-action" href="{{ url('/carro') }}">Cadastrar Veículos</a>
-                <a class="list-group-item list-group-item-action" href="{{ url('/carro/listar') }}">Ver Veículos</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('carro.create') }}">Cadastrar Veículos</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('carro.lista') }}">Ver Veículos</a>
                 </div>
             </div>
         </div>
@@ -35,8 +35,8 @@
             </button>
             <div class="dropdown-menu">
                 <div class="list-group">
-                <a class="list-group-item list-group-item-action" href="{{ url('/entrada/create') }}">Cadastrar Entradas</a>
-                <a class="list-group-item list-group-item-action" href="{{ url('/entrada') }}">Ver Entradas</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('entrada.create') }}">Cadastrar Entradas</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('entrada.lista') }}">Ver Entradas</a>
                 </div>
             </div>
 
