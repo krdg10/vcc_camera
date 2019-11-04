@@ -31,13 +31,19 @@
                 <form method="POST" action="{{ route('entrada.adicionaMotorista', $entrada->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('put')
-                    <select class="MineSelect" name="motorista" required>
-                        <option value="false"> Adicione um motorista</option>
-                        @foreach($motorista as $Motorista) 
-                            <option value="{{ $Motorista->id }}"> {{ $Motorista->nome }} </option>
-                        @endforeach
-                    </select>
-                    <input type="text" placeholder="Veículo" name="veiculo" class="form-control" value="{{ $entrada->carro->nome }} - {{ $entrada->carro->placa }}" disabled>
+                    <div class="form-group">
+        				<label for="motorista">Motorista</label>
+                        <select class="MineSelect" name="motorista" id="motorista" required>
+                            <option value="false"> Adicione um motorista</option>
+                            @foreach($motorista as $Motorista) 
+                                <option value="{{ $Motorista->id }}"> {{ $Motorista->nome }} </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+        				<label for="veiculo">Veículo</label>
+                        <input type="text" placeholder="Veículo" name="veiculo" class="form-control" value="{{ $entrada->carro->nome }} - {{ $entrada->carro->placa }}" disabled>
+                    </div>
                     <div id="formFooter">
                         <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Salvar </button>
                     </div>	
