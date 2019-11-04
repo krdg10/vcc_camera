@@ -83,27 +83,43 @@
 											<div id="collapse{{$avaria->id}}" class="collapse" aria-labelledby="heading{{ $avaria->id }}" data-parent="#accordionInterno">
 												<div class="card-body">
 													{{-- SELECT LOCAL AVARIA --}}
-												 	<select class="MineSelect" name="localAvaria" id="localAvaria{{$avaria->id}}" ></select>
+													<div class="form-group">
+        												<label for="localAvaria">Local da Avaria</label>
+														<select class="MineSelect" name="localAvaria" id="localAvaria{{$avaria->id}}" ></select>
+													</div>
 													
 													{{-- SELECT LOCAL AVARIA --}}
-													<select class="MineSelect" name="tipoAvaria" id="tipoAvaria{{$avaria->id}}"></select>
+													<div class="form-group">
+        												<label for="tipoAvaria">Tipo da Avaria</label>
+														<select class="MineSelect" name="tipoAvaria" id="tipoAvaria{{$avaria->id}}"></select>
+													</div>
 
 													{{-- CAMPO OBSERVAÇÃO --}}
-													<input class="form-control" type="text" value="{{ $avaria->obs }} " name="obs" id="obs">
+													<div class="form-group">
+        												<label for="obs">Tipo da Avaria</label>
+														<input class="form-control" type="text" value="{{ $avaria->obs }} " name="obs" id="obs">
+													</div>
 													
 													{{-- BOTÃO PARA ENVIAR ATUALIZAÇÃO --}}
 													<button type="submit" id="submit" class="btn btn-outline-primary"> Atualizar Avaria </button>
-													
-									</form>
+													<button type="submit" id="submit" class="btn btn-outline-primary" value="delete" style="padding-left: 32px; padding-right: 32px;"
+														href="{{ route('descavarias.destroy', $avaria->id)  }}"
+														onclick="event.preventDefault();
+														document.getElementById('delete-avaria{{$avaria->id}}').submit();"> 
+														<i class="fas fa-trash"></i> Excluir 
+													</button>
+
+									
 													{{-- BOTÃO PARA DELETAR O DADO DA AVARIA --}}
-													<form method="POST" action="{{ route('descavarias.destroy', $avaria->id)  }}" enctype="multipart/form-data"> <!-- antes n tinha esse form. Era só o button uma linha abaixo. dai ficava lado a lado na tela. Era tudo post, ai usava um formaction na tag com o mesmo endereço do form de baixo. tentei formmethod pra n precisar de dois form mas foi não-->
-														<button type="submit" id="submit" class="btn btn-outline-primary" value="delete" style="padding-left: 32px; padding-right: 32px; margin-top: 5px;"> <i class="fas fa-trash"></i> Excluir </button>
-														@method('delete')
-														@csrf
-													</form>
+													
     											</div>
     										</div>
-    									</div>
+										</div>
+									</form>
+									<form id="delete-avaria{{$avaria->id}}" method="POST" action="{{ route('descavarias.destroy', $avaria->id)  }}" enctype="multipart/form-data"> <!-- antes n tinha esse form. Era só o button uma linha abaixo. dai ficava lado a lado na tela. Era tudo post, ai usava um formaction na tag com o mesmo endereço do form de baixo. tentei formmethod pra n precisar de dois form mas foi não-->
+										@method('delete')
+										@csrf
+									</form>
 								@empty
 									<h3>Nenhuma Avaria Cadastrada</h3>
 								@endforelse
@@ -125,7 +141,7 @@
 					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 						<div class="card-body">
 							{{-- INCLUDE DO CAMPO PARA INSERÇÃO DE DADOS --}}
-            				@include('verificacao/novaVerificacao')
+            				@include('verificacao.novaVerificacao')
 
 							<form method="POST" action="{{ route('descavarias.store', $verificacao->id) }}" enctype="multipart/form-data">
 								@csrf

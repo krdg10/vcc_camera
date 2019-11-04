@@ -667,6 +667,7 @@ svg {
 
 table {
   border-collapse: collapse;
+  word-wrap:break-word
 }
 
 caption {
@@ -10705,5 +10706,17 @@ a.text-dark:hover, a.text-dark:focus {
   font-size: 0.75em;
   font-weight: bold;
   padding: 10px;
+}
+
+@media screen and ( max-width: 520px ){
+  ul.pagination li {
+    display: none;
+  }
+
+  ul.pagination li:first-child,
+  ul.pagination li:last-child,
+  ul.pagination li.active {
+    display: block;
+  }
 }
 /*# sourceMappingURL=bootstrap.css.map */
