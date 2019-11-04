@@ -40,12 +40,27 @@
         @include('layouts.messages')
         <hr>
         <form method="POST" action="{{ route('carro.store') }}" enctype="multipart/form-data" onsubmit="return validaCampos();">
-        {{ csrf_field() }}
-            <input type="text" placeholder="Nome" name="nome" class="form-control" required maxlength="250">
-            <input type="text" placeholder="Placa" name="placa" class="form-control" maxlength="8" minlength="8" onblur="caps();" required>
-            <input type="text" placeholder="Modelo" name="modelo" class="form-control" required maxlength="250">
-            <input type="text" placeholder="Ano" name="ano" class="form-control" maxlength="4" minlength="4">
-            <input type="text" placeholder="RFID" name="rfid" class="form-control" required maxlength="250">
+            {{ csrf_field() }}
+            <div class="form-group">
+                <label for="nome">Nome <a class="color-red">*</a></label>
+                <input type="text" placeholder="Nome" name="nome" class="form-control" required maxlength="250" value="{{\Session::get('resposta')["nome"]}}">
+            </div>
+            <div class="form-group">
+                <label for="placa">Placa <a class="color-red">*</a></label>
+                <input type="text" placeholder="Placa" name="placa" class="form-control" maxlength="8" minlength="8" onblur="caps();" required value="{{\Session::get('resposta')["placa"]}}">
+            </div>
+            <div class="form-group">
+                <label for="modelo">Modelo <a class="color-red">*</a></label>
+                <input type="text" placeholder="Modelo" name="modelo" class="form-control" required maxlength="250" value="{{\Session::get('resposta')["modelo"]}}">
+            </div>
+            <div class="form-group">
+                <label for="ano">Ano <a class="color-red">*</a></label>
+                <input type="text" placeholder="Ano" name="ano" class="form-control" maxlength="4" minlength="4" value="{{\Session::get('resposta')["ano"]}}">
+            </div>
+            <div class="form-group">
+                <label for="rfid">RFID <a class="color-red">*</a></label>
+                <input type="text" placeholder="RFID" name="rfid" class="form-control" required maxlength="250" value="{{\Session::get('resposta')["rfid"]}}">
+            </div>
             <div id="formFooter">
                 <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Salvar </button>
             </div>

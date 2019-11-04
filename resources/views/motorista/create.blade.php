@@ -38,12 +38,27 @@
 
             <form method="POST" action="{{ route('motorista.store') }}" enctype="multipart/form-data" onsubmit="return valida();">
                 {{ csrf_field() }}
-                <input type="text" placeholder="Nome" name="nome" class="form-control" required max="250">
-                <input type="text" placeholder="CPF" name="cpf" class="form-control" maxlength="11" minlength="11" required>
-                <input type="date" placeholder="Data de Nascimento" name="data_nascimento" class="form-control" required>
-                <input type="text" placeholder="Código VCC" name="codigo_empresa" class="form-control" maxlength="4" minlength="4" required>
-                <input type="text" placeholder="Código Transdata" name="codigo_transdata" class="form-control" maxlength="5" minlength="5" required>
-
+                <div class="form-group">
+                    <label for="nome">Nome <a class="color-red">*</a></label>
+                    <input type="text" placeholder="Nome" name="nome" class="form-control" max="250" value="{{\Session::get('resposta')["nome"]}}" required>
+                    <!-- <small>blabla</small>ver como fica esse small. Essa alteração foi de formgroup, labele e esse value.  display tem que ser igual da label.-->
+                </div>
+                <div class="form-group">
+                    <label for="cpf">CPF <a class="color-red">*</a></label>
+                    <input type="text" placeholder="CPF" name="cpf" class="form-control" maxlength="11" minlength="11" value="{{\Session::get('resposta')["cpf"]}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="data_nascimento">Data de Nascimento <a class="color-red">*</a></label>
+                    <input type="date" placeholder="Data de Nascimento" name="data_nascimento" class="form-control" value="{{\Session::get('resposta')["data_nascimento"]}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="codigo_empresa">Código VCC <a class="color-red">*</a></label>
+                    <input type="text" placeholder="Código VCC" name="codigo_empresa" class="form-control" maxlength="4" minlength="4" value="{{\Session::get('resposta')["codigo_empresa"]}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="codigo_transdata">Código Transdata <a class="color-red">*</a></label>
+                    <input type="text" placeholder="Código Transdata" name="codigo_transdata" class="form-control" maxlength="5" minlength="5" value="{{\Session::get('resposta')["codigo_transdata"]}}" required>
+                </div>
                 <div id="formFooter">
                     <button type="submit" id="submit" class="fadeIn fourth btn btn-primary"> Salvar </button>
                 </div>

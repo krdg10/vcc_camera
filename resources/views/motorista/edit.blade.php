@@ -43,11 +43,26 @@
         @include('layouts.messages')
         <hr>
         <form method="POST" action="{{ route('motorista.update', $Motorista->id) }}" enctype="multipart/form-data" onsubmit="return valida();"> <!-- forma de validar data aqui é o regex. is date é só sqlserver, o hasdate n peguei funcionamento -->
-            <input type="text" placeholder="Nome" name="nome" class="form-control" value="{{ $Motorista->nome }}" required max="250">
-            <input type="text" placeholder="CPF" name="cpf" class="form-control" maxlength="11" minlength="11" value="{{ $Motorista->cpf }}" required>
-            <input type="date" placeholder="Data de Nascimento" name="data_nascimento" class="form-control" value="{{ $Motorista->data_nascimento }}" maxlength="19" required>
-            <input type="text" placeholder="Código VCC" name="codigo_empresa" class="form-control" maxlength="4" minlength="4" value="{{ $Motorista->codigo_empresa }}" required>
-            <input type="text" placeholder="Código Transdata" name="codigo_transdata" class="form-control" maxlength="5" minlength="5" value="{{ $Motorista->codigo_transdata }}" required>
+            <div class="form-group">
+                <label for="nome">Nome <a class="color-red">*</a></label>
+                <input type="text" placeholder="Nome" name="nome" class="form-control" value="{{ $Motorista->nome }}" required max="250">
+            </div>
+            <div class="form-group">
+                <label for="cpf">CPF <a class="color-red">*</a></label>
+                <input type="text" placeholder="CPF" name="cpf" class="form-control" maxlength="11" minlength="11" value="{{ $Motorista->cpf }}" required>
+            </div>
+            <div class="form-group">
+                <label for="data_nascimento">Data de Nascimento <a class="color-red">*</a></label>
+                <input type="date" placeholder="Data de Nascimento" name="data_nascimento" class="form-control" value="{{ $Motorista->data_nascimento }}" maxlength="19" required>
+            </div>
+            <div class="form-group">
+                <label for="codigo_empresa">Código VCC <a class="color-red">*</a></label>
+                <input type="text" placeholder="Código VCC" name="codigo_empresa" class="form-control" maxlength="4" minlength="4" value="{{ $Motorista->codigo_empresa }}" required>
+            </div>
+            <div class="form-group">
+                <label for="codigo_transdata">Código Transdata <a class="color-red">*</a></label>
+                <input type="text" placeholder="Código Transdata" name="codigo_transdata" class="form-control" maxlength="5" minlength="5" value="{{ $Motorista->codigo_transdata }}" required>
+            </div>
             <div id="formFooter">
                 <button type="submit" id="submit" class="fadeIn fourth btn btn-primary" value="put"> Atualizar </button>
                 @method('put')

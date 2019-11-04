@@ -284,7 +284,7 @@ input[type=text], input[type=password], input[type="email"]{
   display: inline-block;
   font-size: 16px;
   margin: 5px;
-  width: 85%;
+  width: 90%;
   border: 2px solid #f6f6f6;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
@@ -307,7 +307,7 @@ input[type=text], input[type=password], input[type="email"]{
   display: inline-block;
   font-size: 16px;
   margin: 5px;
-  width: 85%;
+  width: 90%;
   border: 2px solid #f6f6f6;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
@@ -326,7 +326,7 @@ input[type=date], input[type=datetime-local], input[type=file],  input[type=time
   display: inline-block;
   font-size: 16px;
   margin: 5px;
-  width: 85%;
+  width: 90%;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
   -ms-transition: all 0.5s ease-in-out;
@@ -682,8 +682,12 @@ th {
 }
 
 label {
-  display: inline-block;
-  margin-bottom: 0.5rem;
+  display: flow-root;
+  /*margin-bottom: 0.5rem;*/
+}
+
+.color-red{
+  color: red !important;
 }
 
 button {
@@ -775,7 +779,7 @@ textarea {
   display: inline-block;
   font-size: 16px;
   margin: 5px;
-  width: 80%;
+  width: 85%;
   border: 2px solid #f6f6f6;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
@@ -787,7 +791,7 @@ textarea {
   
 }
 #btnObs button{
-  margin-top: 70%;
+  margin-top: 100%;
 }
 
 fieldset {

@@ -21,9 +21,6 @@ class EntradaController extends Controller{
     public function buscaEntradas(Request $request){
         EntradaController::verifyIfSearchIsEmpty($request);
 
-        $nome = $request->nome;
-        $horario = $request->horario;
-        $carro = $request->carro;
         $entradas = EntradaController::getSearchResults($request);
         
         return view('entrada.busca', ['entradas' => $entradas, 'nome' => $request->nome, 
@@ -70,7 +67,7 @@ class EntradaController extends Controller{
 
             $entrada->save();
 
-            copy('http://admin:vcc123456@192.168.1.64:64/Streaming/channels/1/picture','C:\Users\Administrativo\vcc_cam\storage\app\public\fotos\1_store_rbt_'. $entrada->id .'.jpg');
+            copy('http://admin:vcc123456@192.168.1.65:64/Streaming/channels/1/picture','C:\Users\Administrativo\vcc_cam\storage\app\public\fotos\1_store_rbt_'. $entrada->id .'.jpg');
 
             //copy('http://admin:vcc123456@192.168.1.65:64/Streaming/channels/2/picture','C:\Users\Administrativo\vcc_cam\storage\app\public\fotos\2_store_rbt_'. $entrada->id .'.jpg');
             
@@ -148,6 +145,9 @@ class EntradaController extends Controller{
     }
 
     public function getSearchResults($request){
+        $nome = $request->nome;
+        $horario = $request->horario;
+        $carro = $request->carro;
         return Entrada::join('motoristas', 'motoristas.id', '=', 'entradas.motorista_id')
                 ->join('carros', 'carros.id', '=', 'entradas.carro_id')
                 ->when($request->verificado=='1', function($consulta){

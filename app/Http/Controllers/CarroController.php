@@ -16,7 +16,7 @@ class CarroController extends Controller
         $validator = Validator::make($request->all(), CarroController::rulesCarro(NULL));
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
+            return redirect()->back()->withErrors($validator)->with('resposta', $request->all());;
         }
 
         $carro->nome = $request->nome;
@@ -40,12 +40,6 @@ class CarroController extends Controller
             return $redirect;
         }
         
-        $placa = $request->placa;
-        $nome = $request->nome;
-        $modelo = $request->modelo;
-        $ano = $request->ano;
-        $ativo = $request->ativo;
-        $rfid = $request->rfid;
         $carros = CarroController::getSearchResults($request);
         
         return view('carro.busca', ['carros' => $carros, 'nome' => $request->nome, 
@@ -99,6 +93,12 @@ class CarroController extends Controller
     }
 
     public function getSearchResults($request){
+        $placa = $request->placa;
+        $nome = $request->nome;
+        $modelo = $request->modelo;
+        $ano = $request->ano;
+        $ativo = $request->ativo;
+        $rfid = $request->rfid;
         return DB::table('carros')->when($request->placa,function($query, $placa){
                 $query->where('placa', $placa);
                 })

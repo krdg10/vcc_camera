@@ -14,7 +14,9 @@ class MotoristaController extends Controller{
         $validator = Validator::make($request->all(), MotoristaController::rulesMotorista(NULL));
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
+            //dd($validator->failed()["cpf"]["Cpf"]);
+            //if failed cpf exists; request->cpf =''; limpa assim
+            return redirect()->back()->withErrors($validator)->with('resposta', $request->all());
         }
         
         //https://stackoverflow.com/questions/47750807/laravel-rule-validation-unique-for-id

@@ -68,7 +68,7 @@
             
             <div class="container" style="padding-left: 0px; padding-right:0px;">
                 {{-- INCLUDE DO CAMPO PARA INSERÇÃO DE DADOS --}}
-                @include('verificacao/novaVerificacao')
+                @include('verificacao.novaVerificacao')
 
                 <form method="POST" action="{{ route('verificacao.store', $entradas->id) }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
