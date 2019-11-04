@@ -7,8 +7,8 @@
             </button>
             <div class="dropdown-menu">
                 <div class="list-group">
-                <a class="list-group-item list-group-item-action" href="{{ route('motorista.create') }}">Cadastrar Veículos</a>
-                <a class="list-group-item list-group-item-action" href="{{ route('motorista.lista') }}">Ver Veículos</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('motorista.create') }}">Cadastrar Motoristas</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('motorista.lista') }}">Ver Motoristas</a>
                 </div>
             </div>
         </div>
