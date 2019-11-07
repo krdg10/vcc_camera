@@ -73,8 +73,10 @@ class EntradaController extends Controller{
             
             Foto::create([
                 'entrada_id' => $entrada->id,
-                'path' => 'fotos/1_store_rbt_'. $entrada->id .'.jpg'
+                'path' => 'fotos/1_store_rbt_'. $entrada->id .'.jpg',
+                'legenda' => 'Lateral Direita'
             ]);
+            //legenda por ângulo que a foto pega ou posição camera
 
             /*Foto::create([
                 'entrada_id' => $entrada->id,
