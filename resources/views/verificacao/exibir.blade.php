@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
-<div class="wrapper fadeInDown">
+	<script src="{{ asset('js/jquery.min.js') }}" ></script>
+    <script src="{{ asset('js/xzoom.min.js') }}" ></script>
 	<script type="text/javascript">
 	    var avaria, fotos, metodos;    
 
@@ -13,9 +14,16 @@
 	            ";
 	        @endphp
 
-	        // EXIBE MENSAGEM DE SUCESSO E ERRO.
+			// EXIBE MENSAGEM DE SUCESSO E ERRO.
+			jQuery(function($) {
+                $(".xzoom").xzoom({
+                    position: 'right',
+                    Xoffset: 15
+                });
+            });
 	    }
 	</script>
+<div class="wrapper fadeInDown">	
 
     <div id="formContent">	
 	    <h3>Entrada</h3> <hr>

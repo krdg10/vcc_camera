@@ -20,30 +20,13 @@
             avaria.setSelect('localAvariaNovo', 'local');
             avaria.setSelect('tipoAvariaNovo', 'tipo'); 
             avaria.carousel('divExibebeImagens', 'modalImg', fotos);
-
-           
-
             jQuery(function($) {
-              $(".xzoom").xzoom({
-                  position: 'right',
-                  Xoffset: 15
-              });
+                $(".xzoom").xzoom({
+                    position: 'right',
+                    Xoffset: 15
+                });
             });
         }
-        $("#modalImg").click(function(){
-            $(".modal").addClass("visible");
-        });
-
-        $(".close").click(function(){
-            $(".modal").removeClass("visible");
-        });
-
-        $(document).click(function(event) {
-        //if you click on anything except the modal itself or the "open modal" link, close the modal
-        if (!$(event.target).closest(".modal,#modalImg").length) {
-            $("body").find(".modal").removeClass("visible");
-        }
-        });
 
     </script>
 

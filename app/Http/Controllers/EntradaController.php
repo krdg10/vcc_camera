@@ -9,6 +9,8 @@ use App\Models\Carro;
 use App\Models\Motorista;
 use App\Models\Foto;
 use App\Models\Verificacao;
+use App\Models\Tipo_avarias;
+use App\Models\Local_avaria;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -92,8 +94,16 @@ class EntradaController extends Controller{
     public function createEntrada(){
         $motorista = EntradaController::getAllActiveDrivers();
         $carro = Carro::where('ativo', 1)->get();
+        $tipo_avarias = Tipo_avarias::all();
+        $local_avarias = Local_avaria::all();
+        
+        $foto = new Foto;
+        $foto->id=1;
+        $foto->path = "fotos/1_store_rbt_40.jpg";
+        $foto->legenda="Imagem";
+        $fotos = collect([$foto]);
 
-        return view('entrada.create', compact('motorista', 'carro'));
+        return view('entrada.create', compact('motorista', 'carro', 'local_avarias', 'tipo_avarias', 'fotos'));
     }
 
     public function exibeEntrada($id){

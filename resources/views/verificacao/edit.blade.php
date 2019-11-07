@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+	<script src="{{ asset('js/jquery.min.js') }}" ></script>
+    <script src="{{ asset('js/xzoom.min.js') }}" ></script>
 	<script>
 	    var avarias = [];
 	    var cont = 0;
@@ -22,7 +24,13 @@
 	        avaria.setSelect('localAvariaNovo', 'local');
 	        avaria.setSelect('tipoAvariaNovo', 'tipo');
 
-	        // EXIBE MENSAGEM DE SUCESSO E ERRO.
+			// EXIBE MENSAGEM DE SUCESSO E ERRO.
+			jQuery(function($) {
+                $(".xzoom").xzoom({
+                    position: 'right',
+                    Xoffset: 15
+                });
+            });
 	        
 	    }
 	</script>

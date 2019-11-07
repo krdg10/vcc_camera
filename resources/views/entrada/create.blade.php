@@ -1,48 +1,26 @@
 @extends('layouts.app')
 @section('content')
-<script>
+    <script src="{{ asset('js/jquery.min.js') }}" ></script>
+    <script src="{{ asset('js/xzoom.min.js') }}" ></script>
+    <script type="text/javascript">
+        var avaria, fotos, metodos;    
+        window.onload = function(){
+            @php
+                echo "
+                    metodos = new Metodos('metodos', '". csrf_token() ."');
+                    avaria = new Avaria('avaria', '". csrf_token() ."', '". $local_avarias ."', '" . $tipo_avarias . "');
+                    avaria.carousel('divExibebeImagens', 'modalImg', '". $fotos ."'); 
+                ";
+            @endphp
 
-    function excluirElement(id){
-        $('#'+id).remove();
-    }
-
-    jQuery(function($) {
-        $(".xzoom").xzoom({
-            position: 'right',
-            Xoffset: 15
-        });
-    });
-
-    // Get the modal
-    var modal = document.getElementById("modalImag");
-
-    // Get the image and insert it inside the modal - use its "alt" text as a caption
-    var img = document.getElementById("myImg");
-    var modalImg = document.getElementById("img01");
-    var captionText = document.getElementById("caption");
-    img.onclick = function(){
-    modal.style.display = "block";
-    modalImg.src = this.src;
-    captionText.innerHTML = this.alt;
-    }
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() { 
-    modal.style.display = "none";
-    }
-
-    $(document).ready(function(){
-        $('img')
-            .wrap('<span style="display:inline-block"></span>')
-            .css('display', 'block')
-            .parent()
-            .zoom();
-    });
-</script>
-<script type="text/javascript" src="https://unpkg.com/xzoom/dist/xzoom.min.js"></script>
+            jQuery(function($) {
+                $(".xzoom").xzoom({
+                    position: 'right',
+                    Xoffset: 15
+                });
+            });
+        }
+    </script>
 
 <div class="wrapper fadeInDown">
     <div id="formContent">
@@ -50,29 +28,11 @@
         @include('layouts.messages')
         <hr>
         <form method="POST" action="{{ route('entrada.store') }}" enctype="multipart/form-data">
-            @csrf   
-           <!-- https://artisansweb.net/how-to-add-zoom-image-effect-on-your-website-images/-->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            @csrf 
+              
+            <div class="container" id="divExibebeImagens"></div>
+            <div id="modalImg"></div>
 
-            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active" id="container">
-                        <!--                        <img class="d-block w-100" id="myImg" style="height: 300px" src="http://admin:vcc123456@192.168.1.65:64/Streaming/channels/2/picture" alt="Imagem da Câmera">-->
-                        <img class="d-block w-100 /" id="myImg" style="height: 300px" src="http://localhost:8000/storage/fotos/1_store_rbt_40.jpg"   alt="Imagem da Câmera">
-                    </div>
-                </div>
-            </div>
-            <div id="modalImag" class="modal">
-
-                <!-- The Close Button -->
-                <span class="close">&times;</span>
-
-                <!-- Modal Content (The Image) -->
-                <img class="modal-content xzoom" id="img01" xoriginal="http://localhost:8000/storage/fotos/1_store_rbt_40.jpg">
-
-                <!-- Modal Caption (Image Text) -->
-                <div id="caption"></div>
-            </div>
             <div class="form-group">
         		<label for="motorista">Motorista</label>
                 <select class="MineSelect" name="motorista" required>
@@ -112,7 +72,5 @@
 </div>
 
   
-
-   
 
 @endsection
