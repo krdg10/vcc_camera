@@ -147,7 +147,7 @@ class Avaria{
 
         setTimeout(function() {
             document.getElementById(idModalImg).setAttribute("xoriginal", img.src);
-        }, 1000 * 2); 
+        }, 0 * 2); 
     }
 
     // FECHA O MODAL
